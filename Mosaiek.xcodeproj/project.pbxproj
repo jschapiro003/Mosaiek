@@ -31,6 +31,16 @@
 		310917361C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310917351C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework */; };
 		310917381C4EFC8F007EA1C5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310917371C4EFC8F007EA1C5 /* FBSDKLoginKit.framework */; };
 		31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */; };
+		31E7A7281C4F41DB00736786 /* InvitationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */; };
+		31E7A72A1C4F428400736786 /* NewMosaicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7291C4F428400736786 /* NewMosaicViewController.swift */; };
+		31E7A72C1C4F431700736786 /* TimelineDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A72B1C4F431700736786 /* TimelineDetailViewController.swift */; };
+		31E7A72F1C4F48E800736786 /* Mosaic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A72E1C4F48E800736786 /* Mosaic.swift */; };
+		31E7A7311C4F493C00736786 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7301C4F493C00736786 /* User.swift */; };
+		31E7A7331C4F496100736786 /* MosaicImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7321C4F496100736786 /* MosaicImage.swift */; };
+		31E7A7371C4F49BB00736786 /* EditMosaicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7361C4F49BB00736786 /* EditMosaicViewController.swift */; };
+		31E7A7391C4F49E000736786 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7381C4F49E000736786 /* Comment.swift */; };
+		31E7A73B1C4F4A1B00736786 /* AddContributorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A73A1C4F4A1B00736786 /* AddContributorsViewController.swift */; };
+		31E7A73D1C4F4A5900736786 /* EditContributorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A73C1C4F4A5900736786 /* EditContributorsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +76,7 @@
 		310917091C4EF2DE007EA1C5 /* MosaiekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaiekUITests.swift; sourceTree = "<group>"; };
 		3109170B1C4EF2DE007EA1C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		310917181C4EF4B8007EA1C5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		3109171A1C4EF61D007EA1C5 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		3109171A1C4EF61D007EA1C5 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "Mosaiek/Bridging-Header.h"; sourceTree = "<group>"; };
 		3109171D1C4EFB18007EA1C5 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../Documents/ParseSDK/Bolts.framework; sourceTree = "<group>"; };
 		3109171E1C4EFB18007EA1C5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../Documents/ParseSDK/Parse.framework; sourceTree = "<group>"; };
 		310917211C4EFB6B007EA1C5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -82,6 +92,16 @@
 		310917351C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = ../../Documents/ParseSDK/ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		310917371C4EFC8F007EA1C5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationsViewController.swift; sourceTree = "<group>"; };
+		31E7A7291C4F428400736786 /* NewMosaicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMosaicViewController.swift; sourceTree = "<group>"; };
+		31E7A72B1C4F431700736786 /* TimelineDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineDetailViewController.swift; sourceTree = "<group>"; };
+		31E7A72E1C4F48E800736786 /* Mosaic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mosaic.swift; sourceTree = "<group>"; };
+		31E7A7301C4F493C00736786 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		31E7A7321C4F496100736786 /* MosaicImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicImage.swift; sourceTree = "<group>"; };
+		31E7A7361C4F49BB00736786 /* EditMosaicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMosaicViewController.swift; sourceTree = "<group>"; };
+		31E7A7381C4F49E000736786 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		31E7A73A1C4F4A1B00736786 /* AddContributorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributorsViewController.swift; sourceTree = "<group>"; };
+		31E7A73C1C4F4A5900736786 /* EditContributorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContributorsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +147,7 @@
 		310916DA1C4EF2DE007EA1C5 = {
 			isa = PBXGroup;
 			children = (
+				3109171A1C4EF61D007EA1C5 /* Bridging-Header.h */,
 				310916E51C4EF2DE007EA1C5 /* Mosaiek */,
 				310916FD1C4EF2DE007EA1C5 /* MosaiekTests */,
 				310917081C4EF2DE007EA1C5 /* MosaiekUITests */,
@@ -148,13 +169,13 @@
 		310916E51C4EF2DE007EA1C5 /* Mosaiek */ = {
 			isa = PBXGroup;
 			children = (
-				31E7A7241C4F2D7700736786 /* Controllers */,
 				310916E61C4EF2DE007EA1C5 /* AppDelegate.swift */,
 				310916EA1C4EF2DE007EA1C5 /* Main.storyboard */,
-				310916F01C4EF2DE007EA1C5 /* Assets.xcassets */,
 				310916F21C4EF2DE007EA1C5 /* LaunchScreen.storyboard */,
+				31E7A72D1C4F48D800736786 /* Models */,
+				31E7A7241C4F2D7700736786 /* Controllers */,
+				310916F01C4EF2DE007EA1C5 /* Assets.xcassets */,
 				310916F51C4EF2DE007EA1C5 /* Info.plist */,
-				3109171A1C4EF61D007EA1C5 /* Bridging-Header.h */,
 				310916ED1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld */,
 			);
 			path = Mosaiek;
@@ -205,8 +226,25 @@
 			children = (
 				310916E81C4EF2DE007EA1C5 /* LoginViewController.swift */,
 				31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */,
+				31E7A72B1C4F431700736786 /* TimelineDetailViewController.swift */,
+				31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */,
+				31E7A7291C4F428400736786 /* NewMosaicViewController.swift */,
+				31E7A7361C4F49BB00736786 /* EditMosaicViewController.swift */,
+				31E7A73A1C4F4A1B00736786 /* AddContributorsViewController.swift */,
+				31E7A73C1C4F4A5900736786 /* EditContributorsViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		31E7A72D1C4F48D800736786 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				31E7A72E1C4F48E800736786 /* Mosaic.swift */,
+				31E7A7301C4F493C00736786 /* User.swift */,
+				31E7A7321C4F496100736786 /* MosaicImage.swift */,
+				31E7A7381C4F49E000736786 /* Comment.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,9 +382,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				310916EF1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld in Sources */,
+				31E7A72C1C4F431700736786 /* TimelineDetailViewController.swift in Sources */,
 				31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */,
+				31E7A72F1C4F48E800736786 /* Mosaic.swift in Sources */,
+				31E7A7281C4F41DB00736786 /* InvitationsViewController.swift in Sources */,
+				31E7A73B1C4F4A1B00736786 /* AddContributorsViewController.swift in Sources */,
+				31E7A7311C4F493C00736786 /* User.swift in Sources */,
+				31E7A7371C4F49BB00736786 /* EditMosaicViewController.swift in Sources */,
+				31E7A7391C4F49E000736786 /* Comment.swift in Sources */,
+				31E7A72A1C4F428400736786 /* NewMosaicViewController.swift in Sources */,
+				31E7A73D1C4F4A5900736786 /* EditContributorsViewController.swift in Sources */,
 				310916E91C4EF2DE007EA1C5 /* LoginViewController.swift in Sources */,
 				310916E71C4EF2DE007EA1C5 /* AppDelegate.swift in Sources */,
+				31E7A7331C4F496100736786 /* MosaicImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

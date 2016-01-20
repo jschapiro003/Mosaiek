@@ -38,7 +38,7 @@
         <!--Invitations-->
         <scene sceneID="rGS-UY-fGV">
             <objects>
-                <viewController id="b3D-Kp-bCA" sceneMemberID="viewController">
+                <viewController id="b3D-Kp-bCA" customClass="InvitationsViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sPX-QK-0Im"/>
                         <viewControllerLayoutGuide type="bottom" id="8vT-jJ-9Zo"/>
@@ -87,7 +87,7 @@
         <!--Create Mosaic-->
         <scene sceneID="3c3-jv-hH1">
             <objects>
-                <viewController id="ZZx-G4-UOe" sceneMemberID="viewController">
+                <viewController id="ZZx-G4-UOe" customClass="NewMosaicViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wad-cf-cFr"/>
                         <viewControllerLayoutGuide type="bottom" id="E1V-LG-GtV"/>
