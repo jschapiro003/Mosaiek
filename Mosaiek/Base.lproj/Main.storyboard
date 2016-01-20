@@ -95,15 +95,55 @@
                     <view key="view" contentMode="scaleToFill" id="Mu2-LP-dhc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mosaic Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAC-rj-Sxv">
+                                <rect key="frame" x="20" y="387" width="152" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mosaic Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZu-nN-9a8">
+                                <rect key="frame" x="20" y="437" width="152" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tnn-gA-t4m">
+                                <rect key="frame" x="95" y="106" width="411" height="231"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mwt-4j-EUJ">
+                                <rect key="frame" x="188" y="506" width="225" height="30"/>
+                                <state key="normal" title="Invite Others To Contribute"/>
+                                <connections>
+                                    <action selector="inviteContributors:" destination="ZZx-G4-UOe" eventType="touchUpInside" id="50N-Np-Nri"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w8K-1A-P09">
+                                <rect key="frame" x="162" y="383" width="251" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ycz-rZ-eZH">
+                                <rect key="frame" x="188" y="433" width="225" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create Mosaic" id="rIB-aa-OVw"/>
+                    <connections>
+                        <outlet property="mosaicDescription" destination="ycz-rZ-eZH" id="7hE-MN-BYj"/>
+                        <outlet property="mosaicImage" destination="tnn-gA-t4m" id="1yZ-98-KV8"/>
+                        <outlet property="mosaicName" destination="w8K-1A-P09" id="m3B-b9-d2n"/>
+                        <segue destination="8hP-pG-A64" kind="show" identifier="showAddContributorsViewController" id="26P-It-MMq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s5r-9x-Kre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2411" y="138"/>
         </scene>
-        <!--Add Friends-->
+        <!--Add Contributors-->
         <scene sceneID="J6n-bP-cvJ">
             <objects>
                 <viewController id="8hP-pG-A64" sceneMemberID="viewController">
@@ -116,7 +156,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Friends" id="fB6-Qs-hHN"/>
+                    <navigationItem key="navigationItem" title="Add Contributors" id="fB6-Qs-hHN"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWk-gn-iim" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
