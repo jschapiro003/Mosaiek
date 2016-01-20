@@ -146,8 +146,8 @@
 		310916E51C4EF2DE007EA1C5 /* Mosaiek */ = {
 			isa = PBXGroup;
 			children = (
+				31E7A7241C4F2D7700736786 /* Controllers */,
 				310916E61C4EF2DE007EA1C5 /* AppDelegate.swift */,
-				310916E81C4EF2DE007EA1C5 /* LoginViewController.swift */,
 				310916EA1C4EF2DE007EA1C5 /* Main.storyboard */,
 				310916F01C4EF2DE007EA1C5 /* Assets.xcassets */,
 				310916F21C4EF2DE007EA1C5 /* LaunchScreen.storyboard */,
@@ -196,6 +196,14 @@
 				310917181C4EF4B8007EA1C5 /* FBSDKCoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		31E7A7241C4F2D7700736786 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				310916E81C4EF2DE007EA1C5 /* LoginViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

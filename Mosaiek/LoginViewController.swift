@@ -22,15 +22,19 @@ class LoginViewController: UIViewController {
     }
     
     func loginWithFacebook() {
-        
+        let this = self;
         let permissions = ["email","public_profile","user_friends","user_photos"]
+        
+        //login with facebook
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions) {
             (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
                 if user.isNew {
                     print("User signed up and logged in through Facebook!")
+                    self.performSegueWithIdentifier("showTimeline", sender: this)
                 } else {
                     print("User logged in through Facebook!")
+                    self.performSegueWithIdentifier("showTimeline", sender: this)
                 }
             } else {
                 print("Uh oh. The user cancelled the Facebook login.")
@@ -40,14 +44,17 @@ class LoginViewController: UIViewController {
     }
     
     // Login Actions
-
-   
+    
+    
+    // button handler for Login With Facebook
     @IBAction func userLogin(sender: AnyObject) {
+        //user not already logged in
         if (PFUser.currentUser() == nil){
             self.loginWithFacebook()
+            
         } else {
-            //perform segue
             print("User Already Logged In:", PFUser.currentUser()?.username)
+            self.performSegueWithIdentifier("showTimeline", sender: self)
         }
     }
 
