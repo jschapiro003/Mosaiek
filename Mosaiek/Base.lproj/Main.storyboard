@@ -35,6 +35,25 @@
             </objects>
             <point key="canvasLocation" x="111" y="138"/>
         </scene>
+        <!--Invitations-->
+        <scene sceneID="rGS-UY-fGV">
+            <objects>
+                <viewController id="b3D-Kp-bCA" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sPX-QK-0Im"/>
+                        <viewControllerLayoutGuide type="bottom" id="8vT-jJ-9Zo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iEr-yQ-7s9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Invitations" id="SRb-KB-mRj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8YF-Qh-gIP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1675" y="-683"/>
+        </scene>
         <!--Timeline-->
         <scene sceneID="LE3-Vg-n9S">
             <objects>
@@ -48,11 +67,60 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Timeline" id="Ra7-Po-cbq"/>
+                    <navigationItem key="navigationItem" title="Timeline" id="Ra7-Po-cbq">
+                        <barButtonItem key="leftBarButtonItem" title="Inviations" id="B4o-FR-5Cu">
+                            <connections>
+                                <segue destination="b3D-Kp-bCA" kind="show" identifier="showInvitations" id="H8G-rX-W1v"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Create Mosaic" id="cLI-Y0-Wp2">
+                            <connections>
+                                <segue destination="ZZx-G4-UOe" kind="show" identifier="showCreateMosaic" id="H4R-fY-3qW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2C-9T-rBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1653" y="138"/>
+            <point key="canvasLocation" x="1670" y="138"/>
+        </scene>
+        <!--Create Mosaic-->
+        <scene sceneID="3c3-jv-hH1">
+            <objects>
+                <viewController id="ZZx-G4-UOe" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wad-cf-cFr"/>
+                        <viewControllerLayoutGuide type="bottom" id="E1V-LG-GtV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mu2-LP-dhc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Create Mosaic" id="rIB-aa-OVw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s5r-9x-Kre" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2411" y="138"/>
+        </scene>
+        <!--Add Friends-->
+        <scene sceneID="J6n-bP-cvJ">
+            <objects>
+                <viewController id="8hP-pG-A64" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2ps-Zm-vnv"/>
+                        <viewControllerLayoutGuide type="bottom" id="1pb-gW-1d8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="c7I-6E-6Qo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Friends" id="fB6-Qs-hHN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VWk-gn-iim" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3101" y="138"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZgU-CA-jjX">
