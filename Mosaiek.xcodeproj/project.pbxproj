@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		310916E71C4EF2DE007EA1C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310916E61C4EF2DE007EA1C5 /* AppDelegate.swift */; };
-		310916E91C4EF2DE007EA1C5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310916E81C4EF2DE007EA1C5 /* ViewController.swift */; };
+		310916E91C4EF2DE007EA1C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310916E81C4EF2DE007EA1C5 /* LoginViewController.swift */; };
 		310916EC1C4EF2DE007EA1C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 310916EA1C4EF2DE007EA1C5 /* Main.storyboard */; };
 		310916EF1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 310916ED1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld */; };
 		310916F11C4EF2DE007EA1C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 310916F01C4EF2DE007EA1C5 /* Assets.xcassets */; };
@@ -52,7 +52,7 @@
 /* Begin PBXFileReference section */
 		310916E31C4EF2DE007EA1C5 /* Mosaiek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mosaiek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		310916E61C4EF2DE007EA1C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		310916E81C4EF2DE007EA1C5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		310916E81C4EF2DE007EA1C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		310916EB1C4EF2DE007EA1C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		310916EE1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Mosaiek.xcdatamodel; sourceTree = "<group>"; };
 		310916F01C4EF2DE007EA1C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				310916E61C4EF2DE007EA1C5 /* AppDelegate.swift */,
-				310916E81C4EF2DE007EA1C5 /* ViewController.swift */,
+				310916E81C4EF2DE007EA1C5 /* LoginViewController.swift */,
 				310916EA1C4EF2DE007EA1C5 /* Main.storyboard */,
 				310916F01C4EF2DE007EA1C5 /* Assets.xcassets */,
 				310916F21C4EF2DE007EA1C5 /* LaunchScreen.storyboard */,
@@ -333,7 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				310916EF1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld in Sources */,
-				310916E91C4EF2DE007EA1C5 /* ViewController.swift in Sources */,
+				310916E91C4EF2DE007EA1C5 /* LoginViewController.swift in Sources */,
 				310916E71C4EF2DE007EA1C5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -573,6 +573,7 @@
 				310917101C4EF2DE007EA1C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		310917111C4EF2DE007EA1C5 /* Build configuration list for PBXNativeTarget "MosaiekTests" */ = {
 			isa = XCConfigurationList;
@@ -581,6 +582,7 @@
 				310917131C4EF2DE007EA1C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		310917141C4EF2DE007EA1C5 /* Build configuration list for PBXNativeTarget "MosaiekUITests" */ = {
 			isa = XCConfigurationList;
@@ -589,6 +591,7 @@
 				310917161C4EF2DE007EA1C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
