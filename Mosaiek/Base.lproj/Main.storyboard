@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCT-mX-251">
-                                <rect key="frame" x="193" y="344" width="212" height="30"/>
+                                <rect key="frame" x="194" y="343" width="212" height="30"/>
                                 <state key="normal" title="Login With Facebook"/>
                                 <connections>
                                     <action selector="userLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l6F-fC-Af6"/>
@@ -28,38 +28,49 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="x2j-N8-Ht2" kind="show" identifier="showTimeline" id="bxh-2L-Pxk"/>
+                        <segue destination="qfx-Be-GJa" kind="show" identifier="showTimeline" id="ahE-7O-9gi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="111" y="138"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="14q-zm-Vlw">
+        <!--Timeline-->
+        <scene sceneID="LE3-Vg-n9S">
             <objects>
-                <viewController id="x2j-N8-Ht2" sceneMemberID="viewController">
+                <viewController title="Timeline" id="cAd-Ri-EvF" customClass="TimelineViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mvM-7K-h4Y"/>
-                        <viewControllerLayoutGuide type="bottom" id="9mP-z1-3NA"/>
+                        <viewControllerLayoutGuide type="top" id="tuh-rQ-DIL"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fdx-ic-LiD"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zT3-gJ-8hU">
+                    <view key="view" contentMode="scaleToFill" id="dth-PD-QRG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timeline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Qe-3G-cT0">
-                                <rect key="frame" x="184" y="289" width="211" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Timeline" id="Ra7-Po-cbq"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5iO-ug-9Eo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i2C-9T-rBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="849" y="158"/>
+            <point key="canvasLocation" x="1653" y="138"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZgU-CA-jjX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qfx-Be-GJa" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9fH-If-xwQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="cAd-Ri-EvF" kind="relationship" relationship="rootViewController" id="NC7-rq-a8h"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eBu-hs-RJ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="841" y="138"/>
         </scene>
     </scenes>
 </document>
