@@ -25,6 +25,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     
     var imagePicker: UIImagePickerController!
     
+    var mosaic:Mosaic?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,10 +95,13 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
             
         }
         
-        let mosaic = Mosaic(mosaicName: formName,mosaicDescription: formDescription,mosaicImage: formImage,mosaicImageThumbnail: formImageThumbnail,mosaicCreator:  PFUser.currentUser());
+         self.mosaic = Mosaic(mosaicName: formName,mosaicDescription: formDescription,mosaicImage: formImage,mosaicImageThumbnail: formImageThumbnail,mosaicCreator:  PFUser.currentUser());
         
-        if (self.validMosaic(mosaic)){
-            self.performSegueWithIdentifier("showAddContributorsViewController", sender: self)
+        if (self.validMosaic(self.mosaic!)){
+            
+            self.performSegueWithIdentifier("showAddContributorsViewController", sender: self);
+            self.saveMosaic(self.mosaic!);
+            
         } else {
             //alert no good
             print("form not valid")
@@ -122,6 +127,28 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         return false;
     }
     
+    func saveMosaic(mosaic:Mosaic){
+        //save mosaic to parse
+        let newMosaic = PFObject(className: "Mosaic")
+        newMosaic["name"] = mosaic.mosaicName!;
+        newMosaic["description"] = mosaic.mosaicDescription!;
+        newMosaic["user"] = PFUser.currentUser();
+        
+        let mosaicImageFile = PFFile(name: "\(mosaic.mosaicName!).jpeg" , data: mosaic.mosaicImage!);
+        let mosaicImageThumbnailFile = PFFile(name: "\(mosaic.mosaicName!)_thumbnail.jpeg" , data: mosaic.mosaicImageThumbnail!);
+        newMosaic["image"] = mosaicImageFile;
+        newMosaic["thumbnail"] = mosaicImageThumbnailFile;
+        
+        newMosaic.saveInBackgroundWithBlock { (success, error) -> Void in
+            if ((error) != nil){
+                print(error);
+            } else {
+                print("mosaic saved successfully",success);
+            }
+        }
+        
+    }
+    
     //MARK: - ImagePickerDelegate Methods
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -144,6 +171,9 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     //MARK: - Generate New Mosaic Delegate Methods
     func contributorsAddedToMosaic(){
         print("saving mosaic to parse")
+        if let mosaicWithoutContributors = self.mosaic{
+            //array of users will be passed in
+        }
     }
     
    

@@ -156,7 +156,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Contributors" id="fB6-Qs-hHN"/>
+                    <navigationItem key="navigationItem" title="Add Contributors" id="fB6-Qs-hHN">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="QLL-rF-JD1">
+                            <connections>
+                                <action selector="addContributors:" destination="8hP-pG-A64" id="gHL-NQ-soT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWk-gn-iim" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
