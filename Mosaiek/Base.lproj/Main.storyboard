@@ -146,7 +146,7 @@
         <!--Add Contributors-->
         <scene sceneID="J6n-bP-cvJ">
             <objects>
-                <viewController id="8hP-pG-A64" sceneMemberID="viewController">
+                <viewController id="8hP-pG-A64" customClass="AddContributorsViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2ps-Zm-vnv"/>
                         <viewControllerLayoutGuide type="bottom" id="1pb-gW-1d8"/>

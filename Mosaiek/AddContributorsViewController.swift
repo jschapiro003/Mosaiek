@@ -10,9 +10,14 @@ import UIKit
 
 class AddContributorsViewController: UIViewController {
     
+    var delegate:GenerateNewMosaicDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Welcome to the new add contributors view controller")
+        
+        delegate?.contributorsAddedToMosaic();
+        print(delegate)
         
         // Do any additional setup after loading the view.
     }

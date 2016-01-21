@@ -9,7 +9,13 @@
 import UIKit
 import MobileCoreServices
 
-class NewMosaicViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+
+
+protocol GenerateNewMosaicDelegate {
+    func contributorsAddedToMosaic()
+}
+
+class NewMosaicViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate,GenerateNewMosaicDelegate {
     
     @IBOutlet weak var mosaicName: UITextField!
 
@@ -20,7 +26,6 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
-        print("Welcome to the new mosaic view controller")
         super.viewDidLoad()
         
         self.viewSetup()
@@ -72,29 +77,52 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         
     }
     
-    // Submit Form Actions
+    //MARK: - Submit Form Actions
     
     @IBAction func inviteContributors(sender: AnyObject) {
         
         let formName = self.mosaicName.text!;
         let formDescription = self.mosaicDescription.text!;
-        var formImageThumbnail:UIImage?
+        var formImageThumbnail:NSData?
+        var formImage:NSData?
         
-        if let formImage = self.mosaicImage.image {
-             formImageThumbnail = self.generateThumbnail(formImage);
+        if let formImageHiRez = self.mosaicImage.image {
+            
+            formImage = self.generateJPEG(formImageHiRez);
+            formImageThumbnail = self.generateThumbnail(formImageHiRez);
+            
         }
         
+        let mosaic = Mosaic(mosaicName: formName,mosaicDescription: formDescription,mosaicImage: formImage,mosaicImageThumbnail: formImageThumbnail,mosaicCreator:  PFUser.currentUser());
         
-        print(formName,formDescription,formImageThumbnail)
-        self.performSegueWithIdentifier("showAddContributorsViewController", sender: self)
+        if (self.validMosaic(mosaic)){
+            self.performSegueWithIdentifier("showAddContributorsViewController", sender: self)
+        } else {
+            //alert no good
+            print("form not valid")
+        }
+        
     }
     
-    func generateThumbnail(image:UIImage) -> UIImage{
+    func generateJPEG(image:UIImage) -> NSData {
         
-        return image;
+        return UIImageJPEGRepresentation(image, 0.8)!;
     }
     
-    //ImagePickerDelegate Methods
+    func generateThumbnail(image:UIImage) -> NSData{
+        let imageData = UIImageJPEGRepresentation(image, 0.0) //lowest quality
+        return imageData!;
+    }
+    
+    func validMosaic (mosaic:Mosaic) -> Bool {
+        if (mosaic.mosaicName != nil && mosaic.mosaicDescription != nil && mosaic.mosaicImage != nil && mosaic.mosaicImageThumbnail != nil){
+            return true;
+        }
+        //check that each property has a value
+        return false;
+    }
+    
+    //MARK: - ImagePickerDelegate Methods
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
@@ -108,21 +136,32 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        print("image picker cancelled")
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     
+    //MARK: - Generate New Mosaic Delegate Methods
+    func contributorsAddedToMosaic(){
+        print("saving mosaic to parse")
+    }
+    
    
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "showAddContributorsViewController"){
+            
+            let dvc = segue.destinationViewController as! AddContributorsViewController;
+            dvc.delegate = self;
+            
+        } else {
+            print("no go")
+        }
     }
-    */
+    
 
 }
