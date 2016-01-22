@@ -17,8 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCT-mX-251">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCT-mX-251">
                                 <rect key="frame" x="194" y="343" width="212" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="212" id="WPG-ja-8pI"/>
+                                </constraints>
                                 <state key="normal" title="Login With Facebook"/>
                                 <connections>
                                     <action selector="userLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l6F-fC-Af6"/>
@@ -48,11 +51,55 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Invitations" id="SRb-KB-mRj"/>
+                    <navigationItem key="navigationItem" title="Invitations" id="SRb-KB-mRj">
+                        <barButtonItem key="rightBarButtonItem" title="Add Friends" id="fsU-X2-kBD">
+                            <connections>
+                                <segue destination="2Eb-RY-VsJ" kind="show" id="Iju-FZ-br6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8YF-Qh-gIP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1675" y="-683"/>
+        </scene>
+        <!--Add Friends-->
+        <scene sceneID="w3o-7M-uJP">
+            <objects>
+                <viewController id="2Eb-RY-VsJ" customClass="AddFriendsViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IjX-Zw-JRa"/>
+                        <viewControllerLayoutGuide type="bottom" id="LNn-fV-juC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BX7-Da-Dh5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e27-pJ-QGx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="friendCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" id="Jdb-jl-NMz">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jdb-jl-NMz" id="42O-tR-rkl">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Friends" id="SMO-iv-1ny"/>
+                    <connections>
+                        <outlet property="friendsTable" destination="e27-pJ-QGx" id="fiX-A7-nod"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HIU-d9-dWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2424" y="-683"/>
         </scene>
         <!--Timeline-->
         <scene sceneID="LE3-Vg-n9S">

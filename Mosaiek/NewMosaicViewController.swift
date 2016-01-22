@@ -109,6 +109,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         
     }
     
+    //** refactor to MOSAIC model!!
+    
     func generateJPEG(image:UIImage) -> NSData {
         
         return UIImageJPEGRepresentation(image, 0.8)!;
@@ -148,6 +150,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         }
         
     }
+    
+     //*******************************************
     
     //MARK: - ImagePickerDelegate Methods
     
