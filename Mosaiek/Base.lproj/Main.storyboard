@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCT-mX-251">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCT-mX-251">
                                 <rect key="frame" x="194" y="343" width="212" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="212" id="WPG-ja-8pI"/>
@@ -29,6 +29,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qCT-mX-251" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oyL-cR-yFa"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qCT-mX-251" secondAttribute="bottom" constant="227" id="rW9-mi-oUQ"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="qfx-Be-GJa" kind="show" identifier="showTimeline" id="ahE-7O-9gi"/>
@@ -78,21 +82,17 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e27-pJ-QGx">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="friendCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" id="Jdb-jl-NMz">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jdb-jl-NMz" id="42O-tR-rkl">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Friends" id="SMO-iv-1ny"/>
+                    <navigationItem key="navigationItem" title="Add Friends" id="SMO-iv-1ny">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="NDV-YU-csI">
+                            <connections>
+                                <action selector="saveFriends:" destination="2Eb-RY-VsJ" id="h5J-kr-cAH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="friendsTable" destination="e27-pJ-QGx" id="fiX-A7-nod"/>
                     </connections>

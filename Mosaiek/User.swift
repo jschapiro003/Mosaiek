@@ -27,7 +27,7 @@ class User {
             
             if error == nil {
                 // The find succeeded.
-                print("Successfully retrieved \(objects!.count) scores.")
+                print("Successfully retrieved \(objects!.count) users.")
                 // Do something with the found objects
                 if let objects = objects {
                     for object in objects {
@@ -45,6 +45,60 @@ class User {
             }
         }
         
+        
+    }
+    
+    class func saveFriends(users: Array<User>?,completion: (success: String?) -> Void) {
+        
+        if let friendsToSave = users {
+            print ("saving \(friendsToSave.count) friends");
+            
+            
+            
+            for friend in friendsToSave {
+                
+                //find friend in Users table
+                var friendsTable = PFObject(className: "Friends");
+                
+                var query:PFQuery = PFQuery(className: "_User");
+                
+                var friendQuery = query.whereKey("username", equalTo: friend.username!);
+                
+                friendQuery.getFirstObjectInBackgroundWithBlock({ (object: PFObject?,error: NSError?) -> Void in
+                    
+                    //save into friends table where user1 = current user and user2 = friend, status = 0
+                    
+                    if (object != nil){
+                        
+                        completion(success: "Friend Found \(object?.objectId)");
+                        
+                        friendsTable["friend1"] = PFUser.currentUser();
+                        
+                        friendsTable["friend2"] = object;
+                        
+                        friendsTable["status"] = 0;
+                        
+                        friendsTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                            if (success == true){
+                                completion(success: "Friend relationship saved \(success)")
+                            } else {
+                                print(error)
+                                completion(success: "Friend relationship could not be saved");
+                            }
+                        })
+                        
+                    } else {
+                        
+                        print(error);
+                        completion(success: "Could not find friend to add");
+                    }
+                    
+                    
+                })
+                
+            }
+        }
+
         
     }
     
