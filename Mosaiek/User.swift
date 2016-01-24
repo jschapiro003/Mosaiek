@@ -48,21 +48,71 @@ class User {
         
     }
     
+    class func loadAllFriends(completion:(Array<PFObject>?)-> Void){
+        //query the friends table where friend 1 = current user and status = 1
+        //use include to get the user associated with the user pointer
+        var friends:Array<PFObject>;
+        
+        //friend1 = current user
+        let contributorsQuery = PFQuery(className: "Friends");
+        contributorsQuery.whereKey("friend1", equalTo: PFUser.currentUser()!);
+        contributorsQuery.whereKey("status", equalTo: 1);
+        contributorsQuery.includeKey("friend2");// include data associated with friend2 user object
+        
+        //friend2 = current user
+        let contributorsQuery1 = PFQuery(className: "Friends");
+        contributorsQuery1.whereKey("friend2", equalTo: PFUser.currentUser()!);
+        contributorsQuery1.whereKey("status", equalTo: 1);
+        contributorsQuery1.includeKey("friend1"); // include data associated with friend1 user object
+        
+         friends = Array();
+        
+        contributorsQuery.findObjectsInBackgroundWithBlock { (friend2: [PFObject]?, error: NSError?) -> Void in
+            
+            if let friends2 = friend2{
+                for friend in friends2{
+                    friends.append(friend["friend2"] as! PFObject);
+                }
+            }
+            
+            if (error != nil){
+                print (error)
+            }
+            
+            contributorsQuery1.findObjectsInBackgroundWithBlock({ (friend1: [PFObject]?, error: NSError?) -> Void in
+                
+                if let friends1 = friend1{
+                    for friend in friends1{
+                         friends.append(friend["friend1"] as! PFObject);
+                    }
+                }
+                
+                completion(friends);
+                
+                if (error != nil){
+                    print (error)
+                }
+                
+            })
+        }
+        
+        
+    }
+    
     class func saveFriends(users: Array<User>?,completion: (success: String?) -> Void) {
         
         if let friendsToSave = users {
             print ("saving \(friendsToSave.count) friends");
             
             
-            
             for friend in friendsToSave {
                 
                 //find friend in Users table
-                var friendsTable = PFObject(className: "Friends");
+                let friendsTable = PFObject(className: "Friends");
                 
-                var query:PFQuery = PFQuery(className: "_User");
+                let query:PFQuery = PFQuery(className: "_User");
                 
-                var friendQuery = query.whereKey("username", equalTo: friend.username!);
+                let friendQuery = query.whereKey("username", equalTo: friend.username!);
                 
                 friendQuery.getFirstObjectInBackgroundWithBlock({ (object: PFObject?,error: NSError?) -> Void in
                     
@@ -92,7 +142,6 @@ class User {
                         print(error);
                         completion(success: "Could not find friend to add");
                     }
-                    
                     
                 })
                 

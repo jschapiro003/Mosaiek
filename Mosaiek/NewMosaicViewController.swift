@@ -12,7 +12,7 @@ import MobileCoreServices
 
 
 protocol GenerateNewMosaicDelegate {
-    func contributorsAddedToMosaic()
+    func contributorsAddedToMosaic(contributors: Array<PFUser>)
 }
 
 class NewMosaicViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate,GenerateNewMosaicDelegate {
@@ -173,10 +173,12 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     
     
     //MARK: - Generate New Mosaic Delegate Methods
-    func contributorsAddedToMosaic(){
+    func contributorsAddedToMosaic(contributors: Array<PFUser>){
         print("saving mosaic to parse")
-        if let mosaicWithoutContributors = self.mosaic{
-            //array of users will be passed in
+        if (contributors.count > 0){
+            // save to contributors with mosaic_id of current mosaic
+            print("saving to \(self.mosaic?.mosaicName)")
+            Mosaic.addContributors(self.mosaic?.mosaicName,contributors: contributors);
         }
     }
     
