@@ -44,6 +44,7 @@
 		31E7A73F1C51B64A00736786 /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A73E1C51B64A00736786 /* AddFriendsViewController.swift */; };
 		31E7A7421C51DE4A00736786 /* AddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7411C51DE4A00736786 /* AddFriendCell.swift */; };
 		31E7A7441C559CEF00736786 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7431C559CEF00736786 /* Notification.swift */; };
+		31E7A7461C55B8FE00736786 /* InvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7451C55B8FE00736786 /* InvitationCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		31E7A73E1C51B64A00736786 /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewController.swift; sourceTree = "<group>"; };
 		31E7A7411C51DE4A00736786 /* AddFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendCell.swift; sourceTree = "<group>"; };
 		31E7A7431C559CEF00736786 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		31E7A7451C55B8FE00736786 /* InvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				31E7A7411C51DE4A00736786 /* AddFriendCell.swift */,
+				31E7A7451C55B8FE00736786 /* InvitationCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31E7A7461C55B8FE00736786 /* InvitationCell.swift in Sources */,
 				310916EF1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld in Sources */,
 				31E7A72C1C4F431700736786 /* TimelineDetailViewController.swift in Sources */,
 				31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */,

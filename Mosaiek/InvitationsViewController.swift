@@ -18,7 +18,7 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         print("Welcome to the invitations viewcontroller")
         
-        self.invitationsTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //self.invitationsTable.registerClass(InvitationCell.self, forCellReuseIdentifier: "invitationCell")
         self.invitationsTable.delegate = self;
         self.invitationsTable.dataSource = self;
     
@@ -67,14 +67,15 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        let cell:InvitationCell = tableView.dequeueReusableCellWithIdentifier("invitationCell", forIndexPath: indexPath) as! InvitationCell
         
         
         if let invitations = self.notifications{
-            cell.textLabel?.text = invitations[indexPath.row]["description"] as? String;
+            cell.notificationDescriptionLabel?.text = invitations[indexPath.row]["description"] as? String;
+           
             
         } else {
-            cell.textLabel?.text = "You do not have any invitations";
+            cell.notificationDescriptionLabel?.text = "You do not have any invitations";
         }
         
         return cell
@@ -86,6 +87,52 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
     }
+    
+    //#MARK - IBActions
+    
+    
+    @IBAction func acceptInvitation(sender: AnyObject) {
+        
+        var indexPath: NSIndexPath!
+        
+        //get indexPath of button clicked
+        if let button = sender as? UIButton {
+            if let superview = button.superview {
+                if let cell = superview.superview as? InvitationCell {
+                    indexPath = self.invitationsTable.indexPathForCell(cell)
+                }
+            }
+        }
+        
+        //modify notification of that specific rows (indexPath.row)
+        if let notificationList = self.notifications{
+            let notificationType = notificationList[indexPath.row]["type"];
+            
+            notificationList[indexPath.row]["status"] = 1;
+            
+            notificationList[indexPath.row].saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                if (error != nil){
+                    print("error:",error);
+                } else {
+                    print("success: ",success);
+                    
+                    //depending on type, update contributors table or friends table
+                    if (notificationType as! Int == 0){
+                        
+                    } else if (notificationType as! Int == 1){
+                        
+                    } else {
+                        
+                        return;
+                    }
+                }
+            })
+            
+            self.navigationController?.popToRootViewControllerAnimated(true);
+        }
+        print("accepting invitation",indexPath.row);
+    }
+    
 
 
 }

@@ -162,6 +162,7 @@ class User {
         
         let notificationsQuery = PFQuery(className: "Notifications");
         notificationsQuery.whereKey("user", equalTo: PFUser.currentUser()!);
+        notificationsQuery.whereKey("status", equalTo: 0);
         
         notificationsQuery.findObjectsInBackgroundWithBlock { (notifications: [PFObject]?, error: NSError?) -> Void in
             
