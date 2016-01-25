@@ -57,7 +57,7 @@ class Mosaic {
                                 print("success:",success);
                                 if (success == true){
                                     //send notification to contributor
-                                    let notification = Notification(user: contributor, type: 1, description: "You have been invited to contribute to : \(mosaic!["name"])", status: 0,sender:nil,mosaic:mosaic);
+                                    let notification = Notification(user: contributor, type: 1, description: "You have been invited to contribute to \(mosaic!["name"])", status: 0,sender:nil,mosaic:mosaic);
                                     
                                     notification.createNotification();
                                 }

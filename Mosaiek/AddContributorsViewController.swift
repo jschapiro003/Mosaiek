@@ -21,6 +21,7 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        // have spinner spin until mosaic is successfuly saved - if you try to add contributors before it is saved, you have a problem
         
         self.contributorsTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.contributorsTable.delegate = self;
