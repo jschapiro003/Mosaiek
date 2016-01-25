@@ -118,6 +118,7 @@ class User {
                 friendQuery.getFirstObjectInBackgroundWithBlock({ (object: PFObject?,error: NSError?) -> Void in
                     
                     //save into friends table where user1 = current user and user2 = friend, status = 0
+                    print("searching for user");
                     
                     if (object != nil){
                         
@@ -134,9 +135,9 @@ class User {
                                 completion(success: "Friend relationship saved \(success)")
                                 
                                 //create new notification
-                                let notification = Notification(user: object, type: 0, description: "You have a friend request from \(PFUser.currentUser()!["username"])", status: 0);
+                                let notification = Notification(user: object, type: 0, description: "You have a friend request from \(PFUser.currentUser()!["username"])", status: 0, sender: PFUser.currentUser(),mosaic:nil);
                                 
-                                notification.createNotification();
+                                notification.createNotification(); // race condition :(
                                 
                             } else {
                                 print(error)

@@ -119,7 +119,15 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
                     //depending on type, update contributors table or friends table
                     if (notificationType as! Int == 0){
                         
+                        print("updating a friendship");
+                        
+                        //consider adding another column to notifications
+                        
                     } else if (notificationType as! Int == 1){
+                        
+                        print("updating a contribution");
+                        //consider adding another column to notification
+                        
                         
                     } else {
                         
