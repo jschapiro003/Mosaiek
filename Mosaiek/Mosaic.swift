@@ -27,7 +27,7 @@ class Mosaic {
     class func addContributors(mosaicName:String?,contributors:Array<PFUser>){
         
         //get mosaic objects to act as pointer
-        var mosaicQuery = PFQuery(className: "Mosaic");
+        let mosaicQuery = PFQuery(className: "Mosaic");
         
         if let name = mosaicName {
           mosaicQuery.whereKey("name", equalTo: name);
@@ -55,6 +55,12 @@ class Mosaic {
                                 print("error:",error);
                             } else {
                                 print("success:",success);
+                                if (success == true){
+                                    //send notification to contributor
+                                    let notification = Notification(user: contributor, type: 1, description: "You have been invited to contribute to the mosaic: \(mosaic!["username"])", status: 0);
+                                    
+                                    notification.createNotification();
+                                }
                             }
                         })
                     }

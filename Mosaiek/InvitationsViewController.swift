@@ -8,12 +8,21 @@
 
 import UIKit
 
-class InvitationsViewController: UIViewController {
+class InvitationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var invitationsTable: UITableView!
+    
+    var notifications:Array<PFObject>?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Welcome to the invitations viewcontroller")
-        // Do any additional setup after loading the view.
+        
+        self.invitationsTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.invitationsTable.delegate = self;
+        self.invitationsTable.dataSource = self;
+    
+        getNotifications();
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +30,62 @@ class InvitationsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func getNotifications(){
+        
+        User.getNotificiations { (notifications: Array<PFObject>?) -> Void in
+            
+            if let userNotifications = notifications {
+                self.notifications = userNotifications;
+                self.invitationsTable.reloadData();
+            }
+            
+        }
+        
     }
-    */
+    
+    
+    //#MARK - TableViewDelegate Methods
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if let dataSource = self.notifications {
+            
+           return dataSource.count;
+            
+        } else {
+            return 1;
+        }
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        
+        
+        if let invitations = self.notifications{
+            cell.textLabel?.text = invitations[indexPath.row]["description"] as? String;
+            
+        } else {
+            cell.textLabel?.text = "You do not have any invitations";
+        }
+        
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true);
+        
+    }
+
 
 }

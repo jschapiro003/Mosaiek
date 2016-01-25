@@ -26,6 +26,7 @@ class User {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
+                
                 // The find succeeded.
                 print("Successfully retrieved \(objects!.count) users.")
                 // Do something with the found objects
@@ -131,6 +132,12 @@ class User {
                         friendsTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                             if (success == true){
                                 completion(success: "Friend relationship saved \(success)")
+                                
+                                //create new notification
+                                let notification = Notification(user: object, type: 0, description: "You have a friend request from \(PFUser.currentUser()!["username"])", status: 0);
+                                
+                                notification.createNotification();
+                                
                             } else {
                                 print(error)
                                 completion(success: "Friend relationship could not be saved");
@@ -148,6 +155,24 @@ class User {
             }
         }
 
+        
+    }
+    
+    class func getNotificiations(completion:(Array<PFObject>?)-> Void){
+        
+        let notificationsQuery = PFQuery(className: "Notifications");
+        notificationsQuery.whereKey("user", equalTo: PFUser.currentUser()!);
+        
+        notificationsQuery.findObjectsInBackgroundWithBlock { (notifications: [PFObject]?, error: NSError?) -> Void in
+            
+            if (error != nil){
+                print("error:",error);
+            }
+            
+            if (notifications != nil){
+                completion(notifications);
+            }
+        }
         
     }
     

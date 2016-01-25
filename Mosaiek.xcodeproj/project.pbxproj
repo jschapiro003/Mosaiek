@@ -43,6 +43,7 @@
 		31E7A73D1C4F4A5900736786 /* EditContributorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A73C1C4F4A5900736786 /* EditContributorsViewController.swift */; };
 		31E7A73F1C51B64A00736786 /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A73E1C51B64A00736786 /* AddFriendsViewController.swift */; };
 		31E7A7421C51DE4A00736786 /* AddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7411C51DE4A00736786 /* AddFriendCell.swift */; };
+		31E7A7441C559CEF00736786 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7431C559CEF00736786 /* Notification.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		31E7A73C1C4F4A5900736786 /* EditContributorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContributorsViewController.swift; sourceTree = "<group>"; };
 		31E7A73E1C51B64A00736786 /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewController.swift; sourceTree = "<group>"; };
 		31E7A7411C51DE4A00736786 /* AddFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendCell.swift; sourceTree = "<group>"; };
+		31E7A7431C559CEF00736786 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 				31E7A7301C4F493C00736786 /* User.swift */,
 				31E7A7321C4F496100736786 /* MosaicImage.swift */,
 				31E7A7381C4F49E000736786 /* Comment.swift */,
+				31E7A7431C559CEF00736786 /* Notification.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				310916E71C4EF2DE007EA1C5 /* AppDelegate.swift in Sources */,
 				31E7A7331C4F496100736786 /* MosaicImage.swift in Sources */,
 				31E7A7421C51DE4A00736786 /* AddFriendCell.swift in Sources */,
+				31E7A7441C559CEF00736786 /* Notification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
