@@ -9,14 +9,18 @@
 import UIKit
 
 
-class TimelineViewController: UIViewController {
+class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var timelineMosaics = [];
     
+    @IBOutlet weak var mosaicTable: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        print("Welcome to the timeline ", PFUser.currentUser()?.username)
+        
+        self.mosaicTable.delegate = self;
+        self.mosaicTable.dataSource = self;
+        
         self.loadUsersMosaics();
     }
     
@@ -30,8 +34,55 @@ class TimelineViewController: UIViewController {
         Mosaic.getUsersMosaics(PFUser.currentUser()!) { (mosaics) -> Void in
             if let usersMosaics = mosaics {
                 self.timelineMosaics = usersMosaics;
+                
+                self.mosaicTable.reloadData();
             }
         }
+    }
+    
+    
+    //#MARK - TableViewDelegate Methods
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return timelineMosaics.count;
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell:TimelineMosaicCell = tableView.dequeueReusableCellWithIdentifier("timelineMosaicCell", forIndexPath: indexPath) as! TimelineMosaicCell
+        
+        let mosaicThumbnail:PFFile? = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
+        
+        if let thumbnail = mosaicThumbnail {
+            MosaicImage.fileToImage(thumbnail, completion: { (mosaicImage) -> Void in
+                if let mosaicImg = mosaicImage {
+                    cell.mosaicThumbnailImageView.image = mosaicImg;
+                }
+                
+            })
+        }
+        
+        cell.mosaicName?.text = timelineMosaics[indexPath.row]["name"] as? String;
+        cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;
+        
+        
+        
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true);
+        
     }
 
 }

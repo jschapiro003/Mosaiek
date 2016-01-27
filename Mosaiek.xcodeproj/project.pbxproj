@@ -30,6 +30,7 @@
 		310917341C4EFBAD007EA1C5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 310917331C4EFBAD007EA1C5 /* libsqlite3.tbd */; };
 		310917361C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310917351C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework */; };
 		310917381C4EFC8F007EA1C5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310917371C4EFC8F007EA1C5 /* FBSDKLoginKit.framework */; };
+		3112FB8F1C587634004F8055 /* TimelineMosaicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3112FB8E1C587634004F8055 /* TimelineMosaicCell.swift */; };
 		31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */; };
 		31E7A7281C4F41DB00736786 /* InvitationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */; };
 		31E7A72A1C4F428400736786 /* NewMosaicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7291C4F428400736786 /* NewMosaicViewController.swift */; };
@@ -95,6 +96,7 @@
 		310917331C4EFBAD007EA1C5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		310917351C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = ../../Documents/ParseSDK/ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		310917371C4EFC8F007EA1C5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		3112FB8E1C587634004F8055 /* TimelineMosaicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineMosaicCell.swift; sourceTree = "<group>"; };
 		31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationsViewController.swift; sourceTree = "<group>"; };
 		31E7A7291C4F428400736786 /* NewMosaicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMosaicViewController.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 			children = (
 				31E7A7411C51DE4A00736786 /* AddFriendCell.swift */,
 				31E7A7451C55B8FE00736786 /* InvitationCell.swift */,
+				3112FB8E1C587634004F8055 /* TimelineMosaicCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				310916E91C4EF2DE007EA1C5 /* LoginViewController.swift in Sources */,
 				310916E71C4EF2DE007EA1C5 /* AppDelegate.swift in Sources */,
 				31E7A7331C4F496100736786 /* MosaicImage.swift in Sources */,
+				3112FB8F1C587634004F8055 /* TimelineMosaicCell.swift in Sources */,
 				31E7A7421C51DE4A00736786 /* AddFriendCell.swift in Sources */,
 				31E7A7441C559CEF00736786 /* Notification.swift in Sources */,
 			);

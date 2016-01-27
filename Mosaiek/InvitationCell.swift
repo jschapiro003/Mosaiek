@@ -16,7 +16,7 @@ class InvitationCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib();
-        print("awaking from nib");
+        
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
