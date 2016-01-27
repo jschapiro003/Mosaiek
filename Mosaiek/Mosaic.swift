@@ -24,6 +24,24 @@ class Mosaic {
         self.mosaicCreator = mosaicCreator;
     }
     
+    class func getUsersMosaics(user:PFUser, completion: (mosaics: [PFObject]?) -> Void){
+        //query mosaic table for mosaices where user = current user
+        let mosaicsQuery = PFQuery(className: "Mosaic");
+        mosaicsQuery.whereKey("user", equalTo: user);
+        
+        mosaicsQuery.findObjectsInBackgroundWithBlock { (mosaics:[PFObject]?, error:NSError?) -> Void in
+            if (error != nil){
+                print("error ", error)
+            } else {
+                if let usersMosaics = mosaics {
+                    print("successfully retrieved users mosaics");
+                    completion(mosaics: usersMosaics);
+                }
+            }
+        }
+        
+    }
+    
     class func updateMosaicContributor(user:PFObject,mosaic:PFObject) {
         
         let mosaicContributorQuery = PFQuery(className:"Contributors"); //grab mosaic
