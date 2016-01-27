@@ -31,9 +31,11 @@ class LoginViewController: UIViewController {
             if let user = user {
                 if user.isNew {
                     print("User signed up and logged in through Facebook!")
+                    self.getFacebookDetails();
                     self.performSegueWithIdentifier("showTimeline", sender: this)
                 } else {
                     print("User logged in through Facebook!")
+                    self.getFacebookDetails();
                     self.performSegueWithIdentifier("showTimeline", sender: this)
                 }
             } else {
@@ -44,7 +46,18 @@ class LoginViewController: UIViewController {
     }
     
     // Login Actions
-    
+    func getFacebookDetails(){
+        if((FBSDKAccessToken.currentAccessToken()) != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+                let facebookDictionary:NSDictionary?
+                if (error == nil){
+                    facebookDictionary = result as? NSDictionary
+                    
+                    NSLog(facebookDictionary?.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as! String)
+                }
+            })
+        }
+    }
     
     // button handler for Login With Facebook
     @IBAction func userLogin(sender: AnyObject) {
