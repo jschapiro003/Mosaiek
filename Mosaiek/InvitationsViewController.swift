@@ -108,7 +108,7 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         if let notificationList = self.notifications{
             let notificationType = notificationList[indexPath.row]["type"];
             
-            notificationList[indexPath.row]["status"] = 1;
+            notificationList[indexPath.row]["status"] = 1;//notification has been seen
             
             notificationList[indexPath.row].saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                 if (error != nil){
@@ -120,14 +120,25 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
                     if (notificationType as! Int == 0){
                         
                         print("updating a friendship");
+                        let notificationFriend = notificationList[indexPath.row]["sender"];
+                        
+                        if let friend = notificationFriend {
+                            User.confirmFriendRequest(PFUser.currentUser()!, friend:friend as! PFObject);
+                        }
                         
                         //consider adding another column to notifications
+                        
                         
                     } else if (notificationType as! Int == 1){
                         
                         print("updating a contribution");
                         //consider adding another column to notification
+                        let notificationMosaic = notificationList[indexPath.row]["mosaic"];
                         
+                        if let mosaic = notificationMosaic {
+                            
+                            Mosaic.updateMosaicContributor(PFUser.currentUser()!, mosaic: mosaic as! PFObject);
+                        }
                         
                     } else {
                         

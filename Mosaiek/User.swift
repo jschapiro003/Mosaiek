@@ -17,6 +17,57 @@ class User {
         self.username = username;
     }
     
+    class func confirmFriendRequest(user:PFObject,friend:PFObject){
+        
+        //f1-user && f1=friend OR f1= user && f2 = friend, OR f2 = user && f1 = friend, OR f2 = user && f2 = friend
+        //http://stackoverflow.com/questions/27893758/parse-compound-queries-with-or-and-and
+        
+        let friendQuery1 = PFQuery(className: "Friends");
+        friendQuery1.whereKey("friend1", equalTo: user);
+        friendQuery1.whereKey("friend1", equalTo: friend);
+        
+        let friendQuery2 = PFQuery(className: "Friends");
+        friendQuery2.whereKey("friend1", equalTo: user);
+        friendQuery2.whereKey("friend2", equalTo: friend);
+        
+        let friendQuery3 = PFQuery(className: "Friends");
+        friendQuery3.whereKey("friend2", equalTo: user);
+        friendQuery3.whereKey("friend1", equalTo: friend);
+        
+        let friendQuery4 = PFQuery(className: "Friends");
+        friendQuery4.whereKey("friend2", equalTo: user);
+        friendQuery4.whereKey("friend2", equalTo: friend);
+        
+        let finalFriendQuery = PFQuery.orQueryWithSubqueries([friendQuery1,friendQuery2,friendQuery3,friendQuery4]);
+        
+        finalFriendQuery.findObjectsInBackgroundWithBlock { (friendRelations:[PFObject]?, error:NSError?) -> Void in
+            
+            if (error != nil){
+                
+                print("error",error);
+            } else {
+                
+                if let friendships = friendRelations {
+                    
+                    for friendship in friendships {
+                        
+                        friendship["status"] = 1;
+                        
+                        friendship.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                            if (error != nil){
+                                print("error",error);
+                            } else {
+                                print("friendship successfully formed",success);
+                            }
+                        })
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
     class func loadAllUsers(completion:(Array<User>)-> Void) {
         
         let query = PFQuery(className: "_User");
@@ -126,7 +177,7 @@ class User {
                         
                         friendsTable["friend1"] = PFUser.currentUser();
                         
-                        friendsTable["friend2"] = object;
+                        friendsTable["friend2"] = object; //friend to add
                         
                         friendsTable["status"] = 0;
                         

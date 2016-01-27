@@ -24,6 +24,32 @@ class Mosaic {
         self.mosaicCreator = mosaicCreator;
     }
     
+    class func updateMosaicContributor(user:PFObject,mosaic:PFObject) {
+        
+        let mosaicContributorQuery = PFQuery(className:"Contributors"); //grab mosaic
+        mosaicContributorQuery.whereKey("mosaic", equalTo: mosaic);
+        mosaicContributorQuery.whereKey("user", equalTo: user);
+        
+        
+        mosaicContributorQuery.getFirstObjectInBackgroundWithBlock { (contribution:PFObject?, error:NSError?) -> Void in
+            if (error != nil){
+                print("mosaic error: ",error);
+            } else {
+                if let contributionVal = contribution {
+                    contributionVal["status"] = 1; //update contribution record
+                    contributionVal.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                        if (error != nil){
+                            print("error",error);
+                        } else {
+                            print("mosaic contributor updated: ",success);
+                        }
+                    })
+                }
+            }
+        }
+        
+    }
+    
     class func addContributors(mosaicName:String?,contributors:Array<PFUser>){
         
         //get mosaic objects to act as pointer
