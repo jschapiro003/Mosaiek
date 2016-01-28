@@ -71,6 +71,21 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             })
         }
         
+        if let user = timelineMosaics[indexPath.row]["user"]{
+            if let userInfo = user!["profileName"]{
+                cell.username?.text = userInfo as? String;
+            }
+            if let userPhoto = user!["profilePic"]{
+                if let url = NSURL(string: userPhoto as! String) {
+                    if let data = NSData(contentsOfURL: url) {
+                        cell.mosaicOwnerPhoto?.image = UIImage(data: data)
+                    }        
+                }
+            }
+        }
+        cell.username?.text = timelineMosaics[indexPath.row]["user"]!!["profileName"] as? String;
+        //cell.mosaicOwnerPhoto?.image = timelineMosaics[indexPath.row]["user"]["profilePic"];
+        
         cell.mosaicName?.text = timelineMosaics[indexPath.row]["name"] as? String;
         cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;
         

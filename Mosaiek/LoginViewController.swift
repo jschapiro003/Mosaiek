@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
     }
     
     func loginWithFacebook() {
-        let this = self;
+        
         let permissions = ["email","public_profile","user_friends","user_photos"]
         
         //login with facebook
@@ -32,11 +32,10 @@ class LoginViewController: UIViewController {
                 if user.isNew {
                     print("User signed up and logged in through Facebook!")
                     self.getFacebookDetails();
-                    self.performSegueWithIdentifier("showTimeline", sender: this)
+                    
                 } else {
                     print("User logged in through Facebook!")
                     self.getFacebookDetails();
-                    self.performSegueWithIdentifier("showTimeline", sender: this)
                 }
             } else {
                 print("Uh oh. The user cancelled the Facebook login.")
@@ -47,13 +46,35 @@ class LoginViewController: UIViewController {
     
     // Login Actions
     func getFacebookDetails(){
+        let this = self;
+        
         if((FBSDKAccessToken.currentAccessToken()) != nil){
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
                 let facebookDictionary:NSDictionary?
                 if (error == nil){
                     facebookDictionary = result as? NSDictionary
                     
-                    NSLog(facebookDictionary?.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as! String)
+                    if let userInfo = facebookDictionary {
+                        
+                        if let profileName = userInfo.objectForKey("name"){
+                            PFUser.currentUser()!["profileName"] = profileName;
+                        }
+                        
+                        if let profilePic = userInfo.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") {
+                            //PFUser.currentUser()!["profilePic"] = profilePic;
+                            PFUser.currentUser()!["profilePic"] = profilePic;
+                        }
+                        
+                        PFUser.currentUser()!.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                            if (error != nil){
+                                print("error", error);
+                            } else {
+                                print("Successfully saved user's facebook details", success);
+                                 self.performSegueWithIdentifier("showTimeline", sender: this)
+                            }
+                           
+                        })
+                    }
                 }
             })
         }

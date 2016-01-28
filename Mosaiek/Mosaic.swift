@@ -28,6 +28,7 @@ class Mosaic {
         //query mosaic table for mosaices where user = current user
         let mosaicsQuery = PFQuery(className: "Mosaic");
         mosaicsQuery.whereKey("user", equalTo: user);
+        mosaicsQuery.includeKey("user");
         
         mosaicsQuery.findObjectsInBackgroundWithBlock { (mosaics:[PFObject]?, error:NSError?) -> Void in
             if (error != nil){

@@ -16,6 +16,10 @@ class TimelineMosaicCell: UITableViewCell {
     
     @IBOutlet weak var mosaicDescription: UILabel!
     
+    @IBOutlet weak var mosaicOwnerPhoto: UIImageView!
+    
+    @IBOutlet weak var username: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib();
        
