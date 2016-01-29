@@ -12,6 +12,7 @@ import UIKit
 class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var timelineMosaics = [];
+    var currentMosaic:PFObject?
     
     @IBOutlet weak var mosaicTable: UITableView!
     
@@ -22,6 +23,10 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         self.mosaicTable.dataSource = self;
         
         self.loadUsersMosaics();
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        currentMosaic = nil;
     }
     
     
@@ -41,6 +46,26 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    
+    //#MARK - Navigation
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        print("segueing")
+        print(identifier)
+        if currentMosaic == nil{
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showDetailTimelineView"){
+            let dvc = segue.destinationViewController as? TimelineDetailViewController;
+            dvc?.detailedMosaic = currentMosaic;
+            print("preparing")
+            
+        }
+    }
     
     //#MARK - TableViewDelegate Methods
     
@@ -73,8 +98,13 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if let user = timelineMosaics[indexPath.row]["user"]{
-            if let userInfo = user!["profileName"]{
-                cell.username?.text = userInfo as? String;
+            if let userInfo = user {
+                if (userInfo["profileName"] != nil){
+                    if let name = userInfo["profileName"]{
+                        cell.username?.text = name as? String;
+                    }
+                }
+                
             }
             if let userPhoto = user!["profilePic"]{
                 if let url = NSURL(string: userPhoto as! String) {
@@ -83,17 +113,31 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                     }        
                 }
             }
-        }
+        } 
         
         if let likes = timelineMosaics[indexPath.row]["likes"] as? Int{
-            print(likes);
+            
             cell.mosaicLikes?.text = String(likes);
         } else {
             cell.mosaicLikes?.text = "0";
         }
         
         cell.mosaicName?.text = timelineMosaics[indexPath.row]["name"] as? String;
+        
         cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;
+        
+        if cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil{
+            if let contributorMosaic = timelineMosaics[indexPath.row]["mosaic"]{
+                if let contributorMosaicName = contributorMosaic!["name"]{
+                    cell.mosaicName?.text = contributorMosaicName as? String;
+                }
+                
+                if let contributorMosaicDescription = contributorMosaic!["description"]{
+                    cell.mosaicDescription?.text = contributorMosaicDescription as? String;
+                }
+            }
+        }
+        
         
         
         
@@ -103,6 +147,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        currentMosaic = timelineMosaics[indexPath.row] as? PFObject;
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
     }

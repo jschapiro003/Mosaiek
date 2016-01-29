@@ -159,11 +159,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="timelineMosaicCell" rowHeight="276" id="uRB-Zz-S7q" customClass="TimelineMosaicCell" customModule="Mosaiek" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="timelineMosaicCell" rowHeight="276" id="uRB-Zz-S7q" customClass="TimelineMosaicCell" customModule="Mosaiek" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="320" height="276"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uRB-Zz-S7q" id="7Zt-ZS-ivY">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="275.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="275.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XkB-Kf-msJ">
@@ -205,6 +205,7 @@
                                             <outlet property="mosaicOwnerPhoto" destination="Faz-vy-ISh" id="e0g-AW-rIf"/>
                                             <outlet property="mosaicThumbnailImageView" destination="eVY-pM-luE" id="glP-nB-8QX"/>
                                             <outlet property="username" destination="Wz2-2L-Ug9" id="g5D-1B-C2i"/>
+                                            <segue destination="LQK-Pc-T1s" kind="push" identifier="showDetailTimelineView" id="SvP-QW-HAM"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -231,6 +232,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2C-9T-rBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="890" y="130"/>
+        </scene>
+        <!--Detail Timeline View-->
+        <scene sceneID="aCf-n5-7K1">
+            <objects>
+                <viewController id="LQK-Pc-T1s" customClass="TimelineDetailViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rec-xs-i9u"/>
+                        <viewControllerLayoutGuide type="bottom" id="V9n-zp-gVa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e6C-T8-rDi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jZ3-RW-Lel">
+                                <rect key="frame" x="0.0" y="94" width="320" height="255"/>
+                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWX-hc-MrL">
+                                <rect key="frame" x="40" y="392" width="240" height="128"/>
+                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxk-LX-sZC">
+                                <rect key="frame" x="96" y="351" width="151" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xq9-Wm-fUx">
+                                <rect key="frame" x="20" y="351" width="22" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8r-Ye-i2N">
+                                <rect key="frame" x="67" y="351" width="26" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Si3-c1-Fo5">
+                                <rect key="frame" x="20" y="368" width="229" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Detail Timeline View" id="F8D-SY-P3E"/>
+                    <connections>
+                        <outlet property="mosaicContributors" destination="f8r-Ye-i2N" id="uKP-wb-MT2"/>
+                        <outlet property="mosaicDescription" destination="Si3-c1-Fo5" id="See-7x-KP7"/>
+                        <outlet property="mosaicImage" destination="jZ3-RW-Lel" id="CFR-8r-AAU"/>
+                        <outlet property="mosaicImages" destination="YWX-hc-MrL" id="NO8-Bk-gAE"/>
+                        <outlet property="mosaicLikes" destination="Xq9-Wm-fUx" id="zDS-79-j18"/>
+                        <outlet property="mosaicName" destination="sxk-LX-sZC" id="Yhb-4z-YJu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gks-2X-aQy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="890" y="750"/>
         </scene>
         <!--Create Mosaic-->
         <scene sceneID="3c3-jv-hH1">

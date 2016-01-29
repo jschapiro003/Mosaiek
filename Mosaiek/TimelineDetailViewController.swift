@@ -10,10 +10,68 @@ import UIKit
 
 class TimelineDetailViewController: UIViewController {
 
+    var detailedMosaic:PFObject?
+    
+    @IBOutlet weak var mosaicImage: UIImageView!
+    
+    @IBOutlet weak var mosaicImages: UIScrollView!
+    
+    @IBOutlet weak var mosaicLikes: UILabel!
+    
+    @IBOutlet weak var mosaicContributors: UILabel!
+    
+    @IBOutlet weak var mosaicName: UILabel!
+    
+    @IBOutlet weak var mosaicDescription: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.setupView();
         // Do any additional setup after loading the view.
+    }
+    
+    func setupView(){
+        if let mosaic = self.detailedMosaic{
+            
+            if let name = mosaic["name"]{
+                self.mosaicName?.text = name as? String;
+            }
+            
+            if let description = mosaic["description"]{
+                self.mosaicDescription?.text = description as? String;
+            }
+            
+            if let imageFile = mosaic["image"] as? PFFile{
+                MosaicImage.fileToImage(imageFile, completion: { (mosaicImage) -> Void in
+                    if let image = mosaicImage {
+
+                        self.mosaicImage.image = image;
+                    }
+                })
+            } else {
+                print("cant find no image");
+            }
+            
+            if let contributors = mosaic["contributors"]{
+                self.mosaicContributors.text = String(contributors);
+            } else {
+                self.mosaicContributors.text = "0";
+            }
+            
+            if let likes = mosaic["likes"]{
+                self.mosaicLikes?.text = likes as? String;
+            } else {
+                self.mosaicLikes?.text = "0";
+            }
+            
+            
+            if let user = mosaic["user"]{
+                
+            }
+            
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {

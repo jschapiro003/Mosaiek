@@ -34,13 +34,41 @@ class Mosaic {
             if (error != nil){
                 print("error ", error)
             } else {
-                if let usersMosaics = mosaics {
+                if var usersMosaics = mosaics {
                     print("successfully retrieved users mosaics");
-                    completion(mosaics: usersMosaics);
+                   
+                    self.getUsersContributedMosaics(user, completion: { (mosaics) -> Void in
+                        if let contributedMosaics = mosaics {
+                            for contributed in contributedMosaics {
+                                usersMosaics.append(contributed);
+                            }
+                            completion(mosaics: usersMosaics);
+                        }
+                    })
+                    
                 }
             }
         }
         
+    }
+    
+    class func getUsersContributedMosaics(user:PFUser,completion: (mosaics: [PFObject]?) -> Void){
+        let contributedMosaicsQuery = PFQuery(className: "Contributors");
+        contributedMosaicsQuery.whereKey("user", equalTo: user);
+        contributedMosaicsQuery.whereKey("status", equalTo: 1);
+        contributedMosaicsQuery.includeKey("mosaic");
+        contributedMosaicsQuery.includeKey("user");
+        
+        
+        contributedMosaicsQuery.findObjectsInBackgroundWithBlock { (mosaics:[PFObject]?, error:NSError?) -> Void in
+            if (error != nil){
+                print("error",error);
+            } else {
+                print ("successfully retrieved users contributed mosaics");
+                print(mosaics);
+                completion(mosaics: mosaics);
+            }
+        }
     }
     
     class func updateMosaicContributor(user:PFObject,mosaic:PFObject) {
