@@ -63,6 +63,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         let mosaicThumbnail:PFFile? = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
         
         if let thumbnail = mosaicThumbnail {
+            //Memoize!!!!
             MosaicImage.fileToImage(thumbnail, completion: { (mosaicImage) -> Void in
                 if let mosaicImg = mosaicImage {
                     cell.mosaicThumbnailImageView.image = mosaicImg;
@@ -83,8 +84,13 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
-        cell.username?.text = timelineMosaics[indexPath.row]["user"]!!["profileName"] as? String;
-        //cell.mosaicOwnerPhoto?.image = timelineMosaics[indexPath.row]["user"]["profilePic"];
+        
+        if let likes = timelineMosaics[indexPath.row]["likes"] as? Int{
+            print(likes);
+            cell.mosaicLikes?.text = String(likes);
+        } else {
+            cell.mosaicLikes?.text = "0";
+        }
         
         cell.mosaicName?.text = timelineMosaics[indexPath.row]["name"] as? String;
         cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;

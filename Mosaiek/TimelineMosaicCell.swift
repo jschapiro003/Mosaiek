@@ -20,6 +20,8 @@ class TimelineMosaicCell: UITableViewCell {
     
     @IBOutlet weak var username: UILabel!
     
+    @IBOutlet weak var mosaicLikes: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib();
        

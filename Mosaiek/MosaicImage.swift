@@ -21,7 +21,6 @@ class MosaicImage {
                 print("error ",error);
             } else {
                 if let imageData = data {
-                    print("converting image data");
                     let image = UIImage(data:imageData);
                     completion(mosaicImage: image);
                 }

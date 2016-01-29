@@ -140,6 +140,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         let mosaicImageThumbnailFile = PFFile(name: "\(mosaic.mosaicName!)_thumbnail.jpeg" , data: mosaic.mosaicImageThumbnail!);
         newMosaic["image"] = mosaicImageFile;
         newMosaic["thumbnail"] = mosaicImageThumbnailFile;
+        newMosaic["likes"] = 0;
+        newMosaic["contributorsCount"] = 0;
         
         newMosaic.saveInBackgroundWithBlock { (success, error) -> Void in
             if ((error) != nil){
