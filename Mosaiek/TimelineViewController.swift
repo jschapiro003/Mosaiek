@@ -127,18 +127,16 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;
         
         if cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil{
-            if let contributorMosaic = timelineMosaics[indexPath.row]["mosaic"]{
-                if let contributorMosaicName = contributorMosaic!["name"]{
+            if let contributorMosaic = timelineMosaics[indexPath.row]["mosaic"] as? PFObject{
+                if let contributorMosaicName = contributorMosaic["name"]{
                     cell.mosaicName?.text = contributorMosaicName as? String;
                 }
                 
-                if let contributorMosaicDescription = contributorMosaic!["description"]{
+                if let contributorMosaicDescription = contributorMosaic["description"]{
                     cell.mosaicDescription?.text = contributorMosaicDescription as? String;
                 }
             }
         }
-        
-        
         
         
         return cell

@@ -40,6 +40,26 @@ class TimelineDetailViewController: UIViewController {
             
             if let description = mosaic["description"]{
                 self.mosaicDescription?.text = description as? String;
+                
+            } else {
+                //user contributes to mosaic
+                if let contributedMosaic = mosaic["mosaic"] as? PFObject{
+                    if let name = contributedMosaic["name"]{
+                        self.mosaicName.text = name as? String;
+                    }
+                    
+                    if let description = contributedMosaic["description"]{
+                        self.mosaicDescription.text = description as? String;
+                    }
+                    
+                    if let imageFile = contributedMosaic["image"] as? PFFile{
+                        MosaicImage.fileToImage(imageFile, completion: { (mosaicImage) -> Void in
+                            if let image = mosaicImage {
+                                self.mosaicImage.image = image;
+                            }
+                        })
+                    }
+                }
             }
             
             if let imageFile = mosaic["image"] as? PFFile{
@@ -49,8 +69,6 @@ class TimelineDetailViewController: UIViewController {
                         self.mosaicImage.image = image;
                     }
                 })
-            } else {
-                print("cant find no image");
             }
             
             if let contributors = mosaic["contributors"]{
@@ -60,7 +78,7 @@ class TimelineDetailViewController: UIViewController {
             }
             
             if let likes = mosaic["likes"]{
-                self.mosaicLikes?.text = likes as? String;
+                self.mosaicLikes?.text = String(likes);
             } else {
                 self.mosaicLikes?.text = "0";
             }
