@@ -25,7 +25,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         self.loadUsersMosaics();
     }
     
-    override func viewWillAppear(animated: Bool) {
+    
+    override func viewDidDisappear(animated: Bool) {
         currentMosaic = nil;
     }
     
@@ -51,10 +52,18 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         print("segueing")
         print(identifier)
-        if currentMosaic == nil{
-            return false;
-        } else {
+        if (identifier == "showInvitations"){
             return true;
+        } else if (identifier == "showCreateMosaic") {
+            return true;
+        } else if (identifier == "showDetailTimelineView"){
+            if currentMosaic == nil{
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
         }
         
     }
@@ -63,7 +72,6 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             let dvc = segue.destinationViewController as? TimelineDetailViewController;
             dvc?.detailedMosaic = currentMosaic;
             print("preparing")
-            
         }
     }
     
@@ -84,6 +92,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell:TimelineMosaicCell = tableView.dequeueReusableCellWithIdentifier("timelineMosaicCell", forIndexPath: indexPath) as! TimelineMosaicCell
+        
+        currentMosaic = timelineMosaics[indexPath.row] as? PFObject;
         
         let mosaicThumbnail:PFFile? = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
         

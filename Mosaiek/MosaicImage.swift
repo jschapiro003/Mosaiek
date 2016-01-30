@@ -14,6 +14,33 @@ class MosaicImage {
         
     }
     
+    class func saveImageToMosaic(mosaic:PFObject,image:UIImage,completion: (success: Bool) -> Void){
+        
+        let thumbnail = self.generateJPEG(image);
+        let hirez = self.generateJPEG(image);
+        
+        let mosaicImageFile = PFFile(name: "image.jpeg" , data: hirez);
+        let mosaicImageThumbnailFile = PFFile(name: "image_thumbnail.jpeg" , data: thumbnail);
+        
+        let MosaicImageTable = PFObject(className: "MosaicImage");
+        
+        MosaicImageTable["name"] = "";
+        MosaicImageTable["description"] = "";
+        MosaicImageTable["image"] = mosaicImageFile;
+        MosaicImageTable["thumbnail"] = mosaicImageThumbnailFile;
+        MosaicImageTable["mosaic"] = mosaic;
+        
+        MosaicImageTable.saveInBackgroundWithBlock { (success:Bool,error: NSError?) -> Void in
+            if (error != nil){
+                print("error: ", error)
+            } else {
+                completion(success: success);
+            }
+        }
+        
+        
+    }
+    
     class func fileToImage(file:PFFile, completion: (mosaicImage: UIImage?) -> Void){
         
         file.getDataInBackgroundWithBlock { (data: NSData?, error:NSError?) -> Void in
@@ -27,5 +54,15 @@ class MosaicImage {
             }
             
         }
+    }
+    
+    class func generateJPEG(image:UIImage) -> NSData {
+        
+        return UIImageJPEGRepresentation(image, 0.8)!;
+    }
+    
+    class func generateThumbnail(image:UIImage) -> NSData{
+        let imageData = UIImageJPEGRepresentation(image, 0.0) //lowest quality
+        return imageData!;
     }
 }
