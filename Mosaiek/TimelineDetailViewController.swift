@@ -31,22 +31,37 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     // scrollview arrays
     var mosaicScrollImages:[UIImage] = [];
-    var mosaicScrollViews:[UIImageView] = [];
+    var mosaicScrollViews:[UIImageView?] = [];
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupView();
-        self.setupScrollView();
         // Do any additional setup after loading the view.
     }
     
     func setupScrollView(){
+        mosaicImages.delegate = self;
         
+        let pageCount = mosaicScrollImages.count;
+        pageControl.currentPage = 0;
+        pageControl.numberOfPages = pageCount
+        
+        for _ in 0..<pageCount {
+            mosaicScrollViews.append(nil)
+        }
+        
+        let pagesScrollViewSize = mosaicImages.frame.size
+        mosaicImages.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(mosaicScrollImages.count),
+            height: pagesScrollViewSize.height)
+        
+        loadVisiblePages()
     }
     
     func setupView(){
+        let this = self;
+        
         if let mosaic = self.detailedMosaic{
             
             if let name = mosaic["name"]{
@@ -97,11 +112,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             } else {
                 self.mosaicLikes?.text = "0";
             }
-            
-            
-           // if let user = mosaic["user"]{
-                
-            //}
+
             
             // Mosaic info has been loaded now get MosaicImages
             
@@ -111,12 +122,15 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                         if let thumbnail = mosaicImage["thumbnail"] as? PFFile{
                             MosaicImage.fileToImage(thumbnail, completion: { (mosaicImage) -> Void in
                                 if let scrollviewImage = mosaicImage{
-                                    print(scrollviewImage);
+                                    print("image found",scrollviewImage);
+                                    this.mosaicScrollImages.append(scrollviewImage);
+                                    this.setupScrollView()
                                 }
                             })
                         }
                     }
                 }
+                
             })
             
         }
@@ -196,15 +210,83 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     
 
+    // MARK: - Scrollview methods
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func loadPage(page:Int){
+        
+        if page < 0 || page >= mosaicScrollImages.count {
+            // If it's outside the range of what you have to display, then do nothing
+            return
+        }
+        print("loading page")
+        // 1
+        if let pageView = mosaicScrollViews[page] {
+            // Do nothing. The view is already loaded.
+        } else {
+            // 2
+            var frame = mosaicImages.bounds
+            frame.origin.x = frame.size.width * CGFloat(page)
+            frame.origin.y = 0.0
+            
+            // 3
+            let newPageView = UIImageView(image: mosaicScrollImages[page])
+            newPageView.contentMode = .ScaleToFill
+            newPageView.frame = frame
+            mosaicImages.addSubview(newPageView)
+            
+            // 4
+            mosaicScrollViews[page] = newPageView
+        }
     }
-    */
+    
+    func purgePage(page:Int){
+        if page < 0 || page >= mosaicScrollImages.count {
+            // If it's outside the range of what you have to display, then do nothing
+            return
+        }
+        
+        // Remove a page from the scroll view and reset the container array
+        if let pageView = mosaicScrollViews[page] {
+            pageView.removeFromSuperview()
+            mosaicScrollViews[page] = nil
+        }
+    }
+    
+    func loadVisiblePages(){
+        print("loading visible pages")
+        // First, determine which page is currently visible
+        let pageWidth = mosaicImages.frame.size.width
+        let page = Int(floor((mosaicImages.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        print("page",page);
+        // Update the page control
+        pageControl.currentPage = page
+        
+        // Work out which pages you want to load
+        let firstPage = page - 1
+        let lastPage = page + 1
+        
+        // Purge anything before the first page
+        for var index = 0; index < firstPage; ++index {
+            purgePage(index)
+        }
+        
+        // Load pages in our range
+        for index in firstPage...lastPage {
+            loadPage(index)
+        }
+        
+        // Purge anything after the last page
+        for var index = lastPage+1; index < mosaicScrollImages.count; ++index {
+            purgePage(index)
+        }
+    }
+    
+    // MARK: ScrollviewDelegate methods
+    
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
+        // Load the pages that are now on screen
+        print("scrollview delgeate");
+        loadVisiblePages()
+    }
 
 }
