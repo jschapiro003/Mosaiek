@@ -19,7 +19,7 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
         
         super.viewDidLoad()
         
-        self.friendsTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         self.friendsTable.delegate = self;
         self.friendsTable.dataSource = self;
         
@@ -59,16 +59,26 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("friendCell", forIndexPath: indexPath) as! AddFriendCell
         
         
         if let allUsers = self.users {
             cell.accessoryType = .Checkmark
-            cell.textLabel?.text = allUsers[indexPath.row].username;
+            if let name = allUsers[indexPath.row].username {
+                cell.friendName?.text = name;
+            }
+            
+            if let image = allUsers[indexPath.row].profilePic {
+                if let url = NSURL(string: image ) {
+                    if let data = NSData(contentsOfURL: url) {
+                        cell.friendImage?.image = UIImage(data: data)
+                    }
+                }
+            }
             
             
         } else {
-            cell.textLabel?.text = "Sorry no Users :("
+            cell.friendName?.text = "Sorry no Users :("
         }
         
         

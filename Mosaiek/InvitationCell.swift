@@ -14,6 +14,8 @@ class InvitationCell: UITableViewCell {
     
     @IBOutlet weak var notificationButton: UIButton!
     
+    @IBOutlet weak var notificationImage: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib();
         

@@ -14,6 +14,7 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
     
     var notifications:Array<PFObject>?;
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Welcome to the invitations viewcontroller")
@@ -73,6 +74,19 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         if let invitations = self.notifications{
             if invitations.count > 0 {
                 cell.notificationDescriptionLabel?.text = invitations[indexPath.row]["description"] as? String;
+                
+                if let invitationSender = invitations[indexPath.row]["sender"] as? PFObject{
+                    print("we got a sender");
+                    if let senderImage = invitationSender["profilePic"]{
+                        if let url = NSURL(string: senderImage as! String) {
+                            if let data = NSData(contentsOfURL: url) {
+                                cell.notificationImage?.image = UIImage(data: data)
+                            }
+                        }
+                    }
+                }
+                
+                
             } else {
                 cell.notificationDescriptionLabel?.text = "You do not have any invitations";
             }

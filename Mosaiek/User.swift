@@ -11,10 +11,12 @@ import Foundation
 class User {
     
     let username:String?
+    let profilePic:String?
     
-    init(username:String?){
+    init(username:String?,profilePic:String?){
         
         self.username = username;
+        self.profilePic = profilePic;
     }
     
     class func confirmFriendRequest(user:PFObject,friend:PFObject){
@@ -83,10 +85,21 @@ class User {
                 // Do something with the found objects
                 if let objects = objects {
                     for object in objects {
+                        if let name = object["profileName"] as? String{
+                            print("name",name)
+                            var user:User?
+                            if let picture = object["profilePic"] as? String{
+                                user = User(username: name,profilePic: picture);
+                            }else {
+                                user = User(username: name,profilePic: nil);
+                            }
+                            
+                            if let newUser = user {
+                                users.append(newUser);
+                            }
+                            
+                        }
                         
-                        let user = User(username: object["profileName"] as? String);
-                        
-                        users.append(user);
                     }
                     
                     completion(users);
@@ -215,6 +228,8 @@ class User {
         let notificationsQuery = PFQuery(className: "Notifications");
         notificationsQuery.whereKey("user", equalTo: PFUser.currentUser()!);
         notificationsQuery.whereKey("status", equalTo: 0);
+        notificationsQuery.includeKey("sender");
+        notificationsQuery.includeKey("mosaic");
         
         notificationsQuery.findObjectsInBackgroundWithBlock { (notifications: [PFObject]?, error: NSError?) -> Void in
             
