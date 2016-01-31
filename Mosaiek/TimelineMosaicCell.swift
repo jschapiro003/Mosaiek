@@ -22,6 +22,8 @@ class TimelineMosaicCell: UITableViewCell {
     
     @IBOutlet weak var mosaicLikes: UILabel!
     
+    @IBOutlet weak var mosaicCreationDate: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib();
        

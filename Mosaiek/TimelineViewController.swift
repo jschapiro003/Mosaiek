@@ -74,7 +74,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         if (segue.identifier == "showDetailTimelineView"){
             let dvc = segue.destinationViewController as? TimelineDetailViewController;
             dvc?.detailedMosaic = currentMosaic;
-            print("preparing")
+            
         }
     }
     
@@ -139,6 +139,9 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;
         
+        
+        cell.mosaicCreationDate?.text = dateToString(timelineMosaics[indexPath.row].createdAt);
+        
         if cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil{
             if let contributorMosaic = timelineMosaics[indexPath.row]["mosaic"] as? PFObject{
                 if let contributorMosaicName = contributorMosaic["name"]{
@@ -157,10 +160,20 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("selected");
+        print(timelineMosaics[indexPath.row] as? PFObject)
         currentMosaic = timelineMosaics[indexPath.row] as? PFObject;
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
     }
+    
+    // MARK: UTILS
+    func dateToString(date:NSDate?) -> String{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = .MediumStyle
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString;
+    }
+    
 
 }

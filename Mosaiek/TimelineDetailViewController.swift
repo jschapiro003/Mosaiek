@@ -25,6 +25,10 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBOutlet weak var mosaicDescription: UILabel!
     
+    @IBOutlet weak var mosaicUserPic: UIImageView!
+    
+    @IBOutlet weak var mosaicLastUpdatedAt: UILabel!
+    
     @IBOutlet weak var pageControl: UIPageControl!
     
     var imagePicker: UIImagePickerController!
@@ -71,8 +75,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             if let description = mosaic["description"]{
                 self.mosaicDescription?.text = description as? String;
                 
-            } else {
-                //user contributes to mosaic
+            } else { //user contributes to mosaic
                 if let contributedMosaic = mosaic["mosaic"] as? PFObject{
                     if let name = contributedMosaic["name"]{
                         self.mosaicName.text = name as? String;
@@ -89,6 +92,37 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                             }
                         })
                     }
+                }
+                
+                if let contributedUser = mosaic["user"] as? PFObject {
+                    if let image = contributedUser["profilePic"] as? String {
+                        if let url = NSURL(string: image) {
+                            if let data = NSData(contentsOfURL: url) {
+                                mosaicUserPic.image = UIImage(data: data)
+                            }
+                        }
+
+                    }
+                }
+                
+                if let contributedUpatedAt = mosaic.updatedAt {
+                    mosaicLastUpdatedAt?.text = dateToString(contributedUpatedAt);
+                }
+                
+            }
+            
+            if let upadatedAt = mosaic.updatedAt {
+                mosaicLastUpdatedAt?.text = dateToString(upadatedAt);
+            }
+            
+            if let user = mosaic["user"] as? PFObject {
+                if let userImage = user["profilePic"] as? String{
+                    if let url = NSURL(string: userImage) {
+                        if let data = NSData(contentsOfURL: url) {
+                            mosaicUserPic.image = UIImage(data: data)
+                        }
+                    }
+
                 }
             }
             
@@ -285,8 +319,16 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         // Load the pages that are now on screen
-        print("scrollview delgeate");
         loadVisiblePages()
+    }
+    
+    // MARK: UTILS
+    func dateToString(date:NSDate?) -> String{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = .MediumStyle
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString;
     }
 
 }
