@@ -64,7 +64,7 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
         
         if let allUsers = self.users {
             cell.accessoryType = .Checkmark
-            cell.textLabel?.text = allUsers[indexPath.row].username
+            cell.textLabel?.text = allUsers[indexPath.row].username;
             
             
         } else {

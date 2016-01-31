@@ -14,6 +14,18 @@ class MosaicImage {
         
     }
     
+    class func getCurrentMosaicImages(mosaic:PFObject,completion:(Array<PFObject>?)-> Void){
+        let MosaicImageQuery = PFQuery(className: "MosaicImage");
+        MosaicImageQuery.whereKey("mosaic", equalTo: mosaic);
+        MosaicImageQuery.findObjectsInBackgroundWithBlock { (mosaicImages:[PFObject]?,error: NSError?) -> Void in
+            if (error != nil){
+                print("error: ", error);
+            } else {
+                completion(mosaicImages);
+            }
+        }
+    }
+    
     class func saveImageToMosaic(mosaic:PFObject,image:UIImage,completion: (success: Bool) -> Void){
         
         let thumbnail = self.generateJPEG(image);
@@ -29,6 +41,7 @@ class MosaicImage {
         MosaicImageTable["image"] = mosaicImageFile;
         MosaicImageTable["thumbnail"] = mosaicImageThumbnailFile;
         MosaicImageTable["mosaic"] = mosaic;
+        MosaicImageTable["user"] = PFUser.currentUser()!;
         
         MosaicImageTable.saveInBackgroundWithBlock { (success:Bool,error: NSError?) -> Void in
             if (error != nil){

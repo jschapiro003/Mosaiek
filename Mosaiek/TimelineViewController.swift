@@ -25,6 +25,9 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         self.loadUsersMosaics();
     }
     
+    override func viewWillAppear(animated: Bool) {
+        currentMosaic = nil;
+    }
     
     override func viewDidDisappear(animated: Bool) {
         currentMosaic = nil;
@@ -93,7 +96,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell:TimelineMosaicCell = tableView.dequeueReusableCellWithIdentifier("timelineMosaicCell", forIndexPath: indexPath) as! TimelineMosaicCell
         
-        currentMosaic = timelineMosaics[indexPath.row] as? PFObject;
+       
         
         let mosaicThumbnail:PFFile? = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
         
@@ -154,7 +157,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        print("selected");
         currentMosaic = timelineMosaics[indexPath.row] as? PFObject;
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         

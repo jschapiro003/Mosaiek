@@ -84,7 +84,7 @@ class User {
                 if let objects = objects {
                     for object in objects {
                         
-                        let user = User(username: object["username"] as? String);
+                        let user = User(username: object["profileName"] as? String);
                         
                         users.append(user);
                     }
@@ -186,7 +186,7 @@ class User {
                                 completion(success: "Friend relationship saved \(success)")
                                 
                                 //create new notification
-                                let notification = Notification(user: object, type: 0, description: "You have a friend request from \(PFUser.currentUser()!["username"])", status: 0, sender: PFUser.currentUser(),mosaic:nil);
+                                let notification = Notification(user: object, type: 0, description: "You have a friend request from \(PFUser.currentUser()!["profileName"])", status: 0, sender: PFUser.currentUser(),mosaic:nil);
                                 
                                 notification.createNotification(); // race condition :(
                                 

@@ -71,8 +71,12 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         
         
         if let invitations = self.notifications{
-            cell.notificationDescriptionLabel?.text = invitations[indexPath.row]["description"] as? String;
-           
+            if invitations.count > 0 {
+                cell.notificationDescriptionLabel?.text = invitations[indexPath.row]["description"] as? String;
+            } else {
+                cell.notificationDescriptionLabel?.text = "You do not have any invitations";
+            }
+            
             
         } else {
             cell.notificationDescriptionLabel?.text = "You do not have any invitations";

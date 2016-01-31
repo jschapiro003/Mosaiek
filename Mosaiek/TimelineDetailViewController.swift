@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class TimelineDetailViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class TimelineDetailViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate {
 
     var detailedMosaic:PFObject?
     
@@ -25,13 +25,25 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBOutlet weak var mosaicDescription: UILabel!
     
+    @IBOutlet weak var pageControl: UIPageControl!
+    
     var imagePicker: UIImagePickerController!
+    
+    // scrollview arrays
+    var mosaicScrollImages:[UIImage] = [];
+    var mosaicScrollViews:[UIImageView] = [];
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupView();
+        self.setupScrollView();
         // Do any additional setup after loading the view.
+    }
+    
+    func setupScrollView(){
+        
     }
     
     func setupView(){
@@ -87,10 +99,25 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             }
             
             
-            if let user = mosaic["user"]{
+           // if let user = mosaic["user"]{
                 
-            }
+            //}
             
+            // Mosaic info has been loaded now get MosaicImages
+            
+            MosaicImage.getCurrentMosaicImages(mosaic, completion: { (mosaicImages:Array<PFObject>?) -> Void in
+                if let detailedMosaic = mosaicImages{
+                    for mosaicImage in detailedMosaic{
+                        if let thumbnail = mosaicImage["thumbnail"] as? PFFile{
+                            MosaicImage.fileToImage(thumbnail, completion: { (mosaicImage) -> Void in
+                                if let scrollviewImage = mosaicImage{
+                                    print(scrollviewImage);
+                                }
+                            })
+                        }
+                    }
+                }
+            })
             
         }
     }
