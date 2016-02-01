@@ -89,6 +89,19 @@ class Mosaic {
                             print("error",error);
                         } else {
                             print("mosaic contributor updated: ",success);
+                            //update mosaics contributors
+                            if let contributorsCount = mosaic["contributorsCount"] as? Int {
+                                mosaic["contributorsCount"] = contributorsCount + 1;
+                                mosaic.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                                    if (error != nil){
+                                        print("error ",error);
+                                    } else {
+                                        print("mosaci contributors count updated: ",success);
+                                    }
+                                })
+                            }
+                           
+                            
                         }
                     })
                 }

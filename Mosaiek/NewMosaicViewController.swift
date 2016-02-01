@@ -136,8 +136,10 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         newMosaic["description"] = mosaic.mosaicDescription!;
         newMosaic["user"] = PFUser.currentUser();
         
-        let mosaicImageFile = PFFile(name: "\(mosaic.mosaicName!).jpeg" , data: mosaic.mosaicImage!);
-        let mosaicImageThumbnailFile = PFFile(name: "\(mosaic.mosaicName!)_thumbnail.jpeg" , data: mosaic.mosaicImageThumbnail!);
+        let mosaicImageFile = PFFile(name: "\(mosaic.mosaicName!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())).jpeg" , data: mosaic.mosaicImage!);
+        
+        let mosaicImageThumbnailFile = PFFile(name: "\(mosaic.mosaicName!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))_thumbnail.jpeg" , data: mosaic.mosaicImageThumbnail!);
+        
         newMosaic["image"] = mosaicImageFile;
         newMosaic["thumbnail"] = mosaicImageThumbnailFile;
         newMosaic["likes"] = 0;

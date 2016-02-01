@@ -68,9 +68,10 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
         
         
-        if (self.contributors[indexPath.row].username != nil){
-            cell.textLabel?.text = self.contributors[indexPath.row].username;
+        if let username = self.contributors[indexPath.row]["profileName"] as? String {
+            cell.textLabel?.text = username;
         }
+            
         
         return cell
         
