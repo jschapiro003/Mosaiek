@@ -23,7 +23,6 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
        
         // have spinner spin until mosaic is successfuly saved - if you try to add contributors before it is saved, you have a problem
         
-        self.contributorsTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.contributorsTable.delegate = self;
         self.contributorsTable.dataSource = self;
         
@@ -42,8 +41,11 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
         User.loadAllFriends { (friends: Array<PFObject>?) -> Void in
            
             if let contributorList = friends {
+                
                 self.contributors = contributorList;
+                
             }
+            
             self.contributorsTable.reloadData()
         }
     }
@@ -52,7 +54,9 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
     //#MARK - TableViewDelegate Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
         return 1
+        
     }
     
     
@@ -65,13 +69,26 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("addContributorsCell", forIndexPath: indexPath) as! AddContributorsCell
         
         
         if let username = self.contributors[indexPath.row]["profileName"] as? String {
-            cell.textLabel?.text = username;
-        }
             
+            cell.friendName?.text = username;
+            
+        }
+        
+        if let image = self.contributors[indexPath.row]["profilePic"] as? String {
+            
+            if let url = NSURL(string: image) {
+                
+                if let data = NSData(contentsOfURL: url) {
+                    
+                    cell.friendImage?.image = UIImage(data: data)
+                    
+                }
+            }
+        }
         
         return cell
         
@@ -92,15 +109,17 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
     //#MARK - IBActions
     
     @IBAction func addContributors(sender: AnyObject) {
+        
         if let delegateSet = self.delegate {
+            
             if (self.contributorsToAdd != nil){
+                
                 delegateSet.contributorsAddedToMosaic(self.contributorsToAdd!) //pass contributors to add
+                
             }
             
             self.navigationController?.popToRootViewControllerAnimated(true);
         }
     }
-    
-    
 
 }

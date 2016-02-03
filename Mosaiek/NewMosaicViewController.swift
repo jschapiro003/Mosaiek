@@ -63,7 +63,6 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
             
         } else if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
             
-            print("we going to the photo library")
             self.imagePicker = UIImagePickerController()
             self.imagePicker.delegate = self
             self.imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
@@ -117,12 +116,15 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     }
     
     func generateThumbnail(image:UIImage) -> NSData{
+        
         let imageData = UIImageJPEGRepresentation(image, 0.0) //lowest quality
         return imageData!;
     }
     
     func validMosaic (mosaic:Mosaic) -> Bool {
+        
         if (mosaic.mosaicName != nil && mosaic.mosaicDescription != nil && mosaic.mosaicImage != nil && mosaic.mosaicImageThumbnail != nil){
+            
             return true;
         }
         //check that each property has a value
@@ -130,7 +132,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     }
     
     func saveMosaic(mosaic:Mosaic){
-        //save mosaic to parse
+        //save mosaic to parse **********MOVE TO MOSAIC MODDEL
+        
         let newMosaic = PFObject(className: "Mosaic")
         newMosaic["name"] = mosaic.mosaicName!;
         newMosaic["description"] = mosaic.mosaicDescription!;
@@ -146,10 +149,15 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         newMosaic["contributorsCount"] = 0;
         
         newMosaic.saveInBackgroundWithBlock { (success, error) -> Void in
+            
             if ((error) != nil){
+                
                 print(error);
+                
             } else {
+                
                 print("mosaic saved successfully",success);
+                
             }
         }
         
@@ -162,8 +170,9 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            print("image picker finished",pickedImage)
+            
             self.mosaicImage.image = pickedImage
+            
         }
         
         dismissViewControllerAnimated(true, completion: nil)
@@ -180,8 +189,10 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     func contributorsAddedToMosaic(contributors: Array<PFUser>){
         print("saving mosaic to parse")
         if (contributors.count > 0){
+            
             // save to contributors with mosaic_id of current mosaic
             print("saving to \(self.mosaic?.mosaicName)")
+            
             Mosaic.addContributors(self.mosaic?.mosaicName,contributors: contributors);
         }
     }
@@ -199,7 +210,9 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
             dvc.delegate = self;
             
         } else {
+            
             print("no go")
+            
         }
     }
     

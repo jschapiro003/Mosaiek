@@ -17,9 +17,7 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Welcome to the invitations viewcontroller")
         
-        //self.invitationsTable.registerClass(InvitationCell.self, forCellReuseIdentifier: "invitationCell")
         self.invitationsTable.delegate = self;
         self.invitationsTable.dataSource = self;
     
@@ -37,8 +35,10 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         User.getNotificiations { (notifications: Array<PFObject>?) -> Void in
             
             if let userNotifications = notifications {
+                
                 self.notifications = userNotifications;
                 self.invitationsTable.reloadData();
+                
             }
             
         }
@@ -49,6 +49,7 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
     //#MARK - TableViewDelegate Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
         return 1
     }
     
@@ -60,7 +61,9 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
            return dataSource.count;
             
         } else {
+            
             return 1;
+            
         }
         
     }
@@ -72,28 +75,37 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         
         
         if let invitations = self.notifications{
+            
             if invitations.count > 0 {
+                
                 cell.notificationDescriptionLabel?.text = invitations[indexPath.row]["description"] as? String;
                 
                 if let invitationSender = invitations[indexPath.row]["sender"] as? PFObject{
-                    print("we got a sender");
+                    
+                   
                     if let senderImage = invitationSender["profilePic"]{
+                        
                         if let url = NSURL(string: senderImage as! String) {
+                            
                             if let data = NSData(contentsOfURL: url) {
+                                
                                 cell.notificationImage?.image = UIImage(data: data)
+                                
                             }
                         }
                     }
                 }
                 
-                
             } else {
+                
                 cell.notificationDescriptionLabel?.text = "You do not have any invitations";
             }
             
             
         } else {
+            
             cell.notificationDescriptionLabel?.text = "You do not have any invitations";
+            
         }
         
         return cell
@@ -115,37 +127,47 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         
         //get indexPath of button clicked
         if let button = sender as? UIButton {
+            
             if let superview = button.superview {
+                
                 if let cell = superview.superview as? InvitationCell {
+                    
                     indexPath = self.invitationsTable.indexPathForCell(cell)
+                    
                 }
             }
         }
         
         //modify notification of that specific rows (indexPath.row)
         if let notificationList = self.notifications{
+            
             let notificationType = notificationList[indexPath.row]["type"];
             
             notificationList[indexPath.row]["status"] = 1;//notification has been seen
             
             notificationList[indexPath.row].saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                
                 if (error != nil){
+                    
                     print("error:",error);
+                    
                 } else {
+                    
                     print("success: ",success);
                     
                     //depending on type, update contributors table or friends table
                     if (notificationType as! Int == 0){
                         
                         print("updating a friendship");
+                        
                         let notificationFriend = notificationList[indexPath.row]["sender"];
                         
                         if let friend = notificationFriend {
+                            
                             User.confirmFriendRequest(PFUser.currentUser()!, friend:friend as! PFObject);
                         }
                         
                         //consider adding another column to notifications
-                        
                         
                     } else if (notificationType as! Int == 1){
                         
@@ -167,9 +189,8 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
             
             self.navigationController?.popToRootViewControllerAnimated(true);
         }
+        
         print("accepting invitation",indexPath.row);
     }
-    
-
 
 }

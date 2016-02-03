@@ -37,15 +37,31 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var mosaicScrollImages:[UIImage] = [];
     var mosaicScrollViews:[UIImageView?] = [];
     
+    //mosaicImageDataStructure
+    var mosaicImageList: [PFObject] = [];
+    var currentMosaicImage: PFObject?
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        self.detailedMosaic = nil;
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupView();
-        // Do any additional setup after loading the view.
+       
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     func setupScrollView(){
+        
         mosaicImages.delegate = self;
         
         let pageCount = mosaicScrollImages.count;
@@ -57,13 +73,16 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         }
         
         let pagesScrollViewSize = mosaicImages.frame.size
+        
         mosaicImages.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(mosaicScrollImages.count),
             height: pagesScrollViewSize.height)
         
         loadVisiblePages()
+        
     }
     
     func setupView(){
+        
         let this = self;
         
         if let mosaic = self.detailedMosaic{
@@ -76,7 +95,9 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 self.mosaicDescription?.text = description as? String;
                 
             } else { //user contributes to mosaic
+                
                 if let contributedMosaic = mosaic["mosaic"] as? PFObject{
+                    
                     if let name = contributedMosaic["name"]{
                         self.mosaicName.text = name as? String;
                     }
@@ -86,9 +107,13 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                     }
                     
                     if let imageFile = contributedMosaic["image"] as? PFFile{
+                        
                         MosaicImage.fileToImage(imageFile, completion: { (mosaicImage) -> Void in
+                            
                             if let image = mosaicImage {
+                                
                                 self.mosaicImage.image = image;
+                                
                             }
                         })
                     }
@@ -106,28 +131,37 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 }
                 
                 if let contributedUpatedAt = mosaic.updatedAt {
+                    
                     mosaicLastUpdatedAt?.text = "Last Updated: " + dateToString(contributedUpatedAt);
                 }
                 
             }
             
             if let upadatedAt = mosaic.updatedAt {
+                
                 mosaicLastUpdatedAt?.text = "Last Updated: " + dateToString(upadatedAt);
             }
             
             if let user = mosaic["user"] as? PFObject {
+                
                 if let userImage = user["profilePic"] as? String{
+                    
                     if let url = NSURL(string: userImage) {
+                        
                         if let data = NSData(contentsOfURL: url) {
+                            
                             mosaicUserPic.image = UIImage(data: data)
+                            
                         }
                     }
 
                 }
             }
             
-            if let imageFile = mosaic["image"] as? PFFile{
+            if let imageFile = mosaic["image"] as? PFFile {
+                
                 MosaicImage.fileToImage(imageFile, completion: { (mosaicImage) -> Void in
+                    
                     if let image = mosaicImage {
 
                         self.mosaicImage.image = image;
@@ -136,14 +170,21 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             }
             
             if let contributors = mosaic["contributors"]{
+                
                 self.mosaicContributors.text = String(contributors);
+                
             } else {
+                
                 self.mosaicContributors.text = "0";
+                
             }
             
             if let likes = mosaic["likes"]{
+                
                 self.mosaicLikes?.text = String(likes);
+                
             } else {
+                
                 self.mosaicLikes?.text = "0";
             }
 
@@ -151,14 +192,25 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             // Mosaic info has been loaded now get MosaicImages
             
             MosaicImage.getCurrentMosaicImages(mosaic, completion: { (mosaicImages:Array<PFObject>?) -> Void in
+                
                 if let detailedMosaic = mosaicImages{
+                    
+                    this.setupGestureRecognizer();
+                    
                     for mosaicImage in detailedMosaic{
+                        
+                        this.mosaicImageList.append(mosaicImage);
+                        
                         if let thumbnail = mosaicImage["thumbnail"] as? PFFile{
+                            
                             MosaicImage.fileToImage(thumbnail, completion: { (mosaicImage) -> Void in
+                                
                                 if let scrollviewImage = mosaicImage{
-                                    print("image found",scrollviewImage);
+                                    
+                                    
                                     this.mosaicScrollImages.append(scrollviewImage);
                                     this.setupScrollView()
+                                    
                                 }
                             })
                         }
@@ -169,11 +221,30 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    // MARK:Gesture Recognizer 
+    
+    func setupGestureRecognizer() {
+        
+        //add gesture recognizer to mosaicImageView
+        let mosaicImageViewTap = UITapGestureRecognizer()
+        mosaicImageViewTap.addTarget(self, action: "detailImageTapped")
+        mosaicImages.addGestureRecognizer(mosaicImageViewTap)
+        mosaicImages.userInteractionEnabled = true
+        
     }
+    
+    func detailImageTapped() {
+        
+        let pageWidth = mosaicImages.frame.size.width
+        let page = Int(floor((mosaicImages.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        let currentMosaic = self.mosaicImageList[page];
+        self.currentMosaicImage = currentMosaic;
+        
+        self.performSegueWithIdentifier("showMosaicImage", sender: self); // pass mosaicImage to next view
+       
+    }
+
     
     
     // #MARK - IBActions
@@ -187,6 +258,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     // #MARK - Image Picker
     
     func loadMosaicImage(){
+        
         //lazy instantiation of imagePicker
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             
@@ -194,14 +266,12 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             self.imagePicker.delegate = self
             self.imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
             self.imagePicker.mediaTypes = [kUTTypeImage as String];
-            
             self.imagePicker.allowsEditing = false
             
             self.presentViewController(self.imagePicker, animated: true, completion: nil)
             
         } else if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
             
-            print("we going to the photo library")
             self.imagePicker = UIImagePickerController()
             self.imagePicker.delegate = self
             self.imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
@@ -222,9 +292,11 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            print("image picker finished",pickedImage)
+           
             if let mosaic = detailedMosaic {
+                
                 MosaicImage.saveImageToMosaic(mosaic, image: pickedImage, completion: { (success) -> Void in
+                    
                     //set as current image in scrollview
                     //begin background process to mosaic'ify
                     print("Mosaic Image Sucessfully saved: ", success);
@@ -252,28 +324,30 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             // If it's outside the range of what you have to display, then do nothing
             return
         }
-        print("loading page")
+        
         // 1
         if let pageView = mosaicScrollViews[page] {
             // Do nothing. The view is already loaded.
+            
         } else {
-            // 2
+            
             var frame = mosaicImages.bounds
             frame.origin.x = frame.size.width * CGFloat(page)
             frame.origin.y = 0.0
             
-            // 3
+           
             let newPageView = UIImageView(image: mosaicScrollImages[page])
             newPageView.contentMode = .ScaleToFill
             newPageView.frame = frame
             mosaicImages.addSubview(newPageView)
             
-            // 4
+           
             mosaicScrollViews[page] = newPageView
         }
     }
     
     func purgePage(page:Int){
+        
         if page < 0 || page >= mosaicScrollImages.count {
             // If it's outside the range of what you have to display, then do nothing
             return
@@ -281,17 +355,18 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         // Remove a page from the scroll view and reset the container array
         if let pageView = mosaicScrollViews[page] {
+            
             pageView.removeFromSuperview()
             mosaicScrollViews[page] = nil
         }
     }
     
     func loadVisiblePages(){
-        print("loading visible pages")
+        
         // First, determine which page is currently visible
         let pageWidth = mosaicImages.frame.size.width
         let page = Int(floor((mosaicImages.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-        print("page",page);
+       
         // Update the page control
         pageControl.currentPage = page
         
@@ -324,11 +399,24 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     // MARK: UTILS
     func dateToString(date:NSDate?) -> String{
+        
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFormatter.timeStyle = .MediumStyle
         let dateString = dateFormatter.stringFromDate(date!)
+        
         return dateString;
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+                  
+            let dvc = segue.destinationViewController as! TimelineDetailCommentViewController;
+            
+            if let currentMosaic = self.currentMosaicImage {
+                dvc.mosaicImage = currentMosaic;
+                
+            }
+        
     }
 
 }

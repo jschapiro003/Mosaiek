@@ -19,11 +19,11 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
         
         super.viewDidLoad()
         
-        
         self.friendsTable.delegate = self;
         self.friendsTable.dataSource = self;
         
         User.loadAllUsers({ (users) -> Void in
+            
             self.users = users;
             self.friendsTable.reloadData()
         })
@@ -40,6 +40,7 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
     //#MARK - TableViewDelegate Methods
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
         return 1
     }
 
@@ -61,35 +62,41 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
         
         let cell = tableView.dequeueReusableCellWithIdentifier("friendCell", forIndexPath: indexPath) as! AddFriendCell
         
-        
         if let allUsers = self.users {
+            
             cell.accessoryType = .Checkmark
+            
             if let name = allUsers[indexPath.row].username {
+                
                 cell.friendName?.text = name;
             }
             
             if let image = allUsers[indexPath.row].profilePic {
+                
                 if let url = NSURL(string: image ) {
+                    
                     if let data = NSData(contentsOfURL: url) {
+                        
                         cell.friendImage?.image = UIImage(data: data)
+                        
                     }
                 }
             }
             
             
         } else {
+            
             cell.friendName?.text = "Sorry no Users :("
+            
         }
-        
         
         return cell
         
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
-        //let cell = tableView.cellForRowAtIndexPath(indexPath);
+        tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
         let friend = users?[indexPath.row];
         
@@ -99,7 +106,6 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
             
         }
         
-        
     }
     
     //#MARK - IBActions
@@ -107,9 +113,12 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
     @IBAction func saveFriends(sender: AnyObject) {
         
         if let friendsToSave = self.friendsToAdd {
+            
             User.saveFriends(friendsToSave, completion: { (success) -> Void in
+                
                 print(success);
             })
+            
         }
         
         self.navigationController?.popToRootViewControllerAnimated(true);

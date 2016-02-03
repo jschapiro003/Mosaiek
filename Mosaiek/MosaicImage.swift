@@ -17,6 +17,9 @@ class MosaicImage {
     class func getCurrentMosaicImages(mosaic:PFObject,completion:(Array<PFObject>?)-> Void){
         let MosaicImageQuery = PFQuery(className: "MosaicImage");
         MosaicImageQuery.whereKey("mosaic", equalTo: mosaic);
+        MosaicImageQuery.includeKey("user");
+        
+        
         MosaicImageQuery.findObjectsInBackgroundWithBlock { (mosaicImages:[PFObject]?,error: NSError?) -> Void in
             if (error != nil){
                 print("error: ", error);
@@ -38,6 +41,7 @@ class MosaicImage {
         
         MosaicImageTable["name"] = "";
         MosaicImageTable["description"] = "";
+        MosaicImageTable["likes"] = 0;
         MosaicImageTable["image"] = mosaicImageFile;
         MosaicImageTable["thumbnail"] = mosaicImageThumbnailFile;
         MosaicImageTable["mosaic"] = mosaic;

@@ -53,25 +53,35 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //#MARK - Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        print("segueing")
-        print(identifier)
+       
         if (identifier == "showInvitations"){
+            
             return true;
+            
         } else if (identifier == "showCreateMosaic") {
+            
             return true;
+            
         } else if (identifier == "showDetailTimelineView"){
+            
             if currentMosaic == nil{
+                
                 return false;
             } else {
+                
                 return true;
             }
+            
         } else {
+            
             return false;
         }
         
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if (segue.identifier == "showDetailTimelineView"){
+            
             let dvc = segue.destinationViewController as? TimelineDetailViewController;
             dvc?.detailedMosaic = currentMosaic;
             
@@ -81,7 +91,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     //#MARK - TableViewDelegate Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        
+        return 1;
     }
     
     
@@ -103,25 +114,33 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         if let thumbnail = mosaicThumbnail {
             //Memoize!!!!
             MosaicImage.fileToImage(thumbnail, completion: { (mosaicImage) -> Void in
-                if let mosaicImg = mosaicImage {
-                    cell.mosaicThumbnailImageView.image = mosaicImg;
-                }
                 
+                if let mosaicImg = mosaicImage {
+                    
+                    cell.mosaicThumbnailImageView.image = mosaicImg;
+                    
+                }
             })
         }
         
         if let user = timelineMosaics[indexPath.row]["user"]{
             if let userInfo = user {
+                
                 if (userInfo["profileName"] != nil){
+                    
                     if let name = userInfo["profileName"]{
+                        
                         cell.username?.text = name as? String;
                     }
                 }
                 
             }
             if let userPhoto = user!["profilePic"]{
+                
                 if let url = NSURL(string: userPhoto as! String) {
+                    
                     if let data = NSData(contentsOfURL: url) {
+                        
                         cell.mosaicOwnerPhoto?.image = UIImage(data: data)
                     }        
                 }
@@ -131,47 +150,55 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         if let likes = timelineMosaics[indexPath.row]["likes"] as? Int{
             
             cell.mosaicLikes?.text = String(likes);
+            
         } else {
+            
             cell.mosaicLikes?.text = "0";
+            
         }
         
         cell.mosaicName?.text = timelineMosaics[indexPath.row]["name"] as? String;
         
         cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;
         
-        
         cell.mosaicCreationDate?.text = dateToString(timelineMosaics[indexPath.row].createdAt);
         
         if cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil{
+            
             if let contributorMosaic = timelineMosaics[indexPath.row]["mosaic"] as? PFObject{
+                
                 if let contributorMosaicName = contributorMosaic["name"]{
+                    
                     cell.mosaicName?.text = contributorMosaicName as? String;
                 }
                 
                 if let contributorMosaicDescription = contributorMosaic["description"]{
+                    
                     cell.mosaicDescription?.text = contributorMosaicDescription as? String;
                 }
             }
         }
-        
         
         return cell
         
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(timelineMosaics[indexPath.row] as? PFObject)
+        
         currentMosaic = timelineMosaics[indexPath.row] as? PFObject;
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
     }
     
     // MARK: UTILS
     func dateToString(date:NSDate?) -> String{
+        
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFormatter.timeStyle = .MediumStyle
         let dateString = dateFormatter.stringFromDate(date!)
+        
         return dateString;
     }
     
