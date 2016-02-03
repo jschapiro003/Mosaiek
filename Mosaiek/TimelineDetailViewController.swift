@@ -199,7 +199,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                     
                     for mosaicImage in detailedMosaic{
                         
-                        this.mosaicImageList.append(mosaicImage);
+                        let mosaicImg = mosaicImage; //placeholder for mosaicImage
+                        
                         
                         if let thumbnail = mosaicImage["thumbnail"] as? PFFile{
                             
@@ -207,8 +208,9 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                                 
                                 if let scrollviewImage = mosaicImage{
                                     
-                                    
+                                    this.mosaicImageList.append(mosaicImg); // both of these lists get populated at same time
                                     this.mosaicScrollImages.append(scrollviewImage);
+                                    
                                     this.setupScrollView()
                                     
                                 }
@@ -236,9 +238,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     func detailImageTapped() {
         
-        let pageWidth = mosaicImages.frame.size.width
-        let page = Int(floor((mosaicImages.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
-        let currentMosaic = self.mosaicImageList[page];
+    
+        let currentMosaic = self.mosaicImageList[self.pageControl.currentPage];
         self.currentMosaicImage = currentMosaic;
         
         self.performSegueWithIdentifier("showMosaicImage", sender: self); // pass mosaicImage to next view
