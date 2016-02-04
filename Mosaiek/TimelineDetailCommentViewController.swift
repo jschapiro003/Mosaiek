@@ -88,7 +88,7 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
                 if let imageComments = comments {
                     
                     self.comments = imageComments;
-                    print(self.comments);
+                    
                     self.mosaicImageComments.reloadData()
                 }
             })
@@ -148,6 +148,8 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
         if let comment = self.comments![indexPath.row]["comment"] as? String {
             
             cell.commentText?.text = comment;
+        } else {
+            cell.commentText?.text = "Be the first to comment!";
         }
         
         return cell;

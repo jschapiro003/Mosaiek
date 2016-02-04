@@ -10,13 +10,15 @@ import Foundation
 
 class User {
     
+    let userObject:PFObject?
     let username:String?
     let profilePic:String?
     
-    init(username:String?,profilePic:String?){
+    init(username:String?,profilePic:String?, userObject:PFObject?){
         
         self.username = username;
         self.profilePic = profilePic;
+        self.userObject = userObject;
     }
     
     class func confirmFriendRequest(user:PFObject,friend:PFObject){
@@ -89,15 +91,14 @@ class User {
                             print("name",name)
                             var user:User?
                             if let picture = object["profilePic"] as? String{
-                                user = User(username: name,profilePic: picture);
+                                user = User(username: name,profilePic: picture,userObject: object);
                             }else {
-                                user = User(username: name,profilePic: nil);
+                                user = User(username: name,profilePic: nil, userObject: object);
                             }
                             
                             if let newUser = user {
                                 users.append(newUser);
                             }
-                            
                         }
                         
                     }
@@ -239,6 +240,40 @@ class User {
             
             if (notifications != nil){
                 completion(notifications);
+            }
+        }
+        
+    }
+    
+    class func isFriends(user1:PFObject,user2:PFObject,completion:(isFriend:Bool)-> Void) {
+        
+        let friendQuery1 = PFQuery(className: "Friends");
+        friendQuery1.whereKey("friend1", equalTo: user1);
+        friendQuery1.whereKey("friend2", equalTo: user2);
+        friendQuery1.whereKey("status", equalTo: 1);
+        
+        let friendQuery2 = PFQuery(className: "Friends");
+        friendQuery2.whereKey("friend1", equalTo: user2);
+        friendQuery2.whereKey("friend2", equalTo: user1);
+        friendQuery2.whereKey("status", equalTo: 1);
+        
+        let finalFriendQuery = PFQuery.orQueryWithSubqueries([friendQuery1,friendQuery2]);
+        
+        finalFriendQuery.getFirstObjectInBackgroundWithBlock { (friendship:PFObject?, error:NSError?) -> Void in
+            if (error != nil) {
+                
+                print("error: ", error);
+                
+            } else {
+                
+                if (friendship != nil){
+                    completion(isFriend: true);
+                    
+                } else {
+                    
+                    completion(isFriend:false);
+                }
+                
             }
         }
         

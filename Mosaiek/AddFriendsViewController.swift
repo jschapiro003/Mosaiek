@@ -64,7 +64,19 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
         
         if let allUsers = self.users {
             
-            cell.accessoryType = .Checkmark
+            User.isFriends(PFUser.currentUser()!, user2: allUsers[indexPath.row].userObject!, completion: { (isFriend:Bool) -> Void in
+                if (isFriend){
+                    print("we have friends");
+                    cell.accessoryType = .Checkmark;
+                    
+                } else {
+                    
+                    cell.accessoryType = .None;
+                    
+                }
+            })
+            
+            
             
             if let name = allUsers[indexPath.row].username {
                 
