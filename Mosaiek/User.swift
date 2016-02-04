@@ -177,48 +177,55 @@ class User {
                 let friendsTable = PFObject(className: "Friends");
                 
                 let query:PFQuery = PFQuery(className: "_User");
+                print("friends name!!!!!!!: ", friend.username!)
+                print("friend object: ", friend.userObject)
                 
-                let friendQuery = query.whereKey("username", equalTo: friend.username!);
-                
-                friendQuery.getFirstObjectInBackgroundWithBlock({ (object: PFObject?,error: NSError?) -> Void in
+                if let friendObject = friend.userObject {
                     
-                    //save into friends table where user1 = current user and user2 = friend, status = 0
-                    print("searching for user");
+                    let friendQuery = query.whereKey("objectId", equalTo: friendObject.objectId!);
                     
-                    if (object != nil){
+                    friendQuery.getFirstObjectInBackgroundWithBlock({ (object: PFObject?,error: NSError?) -> Void in
                         
-                        completion(success: "Friend Found \(object?.objectId)");
+                        //save into friends table where user1 = current user and user2 = friend, status = 0
+                        print("searching for user");
                         
-                        friendsTable["friend1"] = PFUser.currentUser();
+                        if (object != nil){
+                            
+                            completion(success: "Friend Found \(object?.objectId)");
+                            
+                            friendsTable["friend1"] = PFUser.currentUser();
+                            
+                            friendsTable["friend2"] = object; //friend to add
+                            
+                            friendsTable["status"] = 0;
+                            
+                            friendsTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                                if (success == true){
+                                    completion(success: "Friend relationship saved \(success)")
+                                    
+                                    //create new notification
+                                    let notification = Notification(user: object, type: 0, description: "You have a friend request from \(PFUser.currentUser()!["profileName"])", status: 0, sender: PFUser.currentUser(),mosaic:nil);
+                                    
+                                    notification.createNotification(); // race condition :(
+                                    
+                                } else {
+                                    print(error)
+                                    completion(success: "Friend relationship could not be saved");
+                                }
+                            })
+                            
+                        } else {
+                            
+                            print(error);
+                            completion(success: "Could not find friend to add");
+                        }
                         
-                        friendsTable["friend2"] = object; //friend to add
-                        
-                        friendsTable["status"] = 0;
-                        
-                        friendsTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
-                            if (success == true){
-                                completion(success: "Friend relationship saved \(success)")
-                                
-                                //create new notification
-                                let notification = Notification(user: object, type: 0, description: "You have a friend request from \(PFUser.currentUser()!["profileName"])", status: 0, sender: PFUser.currentUser(),mosaic:nil);
-                                
-                                notification.createNotification(); // race condition :(
-                                
-                            } else {
-                                print(error)
-                                completion(success: "Friend relationship could not be saved");
-                            }
-                        })
-                        
-                    } else {
-                        
-                        print(error);
-                        completion(success: "Could not find friend to add");
+                    })
+                    
                     }
-                    
-                })
-                
             }
+                
+                
         }
 
         

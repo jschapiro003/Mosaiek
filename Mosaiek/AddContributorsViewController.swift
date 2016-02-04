@@ -96,13 +96,29 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let cell: AddContributorsCell = tableView.cellForRowAtIndexPath(indexPath)! as! AddContributorsCell
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
         let contributor = self.contributors[indexPath.row];
         
-        self.contributorsToAdd?.append(contributor as! PFUser);
-
-        print(self.contributorsToAdd?.count)
+        if (cell.accessoryType == .None) {
+            print("adding friend");
+            
+            cell.accessoryType = .Checkmark
+            
+            if self.containedInContributorsToAdd(contributor as! PFUser) == false {
+                self.contributorsToAdd?.append(contributor as! PFUser);
+            }
+        
+        } else {
+           
+            print("removing friend");
+            cell.accessoryType = .None
+            self.removeContributorToAdd(contributor as! PFUser);
+        }
+        
+        print(self.contributorsToAdd)
     }
     
     
@@ -120,6 +136,40 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
             
             self.navigationController?.popToRootViewControllerAnimated(true);
         }
+    }
+    
+    func containedInContributorsToAdd(targetContributor:PFUser) -> Bool {
+        var found = false;
+        
+        if var contributors = self.contributorsToAdd {
+            
+            for var i = 0; i < contributors.count; i++ {
+                
+                if (contributors[i] == targetContributor) {
+                    found = true;
+                }
+            }
+            
+        }
+        
+        return found;
+        
+    }
+    
+    func removeContributorToAdd(targetContributor:PFUser) {
+        print("attemtping to remove friend");
+        if var contributors = self.contributorsToAdd {
+            
+            for var i = 0; i < contributors.count; i++ {
+                
+                if (contributors[i] == targetContributor) {
+                    print("friend found");
+                    contributors.removeAtIndex(i);
+                    print(contributors);
+                }
+            }
+        }
+        
     }
 
 }

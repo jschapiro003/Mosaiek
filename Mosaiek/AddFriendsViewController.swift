@@ -77,7 +77,6 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
             })
             
             
-            
             if let name = allUsers[indexPath.row].username {
                 
                 cell.friendName?.text = name;
@@ -108,13 +107,21 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let cell: AddFriendCell = tableView.cellForRowAtIndexPath(indexPath)! as! AddFriendCell
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
-        let friend = users?[indexPath.row];
+        let friend = self.users?[indexPath.row];
         
         if let friendToAdd = friend {
             
-            self.friendsToAdd?.append(friendToAdd);
+            if cell.accessoryType == .None {
+                
+                cell.accessoryType = .Checkmark
+                
+                self.friendsToAdd?.append(friendToAdd);
+            }
+           
             
         }
         
