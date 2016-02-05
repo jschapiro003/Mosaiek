@@ -258,7 +258,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         if (self.mosaicLIkesButton.alpha == 1.0){
             print("liking mosaic");
             if let mosaic = self.detailedMosaic {
-                print("hello world");
+                
                 Mosaic.likeMosaic(mosaic);
                 self.mosaicLIkesButton.alpha = 0.5;
                 self.mosaicLikes.text = String(Int(self.mosaicLikes!.text!)! + 1);
