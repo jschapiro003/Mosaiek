@@ -16,6 +16,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var mosaicTable: UITableView!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +52,11 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    //#MARK - IBAction
+    
+    @IBAction func likeMosaic(sender: AnyObject) {
+        print("like mosaic");
+    }
     
     //#MARK - Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {

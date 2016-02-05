@@ -19,6 +19,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBOutlet weak var mosaicLikes: UILabel!
     
+    @IBOutlet weak var mosaicLIkesButton: UIButton!
     @IBOutlet weak var mosaicContributors: UILabel!
     
     @IBOutlet weak var mosaicName: UILabel!
@@ -42,11 +43,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var currentMosaicImage: PFObject?
     
     
-    override func viewWillAppear(animated: Bool) {
-        
-        self.detailedMosaic = nil;
-        
-    }
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -255,6 +252,24 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         self.loadMosaicImage();
     }
+    
+    @IBAction func likeMosaic(sender: AnyObject) {
+        print(self.mosaicLIkesButton.alpha);
+        if (self.mosaicLIkesButton.alpha == 1.0){
+            print("liking mosaic");
+            if let mosaic = self.detailedMosaic {
+                print("hello world");
+                Mosaic.likeMosaic(mosaic);
+                self.mosaicLIkesButton.alpha = 0.5;
+                self.mosaicLikes.text = String(Int(self.mosaicLikes!.text!)! + 1);
+            } else {
+                return;
+            }
+        }
+       
+    }
+    
+    
     
     // #MARK - Image Picker
     

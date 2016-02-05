@@ -120,6 +120,9 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
                 cell.accessoryType = .Checkmark
                 
                 self.friendsToAdd?.append(friendToAdd);
+            } else {
+                
+                print("already friends");
             }
            
             

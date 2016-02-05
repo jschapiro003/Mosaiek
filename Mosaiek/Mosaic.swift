@@ -163,5 +163,58 @@ class Mosaic {
         
     }
     
+    class func likeMosaic(mosaic:PFObject){
+        
+        //query likes table for like relationship
+        //if exists return
+        //else create the relationship and increment that mosaics likes
+        let likesQuery = PFQuery(className: "Likes");
+        likesQuery.whereKey("mosaic", equalTo: mosaic);
+        likesQuery.whereKey("user", equalTo: PFUser.currentUser()!);
+        
+        likesQuery.getFirstObjectInBackgroundWithBlock { (like:PFObject?, error:NSError?) -> Void in
+            
+            if (error != nil){
+                
+                print("error: ",error);
+                
+            }
+                
+            if (like != nil){
+                print("like exists");
+                return;
+                
+            } else {
+                
+                let likeSave = PFObject(className: "Likes");
+                
+                likeSave["user"] = PFUser.currentUser()!;
+                likeSave["mosaic"] = mosaic;
+                
+                likeSave.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                    
+                    if (error != nil){
+                        print("error: ",error);
+                    } else {
+                        print("saved like save", success);
+                    }
+                })
+                
+                mosaic["likes"] = mosaic["likes"] as! Int + 1;
+                
+                mosaic.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
+                    if (error != nil){
+                        print("error: ",error);
+                    } else {
+                        print("successfully liked mosaic",success);
+                    }
+                }
+                
+            }
+        }
+        
+        
+    }
+    
     
 }

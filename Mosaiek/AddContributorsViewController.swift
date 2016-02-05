@@ -110,6 +110,7 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
             if self.containedInContributorsToAdd(contributor as! PFUser) == false {
                 self.contributorsToAdd?.append(contributor as! PFUser);
             }
+             print(self.contributorsToAdd)
         
         } else {
            
@@ -118,7 +119,7 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
             self.removeContributorToAdd(contributor as! PFUser);
         }
         
-        print(self.contributorsToAdd)
+       
     }
     
     
@@ -164,8 +165,8 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
                 
                 if (contributors[i] == targetContributor) {
                     print("friend found");
-                    contributors.removeAtIndex(i);
-                    print(contributors);
+                    self.contributorsToAdd?.removeAtIndex(i);
+                    print(self.contributorsToAdd);
                 }
             }
         }
