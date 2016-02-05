@@ -136,7 +136,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             
             if let upadatedAt = mosaic.updatedAt {
                 
-                mosaicLastUpdatedAt?.text = "Last Updated: " + dateToString(upadatedAt);
+                mosaicLastUpdatedAt?.text = "Last Updated: " +  DateUtil.timeAgoSinceDate(upadatedAt,numericDates: true);
             }
             
             if let user = mosaic["user"] as? PFObject {

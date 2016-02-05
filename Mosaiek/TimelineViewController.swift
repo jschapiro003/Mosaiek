@@ -168,7 +168,11 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.mosaicDescription?.text = timelineMosaics[indexPath.row]["description"] as? String;
         
-        cell.mosaicCreationDate?.text = dateToString(timelineMosaics[indexPath.row].createdAt);
+        if let date = timelineMosaics[indexPath.row].createdAt {
+            
+            cell.mosaicCreationDate?.text = DateUtil.timeAgoSinceDate(date!,numericDates: true);
+        }
+        
         
         if cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil{
             
