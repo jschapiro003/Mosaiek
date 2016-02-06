@@ -249,11 +249,12 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     func detailImageTapped() {
         
-    
-        let currentMosaic = self.mosaicImageList[self.pageControl.currentPage];
-        self.currentMosaicImage = currentMosaic;
-        
-        self.performSegueWithIdentifier("showMosaicImage", sender: self); // pass mosaicImage to next view
+        if self.mosaicImageList.count > self.pageControl.currentPage {
+            let currentMosaic = self.mosaicImageList[self.pageControl.currentPage];
+            self.currentMosaicImage = currentMosaic;
+            
+            self.performSegueWithIdentifier("showMosaicImage", sender: self); // pass mosaicImage to next view
+        }
        
     }
 
