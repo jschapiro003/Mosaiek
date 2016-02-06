@@ -9,7 +9,11 @@
 import UIKit
 import MobileCoreServices
 
-class TimelineDetailViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate {
+protocol EditMosaicDelegate {
+    func didEditMosaic(mosaicName:String,mosaicDescription:String);
+}
+
+class TimelineDetailViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, EditMosaicDelegate {
 
     var detailedMosaic:PFObject?
     
@@ -446,7 +450,22 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             
         }
         
+        if (segue.identifier == "showEditMosaic") {
+            let dvc = segue.destinationViewController as! EditMosaicViewController;
+            if let currentMosaic = self.detailedMosaic {
+                dvc.delegate = self;
+                dvc.mosaic = currentMosaic;
+            }
+        }
         
+        
+    }
+    
+    // EditMosaic Delegate Methods 
+    
+    func didEditMosaic(mosaicName: String, mosaicDescription: String) {
+        self.mosaicName.text = mosaicName;
+        self.mosaicDescription.text = mosaicDescription;
     }
 
 }

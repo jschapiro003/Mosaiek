@@ -10,11 +10,19 @@ import UIKit
 
 class EditMosaicViewController: UIViewController {
     
+    var mosaic:PFObject?
+    var delegate:EditMosaicDelegate?
+    
+    @IBOutlet weak var editName: UITextField!
+    
+    @IBOutlet weak var editDescription: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Welcome to the new edit mosaic view controller")
         
-        // Do any additional setup after loading the view.
+        if let mosaicToEdit = self.mosaic {
+            self.setupView();
+        }
+       
     }
     
     override func didReceiveMemoryWarning() {
@@ -23,14 +31,32 @@ class EditMosaicViewController: UIViewController {
     }
     
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    func setupView(){
+        if let name = self.mosaic!["name"]{
+            self.editName.text = name as? String;
+        }
+        
+        if let description = self.mosaic!["description"] {
+            self.editDescription.text = description as? String;
+        }
     }
-    */
+    
+    @IBAction func editMosaic(sender: AnyObject) {
+        
+        if (self.mosaic != nil && self.editDescription.text != nil && self.editName.text != nil){
+            Mosaic.editMosaic(self.mosaic!, mosaicName: self.editName.text!, mosaicDescription: self.editDescription.text!, completion: { (success) -> Void in
+                //call delegate method to update timelinedetailview text labels
+                print("edited mosaic",success);
+                if (success == true){
+                    self.delegate?.didEditMosaic(self.editName.text!, mosaicDescription: self.editDescription.text!);
+                }
+            })
+        }
+        if let navController = self.navigationController {
+            navController.popViewControllerAnimated(true)
+        }
+        
+    }
+   
 
 }

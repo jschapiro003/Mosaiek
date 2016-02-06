@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class Mosaic {
     
     var mosaicName:String?
@@ -292,6 +293,26 @@ class Mosaic {
                 completion(count: Int(count));
                 
             })
+        }
+    }
+    
+    class func editMosaic(mosaic:PFObject,mosaicName:String,mosaicDescription:String,completion:(success:Bool)->Void){
+        
+        mosaic["name"] = mosaicName;
+        mosaic["description"] = mosaicDescription;
+        
+        mosaic.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
+            if (error != nil){
+                print("error ",error);
+            }
+            
+            if (success != true){
+                print("mosaic could not be updated");
+                completion(success: false);
+            } else {
+                print("mosaic succesfully updated");
+                completion(success:true);
+            }
         }
     }
 }

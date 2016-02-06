@@ -352,7 +352,7 @@
                     <navigationItem key="navigationItem" title="Detail Timeline View" id="F8D-SY-P3E">
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Edit" id="cf3-QU-Ldg">
                             <connections>
-                                <segue destination="CUX-9o-EEQ" kind="push" id="2aC-Lu-aqw"/>
+                                <segue destination="CUX-9o-EEQ" kind="push" identifier="showEditMosaic" id="2aC-Lu-aqw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -375,10 +375,10 @@
             </objects>
             <point key="canvasLocation" x="890" y="750"/>
         </scene>
-        <!--View Controller-->
+        <!--Edit Mosaic -->
         <scene sceneID="GwA-YV-G4g">
             <objects>
-                <viewController id="CUX-9o-EEQ" sceneMemberID="viewController">
+                <viewController id="CUX-9o-EEQ" customClass="EditMosaicViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ClZ-uj-7wI"/>
                         <viewControllerLayoutGuide type="bottom" id="M2p-Ea-w5E"/>
@@ -386,9 +386,43 @@
                     <view key="view" contentMode="scaleToFill" id="MVn-6M-fL2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bqb-Cg-rhe">
+                                <rect key="frame" x="20" y="113" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IYK-OU-otG">
+                                <rect key="frame" x="106" y="163" width="194" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7sD-VV-GVr">
+                                <rect key="frame" x="106" y="110" width="194" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fl2-hD-0Al">
+                                <rect key="frame" x="20" y="167" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="D5v-vY-HRj"/>
+                    <navigationItem key="navigationItem" title="Edit Mosaic " id="D5v-vY-HRj">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="aaB-am-NkA">
+                            <connections>
+                                <action selector="editMosaic:" destination="CUX-9o-EEQ" id="Om9-oa-SJo"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editDescription" destination="IYK-OU-otG" id="8cs-de-HUf"/>
+                        <outlet property="editName" destination="7sD-VV-GVr" id="XsU-eE-KCH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bF8-kp-nAY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
