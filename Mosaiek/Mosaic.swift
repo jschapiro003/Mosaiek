@@ -25,16 +25,21 @@ class Mosaic {
     }
     
     class func getUsersMosaics(user:PFUser, completion: (mosaics: [PFObject]?) -> Void){
+        
         //query mosaic table for mosaices where user = current user
         let mosaicsQuery = PFQuery(className: "Mosaic");
         mosaicsQuery.whereKey("user", equalTo: user);
         mosaicsQuery.includeKey("user");
         
+        print("beggining getUsers Mosaics");
+        
         mosaicsQuery.findObjectsInBackgroundWithBlock { (mosaics:[PFObject]?, error:NSError?) -> Void in
+            
             if (error != nil){
                 print("error ", error)
             } else {
                 if var usersMosaics = mosaics {
+                    
                     print("successfully retrieved users mosaics");
                    
                     self.getUsersContributedMosaics(user, completion: { (mosaics) -> Void in
@@ -42,6 +47,8 @@ class Mosaic {
                             for contributed in contributedMosaics {
                                 usersMosaics.append(contributed);
                             }
+                            completion(mosaics: usersMosaics);
+                        } else {
                             completion(mosaics: usersMosaics);
                         }
                     })
@@ -59,13 +66,13 @@ class Mosaic {
         contributedMosaicsQuery.includeKey("mosaic");
         contributedMosaicsQuery.includeKey("user");
         
+        print("getting contributed mosaics");
         
         contributedMosaicsQuery.findObjectsInBackgroundWithBlock { (mosaics:[PFObject]?, error:NSError?) -> Void in
             if (error != nil){
                 print("error",error);
             } else {
-                print ("successfully retrieved users contributed mosaics");
-                print(mosaics);
+                print ("successfully retrieved contributed mosaics");
                 completion(mosaics: mosaics);
             }
         }
@@ -76,7 +83,9 @@ class Mosaic {
         let mosaicContributorQuery = PFQuery(className:"Contributors"); //grab mosaic
         mosaicContributorQuery.whereKey("mosaic", equalTo: mosaic);
         mosaicContributorQuery.whereKey("user", equalTo: user);
+        mosaicContributorQuery.whereKey("status", equalTo: 0); //status must be 0
         
+        print("begginning update mosaic contributor");
         
         mosaicContributorQuery.getFirstObjectInBackgroundWithBlock { (contribution:PFObject?, error:NSError?) -> Void in
             if (error != nil){
@@ -100,8 +109,6 @@ class Mosaic {
                                     }
                                 })
                             }
-                           
-                            
                         }
                     })
                 }
@@ -112,7 +119,7 @@ class Mosaic {
     
     class func addContributors(mosaicName:String?,contributors:Array<PFUser>){
         
-        //get mosaic objects to act as pointer
+        //get mosaic objects to act as pointer **** Refactor to use mosaic not mosaic name
         let mosaicQuery = PFQuery(className: "Mosaic");
         
         if let name = mosaicName {
@@ -122,6 +129,7 @@ class Mosaic {
             return;
         }
         
+        print("begginning add contributors");
         mosaicQuery.getFirstObjectInBackgroundWithBlock { (mosaic:PFObject?, error:NSError?) -> Void in
             
             if (mosaic != nil){
@@ -131,24 +139,48 @@ class Mosaic {
                 if (contributors.count > 0){
                     for contributor in contributors {
                         
-                        let contributorsTable = PFObject(className: "Contributors");
-                        contributorsTable["mosaic"] = mosaic;
-                        contributorsTable["user"] = contributor;
-                        contributorsTable["status"] = 0;
+                        //check if contributor relationship exists
                         
-                        contributorsTable.saveInBackgroundWithBlock({ (success: Bool, error:NSError?) -> Void in
+                        let contributorsQuery = PFQuery(className: "Contributors");
+                        contributorsQuery.whereKey("mosaic", equalTo: mosaic!);
+                        contributorsQuery.whereKey("user",equalTo: contributor);
+                        
+                        contributorsQuery.getFirstObjectInBackgroundWithBlock({ (contributorRelationship:PFObject?, error:NSError?) -> Void in
+                            
                             if (error != nil){
-                                print("error:",error);
-                            } else {
-                                print("success:",success);
-                                if (success == true){
-                                    //send notification to contributor
-                                    let notification = Notification(user: contributor, type: 1, description: "You have been invited to contribute to \(mosaic!["name"])", status: 0,sender:nil,mosaic:mosaic);
-                                    
-                                    notification.createNotification();
-                                }
+                                print("error: ",error);
                             }
+                                
+                                if contributorRelationship != nil {
+                                    print("relationship already exists");
+                                    return;
+                                } else {
+                                    
+                                    //relationship does not exist - add it
+                                    
+                                    let contributorsTable = PFObject(className: "Contributors");
+                                    contributorsTable["mosaic"] = mosaic;
+                                    contributorsTable["user"] = contributor;
+                                    contributorsTable["status"] = 0;
+                                    
+                                    contributorsTable.saveInBackgroundWithBlock({ (success: Bool, error:NSError?) -> Void in
+                                        if (error != nil){
+                                            print("error:",error);
+                                        } else {
+                                            print("success:",success);
+                                            if (success == true){
+                                                //send notification to contributor
+                                                let notification = Notification(user: contributor, type: 1, description: "You have been invited to contribute to \(mosaic!["name"])", status: 0,sender:nil,mosaic:mosaic);
+                                                
+                                                notification.createNotification();
+                                            }
+                                        }
+                                    })
+                                    
+                                }
+                            
                         })
+                        
                     }
                     
                 }

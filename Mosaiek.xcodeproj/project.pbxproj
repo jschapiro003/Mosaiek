@@ -192,6 +192,7 @@
 				310916F21C4EF2DE007EA1C5 /* LaunchScreen.storyboard */,
 				31E7A7401C51DE2200736786 /* TableViewCells */,
 				31E7A72D1C4F48D800736786 /* Models */,
+				3124CD801C65279000143310 /* Views */,
 				31E7A7241C4F2D7700736786 /* Controllers */,
 				3124CD7D1C65241A00143310 /* Utils */,
 				310916F01C4EF2DE007EA1C5 /* Assets.xcassets */,
@@ -247,6 +248,13 @@
 				3124CD7E1C65243800143310 /* Date.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		3124CD801C65279000143310 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		31E7A7241C4F2D7700736786 /* Controllers */ = {
