@@ -248,5 +248,50 @@ class Mosaic {
         
     }
     
+    class func isOwner(mosaic:PFObject,completion:(owner:Bool)->Void){
+        
+        let isOwnerQuery = PFQuery(className: "Mosaic");
+        isOwnerQuery.whereKey("objectId", equalTo: mosaic.objectId!);
+        isOwnerQuery.whereKey("user", equalTo: PFUser.currentUser()!);
+        
+        isOwnerQuery.getFirstObjectInBackgroundWithBlock { (owner:PFObject?, error:NSError?) -> Void in
+            
+            if (error != nil) {
+                
+                print("error ",error);
+            }
+            
+            if (owner != nil) {
+                
+                print("current user is the owner of this mosaic");
+                completion(owner: true);
+            } else {
+                print("current users is NOT owner of this mosaic");
+                completion(owner:false);
+            }
+        }
+    }
     
+    class func updateContributorCount(mosaic:PFObject,completion:(count:Int)->Void){
+        
+        let contributorCountQuery = PFQuery(className: "Contributors");
+        contributorCountQuery.whereKey("mosaic", equalTo: mosaic);
+        contributorCountQuery.whereKey("status", equalTo: 1);
+        
+        contributorCountQuery.countObjectsInBackgroundWithBlock { (count:Int32, error:NSError?) -> Void in
+            if (error != nil){
+                print("error ",error);
+            }
+            
+            mosaic["contributorsCount"] = Int(count);
+            mosaic.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                if (error != nil){
+                    print("error ",error);
+                }
+                print("mosaic contributor count updated");
+                completion(count: Int(count));
+                
+            })
+        }
+    }
 }

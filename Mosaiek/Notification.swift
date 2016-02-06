@@ -27,38 +27,70 @@ class Notification {
     }
     
     func createNotification(){
-        print("here", self.sender, self.mosaic);
+        
+        
         if (self.user != nil && self.type != nil && self.description != nil && self.status != nil){
-            print("hoping here");
-            let notificationTable = PFObject(className: "Notifications");
-            notificationTable["user"] = self.user;
-            notificationTable["type"] = self.type;
-            notificationTable["description"] = self.description;
-            notificationTable["status"] = self.status;
             
-            if (self.mosaic != nil){
-                notificationTable["mosaic"] = self.mosaic;
-            }
-            
-            if (self.sender != nil){
-                notificationTable["sender"] = self.sender;
-            }
-            
-            notificationTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
-                print("attempting to save a notification");
-                if (error != nil){
-                    print("error:",error);
+            //check if notification already exists
+            self.notificationExists({ (notificationExists) -> Void in
+                if (notificationExists == true){
+                    return;
                 } else {
-                    print("success:",success);
-                    if (success == true){
-                        print("Notification successfully created");
-                    } else {
-                        print("sucess",error);
+                    
+                    // notification does not exist - create it
+                    
+                    let notificationTable = PFObject(className: "Notifications");
+                    notificationTable["user"] = self.user;
+                    notificationTable["type"] = self.type;
+                    notificationTable["description"] = self.description;
+                    notificationTable["status"] = self.status;
+                    
+                    if (self.mosaic != nil){
+                        notificationTable["mosaic"] = self.mosaic;
                     }
+                    
+                    if (self.sender != nil){
+                        notificationTable["sender"] = self.sender;
+                    }
+                    
+                    print("attempting to save a notification");
+                    notificationTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                        
+                        if (error != nil){
+                            print("error:",error);
+                        } else {
+                            if (success == true){
+                                print("Notification successfully created");
+                            } else {
+                                print("sucess",error);
+                            }
+                        }
+                    })
+                    
                 }
             })
+            
         }
       
+    }
+    
+    func notificationExists(completion:(notificationExists:Bool)-> Void){
+        let notificationQuery = PFQuery(className: "Notifications");
+        notificationQuery.whereKey("user", equalTo:self.user!);
+        notificationQuery.whereKey("type", equalTo: self.type!);
+        notificationQuery.whereKey("description", equalTo: self.description!);
+        
+        notificationQuery.getFirstObjectInBackgroundWithBlock { (notification:PFObject?, error:NSError?) -> Void in
+            if (error != nil){
+                print("error ",error);
+            }
+            if (notification != nil){
+                print("notification exists already");
+                completion(notificationExists: true);
+            } else {
+                completion(notificationExists: false);
+            }
+        }
         
     }
 }

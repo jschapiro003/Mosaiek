@@ -34,6 +34,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     var imagePicker: UIImagePickerController!
     
+    @IBOutlet weak var editMosaic: UIBarButtonItem!
+    
     // scrollview arrays
     var mosaicScrollImages:[UIImage] = [];
     var mosaicScrollViews:[UIImageView?] = [];
@@ -83,6 +85,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         let this = self;
         
         if let mosaic = self.detailedMosaic{
+            
+            //isOwner?
+            
+            Mosaic.isOwner(mosaic, completion: { (owner) -> Void in
+                if (owner == true){
+                    self.editMosaic.enabled = true;
+                }
+            });
             
             if let name = mosaic["name"]{
                 self.mosaicName?.text = name as? String;
@@ -425,13 +435,17 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-                  
+        if (segue.identifier == "showMosaicImage") {
+            
             let dvc = segue.destinationViewController as! TimelineDetailCommentViewController;
             
             if let currentMosaic = self.currentMosaicImage {
                 dvc.mosaicImage = currentMosaic;
                 
             }
+            
+        }
+        
         
     }
 
