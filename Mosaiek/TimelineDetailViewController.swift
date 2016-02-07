@@ -49,11 +49,10 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var currentMosaicImage: PFObject?
     
     
-   
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(self.detailedMosaic);
         self.setupView();
        
     }
@@ -110,11 +109,11 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 if let contributedMosaic = mosaic["mosaic"] as? PFObject{
                     
                     if let name = contributedMosaic["name"]{
-                        self.mosaicName.text = name as? String;
+                        self.mosaicName?.text = name as? String;
                     }
                     
-                    if let description = contributedMosaic["description"]{
-                        self.mosaicDescription.text = description as? String;
+                    if let description = contributedMosaic["description"] as? String{
+                        self.mosaicDescription?.text = description;
                     }
                     
                     if let imageFile = contributedMosaic["image"] as? PFFile{

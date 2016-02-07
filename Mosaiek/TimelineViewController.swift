@@ -15,7 +15,7 @@ protocol NewMosaicDelegate {
 
 class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate {
     
-    var timelineMosaics  = [];
+    var timelineMosaics:[PFObject]  = [];
     var currentMosaic:PFObject?
     
     @IBOutlet weak var mosaicTable: UITableView!
@@ -97,6 +97,12 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             dvc?.detailedMosaic = currentMosaic;
             
         }
+        
+        if (segue.identifier == "showCreateMosaic") {
+            let dvc = segue.destinationViewController as? NewMosaicViewController;
+            dvc?.delegate = self;
+        }
+        
     }
     
     //#MARK - TableViewDelegate Methods
@@ -135,18 +141,18 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if let user = timelineMosaics[indexPath.row]["user"]{
-            if let userInfo = user {
+            
                 
-                if (userInfo["profileName"] != nil){
+            if (user["profileName"] != nil){
+                
+                if let name = user["profileName"]{
                     
-                    if let name = userInfo["profileName"]{
-                        
-                        cell.username?.text = name as? String;
-                    }
+                    cell.username?.text = name as? String;
                 }
-                
             }
-            if let userPhoto = user!["profilePic"]{
+                
+            
+            if let userPhoto = user["profilePic"]{
                 
                 if let url = NSURL(string: userPhoto as! String) {
                     
@@ -174,7 +180,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if let date = timelineMosaics[indexPath.row].createdAt {
             
-            cell.mosaicCreationDate?.text = DateUtil.timeAgoSinceDate(date!,numericDates: true);
+            cell.mosaicCreationDate?.text = DateUtil.timeAgoSinceDate(date,numericDates: true);
         }
         
         
@@ -220,7 +226,9 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     //#MARK - New Mosaic Delegate Methods
     
     func didCreateNewMosaic(mosaic:PFObject) {
-        
+        print("adding to datasource");
+        self.timelineMosaics.insert(mosaic, atIndex: 0);
+        self.mosaicTable.reloadData();
     }
     
 

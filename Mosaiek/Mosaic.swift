@@ -233,7 +233,9 @@ class Mosaic {
                     }
                 })
                 
-                mosaic["likes"] = mosaic["likes"] as! Int + 1;
+                if let mosaicLikes = mosaic["likes"] as? Int {
+                    mosaic["likes"] = mosaicLikes + 1;
+                }
                 
                 mosaic.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
                     if (error != nil){
