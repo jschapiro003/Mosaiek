@@ -27,6 +27,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     
     var mosaic:Mosaic?
     
+    var delegate:NewMosaicDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -150,12 +152,15 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         
         newMosaic.saveInBackgroundWithBlock { (success, error) -> Void in
             
-            if ((error) != nil){
+            if (error != nil){
                 
                 print(error);
                 
             } else {
                 
+                if let newMosaicDelegate = self.delegate {
+                    newMosaicDelegate.didCreateNewMosaic(newMosaic);
+                }
                 print("mosaic saved successfully",success);
                 
             }

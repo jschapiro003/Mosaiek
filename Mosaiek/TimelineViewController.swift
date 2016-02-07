@@ -8,10 +8,14 @@
 
 import UIKit
 
+protocol NewMosaicDelegate {
+    func didCreateNewMosaic(mosaic:PFObject);
+}
 
-class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate {
     
-    var timelineMosaics = [];
+    var timelineMosaics  = [];
     var currentMosaic:PFObject?
     
     @IBOutlet weak var mosaicTable: UITableView!
@@ -211,6 +215,12 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         let dateString = dateFormatter.stringFromDate(date!)
         
         return dateString;
+    }
+    
+    //#MARK - New Mosaic Delegate Methods
+    
+    func didCreateNewMosaic(mosaic:PFObject) {
+        
     }
     
 

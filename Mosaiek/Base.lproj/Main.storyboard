@@ -287,18 +287,6 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWX-hc-MrL">
                                 <rect key="frame" x="40" y="392" width="240" height="128"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxk-LX-sZC">
-                                <rect key="frame" x="88" y="351" width="151" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Si3-c1-Fo5">
-                                <rect key="frame" x="12" y="368" width="229" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xq9-Wm-fUx">
                                 <rect key="frame" x="29" y="351" width="22" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -350,6 +338,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Invite More To Contribute..."/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxk-LX-sZC">
+                                <rect key="frame" x="8" y="371" width="151" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -363,7 +357,6 @@
                     <connections>
                         <outlet property="editMosaic" destination="cf3-QU-Ldg" id="fSW-Hx-LDE"/>
                         <outlet property="mosaicContributors" destination="f8r-Ye-i2N" id="uKP-wb-MT2"/>
-                        <outlet property="mosaicDescription" destination="Si3-c1-Fo5" id="See-7x-KP7"/>
                         <outlet property="mosaicImage" destination="jZ3-RW-Lel" id="CFR-8r-AAU"/>
                         <outlet property="mosaicImages" destination="YWX-hc-MrL" id="NO8-Bk-gAE"/>
                         <outlet property="mosaicLIkesButton" destination="Hom-1n-NMX" id="fBV-2f-B3N"/>
