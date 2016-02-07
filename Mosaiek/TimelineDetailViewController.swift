@@ -40,6 +40,9 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBOutlet weak var editMosaic: UIBarButtonItem!
     
+    @IBOutlet weak var socialMediaShareView: UIView!
+    
+    
     // scrollview arrays
     var mosaicScrollImages:[UIImage] = [];
     var mosaicScrollViews:[UIImageView?] = [];
@@ -283,6 +286,12 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
        
     }
     
+    @IBAction func shareOnSocialMedia(sender: AnyObject) {
+        if (self.socialMediaShareView.hidden == true){
+            
+        }
+        self.socialMediaShareView.hidden = false;
+    }
     
     
     // #MARK - Image Picker

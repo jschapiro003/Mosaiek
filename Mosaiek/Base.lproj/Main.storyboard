@@ -332,12 +332,33 @@
                                 <rect key="frame" x="218" y="348" width="37" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Share"/>
+                                <connections>
+                                    <action selector="shareOnSocialMedia:" destination="LQK-Pc-T1s" eventType="touchUpInside" id="sZH-Z0-pf6"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YbU-IY-Fau">
                                 <rect key="frame" x="269" y="348" width="37" height="31"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Invite More To Contribute..."/>
                             </button>
+                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Vt-98-Ooc">
+                                <rect key="frame" x="173" y="318" width="147" height="31"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4n-T6-nXW">
+                                        <rect key="frame" x="0.0" y="1" width="38" height="30"/>
+                                        <state key="normal" title="Fb"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n04-GB-IPS">
+                                        <rect key="frame" x="44" y="1" width="38" height="30"/>
+                                        <state key="normal" title="Insta"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RRF-gG-ypr">
+                                        <rect key="frame" x="90" y="1" width="38" height="30"/>
+                                        <state key="normal" title="Pin"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxk-LX-sZC">
                                 <rect key="frame" x="8" y="371" width="151" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
@@ -365,6 +386,7 @@
                         <outlet property="mosaicName" destination="sxk-LX-sZC" id="Yhb-4z-YJu"/>
                         <outlet property="mosaicUserPic" destination="RDI-Dd-AG8" id="a2G-4i-c1p"/>
                         <outlet property="pageControl" destination="Hj3-2c-A2u" id="n3H-F1-IM6"/>
+                        <outlet property="socialMediaShareView" destination="6Vt-98-Ooc" id="S1L-hi-VmD"/>
                         <segue destination="phU-dN-dd3" kind="push" identifier="showMosaicImage" id="WkC-ue-xUE"/>
                     </connections>
                 </viewController>

@@ -31,6 +31,7 @@ class Mosaic {
         let mosaicsQuery = PFQuery(className: "Mosaic");
         mosaicsQuery.whereKey("user", equalTo: user);
         mosaicsQuery.includeKey("user");
+        mosaicsQuery.orderByDescending("createdAt");
         
         print("beggining getUsers Mosaics");
         
@@ -39,14 +40,22 @@ class Mosaic {
             if (error != nil){
                 print("error ", error)
             } else {
-                if var usersMosaics = mosaics {
+                
+                if let usersMosaics = mosaics {
                     
                     print("successfully retrieved users mosaics");
                    
                     self.getUsersContributedMosaics(user, completion: { (mosaics) -> Void in
                         if let contributedMosaics = mosaics {
                             for contributed in contributedMosaics {
-                                usersMosaics.append(contributed);
+                                
+                                if let contribMosaic = contributed["mosaic"] as? PFObject {
+                                    Mosaic.getSingleMosaic(contribMosaic, completion: { (mosaic) -> Void in
+                                        print("adding contributed mosaic",mosaic);
+                                        completion(mosaics: [mosaic]);
+                                    })
+                                }
+                                
                             }
                             completion(mosaics: usersMosaics);
                         } else {
@@ -60,10 +69,30 @@ class Mosaic {
         
     }
     
+    class func getSingleMosaic(mosaic:PFObject,completion:(mosaic:PFObject)->Void) {
+        let mosaicQuery = PFQuery(className: "Mosaic");
+        mosaicQuery.whereKey("objectId", equalTo: mosaic.objectId!);
+        mosaicQuery.includeKey("user");
+        
+        mosaicQuery.getFirstObjectInBackgroundWithBlock { (mosaic:PFObject?, error:NSError?) -> Void in
+            if (error != nil){
+                print("error ",error);
+            }
+            if let singleMosaic = mosaic {
+                print("successfuly retrieved single mosaic");
+                completion(mosaic: singleMosaic);
+            }
+        }
+    
+    }
+    
+    
+    
     class func getUsersContributedMosaics(user:PFUser,completion: (mosaics: [PFObject]?) -> Void){
         let contributedMosaicsQuery = PFQuery(className: "Contributors");
         contributedMosaicsQuery.whereKey("user", equalTo: user);
         contributedMosaicsQuery.whereKey("status", equalTo: 1);
+        contributedMosaicsQuery.orderByDescending("createdAt");
         contributedMosaicsQuery.includeKey("mosaic");
         contributedMosaicsQuery.includeKey("user");
         

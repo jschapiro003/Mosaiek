@@ -49,7 +49,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     func loadUsersMosaics() {
         Mosaic.getUsersMosaics(PFUser.currentUser()!) { (mosaics) -> Void in
             if let usersMosaics = mosaics {
-                self.timelineMosaics = usersMosaics;
+                self.timelineMosaics += usersMosaics;
                 
                 self.mosaicTable.reloadData();
             }
@@ -140,30 +140,6 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             })
         }
         
-        if let user = timelineMosaics[indexPath.row]["user"]{
-            
-                
-            if (user["profileName"] != nil){
-                
-                if let name = user["profileName"]{
-                    
-                    cell.username?.text = name as? String;
-                }
-            }
-                
-            
-            if let userPhoto = user["profilePic"]{
-                
-                if let url = NSURL(string: userPhoto as! String) {
-                    
-                    if let data = NSData(contentsOfURL: url) {
-                        
-                        cell.mosaicOwnerPhoto?.image = UIImage(data: data)
-                    }        
-                }
-            }
-        } 
-        
         if let likes = timelineMosaics[indexPath.row]["likes"] as? Int{
             
             cell.mosaicLikes?.text = String(likes);
@@ -183,8 +159,28 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.mosaicCreationDate?.text = DateUtil.timeAgoSinceDate(date,numericDates: true);
         }
         
+        if let user = timelineMosaics[indexPath.row]["user"]{
+            
+            if let profileName = user["profileName"] as? String{
+                cell.username?.text = profileName;
+            }
+            
+            
+            if let userPhoto = user["profilePic"]{
+                
+                if let url = NSURL(string: userPhoto as! String) {
+                    
+                    if let data = NSData(contentsOfURL: url) {
+                        
+                        cell.mosaicOwnerPhoto?.image = UIImage(data: data)
+                    }
+                }
+            }
+        }
         
-        if cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil{
+        //contributed mosaic
+        
+        if (cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil){
             
             if let contributorMosaic = timelineMosaics[indexPath.row]["mosaic"] as? PFObject{
                 
@@ -199,6 +195,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
+        
         
         return cell
         
@@ -226,7 +223,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     //#MARK - New Mosaic Delegate Methods
     
     func didCreateNewMosaic(mosaic:PFObject) {
-        print("adding to datasource");
+        
         self.timelineMosaics.insert(mosaic, atIndex: 0);
         self.mosaicTable.reloadData();
     }

@@ -192,6 +192,4 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
     }
     
     
-    
-    
 }
