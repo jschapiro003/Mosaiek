@@ -11,5 +11,5 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
-
+#import <FBSDKShareKit/FBSDKShareKit.h>
 #endif /* Bridging_Header_h */

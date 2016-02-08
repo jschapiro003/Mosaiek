@@ -347,6 +347,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4n-T6-nXW">
                                         <rect key="frame" x="0.0" y="1" width="38" height="30"/>
                                         <state key="normal" title="Fb"/>
+                                        <connections>
+                                            <action selector="shareMosaicOnFB:" destination="LQK-Pc-T1s" eventType="touchUpInside" id="jbR-sc-WVJ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n04-GB-IPS">
                                         <rect key="frame" x="44" y="1" width="38" height="30"/>

@@ -50,6 +50,7 @@
 		31E7A7421C51DE4A00736786 /* AddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7411C51DE4A00736786 /* AddFriendCell.swift */; };
 		31E7A7441C559CEF00736786 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7431C559CEF00736786 /* Notification.swift */; };
 		31E7A7461C55B8FE00736786 /* InvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7451C55B8FE00736786 /* InvitationCell.swift */; };
+		31FF49A71C680EB200E5204E /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FF49A61C680EB200E5204E /* FBSDKShareKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +121,7 @@
 		31E7A7411C51DE4A00736786 /* AddFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendCell.swift; sourceTree = "<group>"; };
 		31E7A7431C559CEF00736786 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		31E7A7451C55B8FE00736786 /* InvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationCell.swift; sourceTree = "<group>"; };
+		31FF49A61C680EB200E5204E /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31FF49A71C680EB200E5204E /* FBSDKShareKit.framework in Frameworks */,
 				310917341C4EFBAD007EA1C5 /* libsqlite3.tbd in Frameworks */,
 				310917321C4EFBA6007EA1C5 /* libz.tbd in Frameworks */,
 				310917381C4EFC8F007EA1C5 /* FBSDKLoginKit.framework in Frameworks */,
@@ -223,6 +226,7 @@
 		310917171C4EF4A3007EA1C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				31FF49A61C680EB200E5204E /* FBSDKShareKit.framework */,
 				310917371C4EFC8F007EA1C5 /* FBSDKLoginKit.framework */,
 				310917351C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework */,
 				310917331C4EFBAD007EA1C5 /* libsqlite3.tbd */,

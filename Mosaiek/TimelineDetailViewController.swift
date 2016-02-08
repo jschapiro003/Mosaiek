@@ -288,11 +288,25 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBAction func shareOnSocialMedia(sender: AnyObject) {
         if (self.socialMediaShareView.hidden == true){
-            
+            self.socialMediaShareView.hidden = false;
+        } else {
+            self.socialMediaShareView.hidden = true;
         }
-        self.socialMediaShareView.hidden = false;
+        
     }
     
+    @IBAction func shareMosaicOnFB(sender: AnyObject) {
+        print("sharing image on fb");
+        if let image = self.mosaicImage.image {
+            print("image is present");
+            let photo : FBSDKSharePhoto = FBSDKSharePhoto()
+            photo.image = image;
+            photo.userGenerated = true
+            let content : FBSDKSharePhotoContent = FBSDKSharePhotoContent()
+            content.photos = [photo]
+        }
+        
+    }
     
     // #MARK - Image Picker
     
