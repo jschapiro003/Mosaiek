@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import Social
 
 protocol EditMosaicDelegate {
     func didEditMosaic(mosaicName:String,mosaicDescription:String);
@@ -298,12 +299,13 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     @IBAction func shareMosaicOnFB(sender: AnyObject) {
         print("sharing image on fb");
         if let image = self.mosaicImage.image {
-            print("image is present");
-            let photo : FBSDKSharePhoto = FBSDKSharePhoto()
-            photo.image = image;
-            photo.userGenerated = true
-            let content : FBSDKSharePhotoContent = FBSDKSharePhotoContent()
-            content.photos = [photo]
+            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) {
+                let fbShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook);
+                fbShare.setInitialText("Check out this photo mosaic I made on Mosaiek");
+                fbShare.addImage(image);
+                
+                self.presentViewController(fbShare, animated: true, completion: nil);
+            }
         }
         
     }
