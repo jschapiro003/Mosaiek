@@ -600,6 +600,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jonathan Schapiro (B6KNDXG7TJ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/jonathanschapiro/Documents/FacebookSDK,
 					/Users/jonathanschapiro/Documents/ParseSDK,
@@ -617,6 +618,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jonathan Schapiro (B6KNDXG7TJ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/jonathanschapiro/Documents/FacebookSDK,
 					/Users/jonathanschapiro/Documents/ParseSDK,

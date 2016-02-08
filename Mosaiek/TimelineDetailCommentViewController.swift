@@ -169,9 +169,9 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
     
     func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         print("should end editing");
-        return false
+        return true
     }
-    
+   
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         

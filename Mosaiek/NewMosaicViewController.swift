@@ -15,7 +15,7 @@ protocol GenerateNewMosaicDelegate {
     func contributorsAddedToMosaic(contributors: Array<PFUser>)
 }
 
-class NewMosaicViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate,GenerateNewMosaicDelegate {
+class NewMosaicViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, GenerateNewMosaicDelegate {
     
     @IBOutlet weak var mosaicName: UITextField!
 
@@ -48,6 +48,9 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         mosaicImageViewTap.addTarget(self, action: "loadMosaicImage")
         mosaicImage.addGestureRecognizer(mosaicImageViewTap)
         mosaicImage.userInteractionEnabled = true
+        
+        self.mosaicName.delegate = self;
+        self.mosaicDescription.delegate = self;
         
     }
     
@@ -202,6 +205,23 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         }
     }
     
+    
+    //MARK: - Text Field Delegate Methods
+    
+    func textFieldDidBeginEditing(textField: UITextField!) {
+        
+    }
+    
+    func textFieldShouldEndEditing(textField: UITextField!) -> Bool {
+        return true
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
    
 
     
