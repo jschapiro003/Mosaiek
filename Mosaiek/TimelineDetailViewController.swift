@@ -489,8 +489,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     // EditMosaic Delegate Methods 
     
     func didEditMosaic(mosaicName: String, mosaicDescription: String) {
-        self.mosaicName.text = mosaicName;
-        self.mosaicDescription.text = mosaicDescription;
+        self.mosaicName?.text = mosaicName;
+        self.mosaicDescription?.text = mosaicDescription;
     }
 
 }

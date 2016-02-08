@@ -10,7 +10,7 @@ import Foundation
 
 class Comment {
     
-    class func saveComment(mosaicImage:PFObject,comment:String,completion:(success:String)->Void){
+    class func saveComment(mosaicImage:PFObject,comment:String,completion:(success:String,comment:PFObject)->Void){
         
         let commentsTable = PFObject(className: "Comments");
         commentsTable["mosaicImage"] = mosaicImage;
@@ -26,7 +26,7 @@ class Comment {
                 
             } else {
                 
-                completion(success: "Successfully saved comment" + String(success));
+                completion(success: "Successfully saved comment" + String(success),comment: commentsTable);
             }
         }
         

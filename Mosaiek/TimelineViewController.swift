@@ -13,7 +13,7 @@ protocol NewMosaicDelegate {
 }
 
 
-class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate {
+class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate {
     
     var timelineMosaics:[PFObject]  = [];
     var currentMosaic:PFObject?
@@ -203,7 +203,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        currentMosaic = timelineMosaics[indexPath.row] as? PFObject;
+        currentMosaic = timelineMosaics[indexPath.row];
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
@@ -228,5 +228,10 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         self.mosaicTable.reloadData();
     }
     
+    //#Mark - Edit Mosaic Delegate
+    
+    func didEditMosaic(mosaicName: String, mosaicDescription: String) {
+            //find cell of current mosaic and update values
+    }
 
 }

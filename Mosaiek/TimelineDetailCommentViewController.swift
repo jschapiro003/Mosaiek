@@ -179,7 +179,9 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
             
             if let mosaicImg = self.mosaicImage {
                 
-                Comment.saveComment(mosaicImg, comment: comment, completion: { (success) -> Void in
+                Comment.saveComment(mosaicImg, comment: comment, completion: { (success,commentObject) -> Void in
+                    self.comments?.insert(commentObject, atIndex: 0);
+                    self.mosaicImageComments.reloadData();
                     print("comment saved", success);
                 })
             
