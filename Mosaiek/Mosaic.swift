@@ -309,6 +309,7 @@ class Mosaic {
         likesQuery.whereKey("mosaic", equalTo: mosaic);
         likesQuery.whereKey("user", equalTo: PFUser.currentUser()!);
         
+        
         likesQuery.getFirstObjectInBackgroundWithBlock { (like:PFObject?, error:NSError?) -> Void in
             if (error != nil){
                 print("error ",error);

@@ -60,11 +60,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    //#MARK - IBAction
-    
-    @IBAction func likeMosaic(sender: AnyObject) {
-        print("like mosaic");
-    }
+   
     
     //#MARK - Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
@@ -125,7 +121,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        let this = self;
+       
         let cell:TimelineMosaicCell = tableView.dequeueReusableCellWithIdentifier("timelineMosaicCell", forIndexPath: indexPath) as! TimelineMosaicCell
         
        
@@ -143,6 +140,18 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             })
         }
+        
+        Mosaic.hasLikedMosaic(timelineMosaics[indexPath.row]) { (liked) -> Void in
+            if (liked == true){
+                cell.likeButton?.setBackgroundImage(UIImage(named: "likes_filled"), forState:UIControlState.Normal);
+                cell.likeButton?.enabled = false;
+                
+            }
+        }
+        
+        
+        cell.likeButton?.tag = indexPath.row;
+        cell.likeButton?.addTarget(this, action: "likeMosaic:", forControlEvents: UIControlEvents.TouchUpInside);
         
         if let likes = timelineMosaics[indexPath.row]["likes"] as? Int{
             
@@ -182,34 +191,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         
-        
-        Mosaic.getMosaicContributorsWithLimit(timelineMosaics[indexPath.row]) { (contributors) -> Void in
-            
-            if let mosaicContributors = contributors {
-                
-                var startingXPos = 0;
-                
-                for contributor in mosaicContributors {
-                    
-                    if let user = contributor["user"] as? PFObject {
-                        
-                        if let profilePic = user["profilePic"] as? String {
-                            // create contributorimageview
-                            let civ = ContributorImageView(imageString: profilePic, x: startingXPos, y: 2, width: 20, height: 20)
-                            print("creating a new civ");
-                            cell.contributorsView?.addSubview(civ);
-                            startingXPos = startingXPos + 10
-                            print("Self has \(self.view.subviews.count) views");
-                        }
-                    }
-                }
-            }
-        }
-        //get this mosaics contributors
-        //for each contributor create a new view
-        //add it contributors view with +x 5 position
-        
-        //contributed mosaic
+
         
         if (cell.mosaicName?.text == nil && cell.mosaicDescription?.text == nil){
             
@@ -230,6 +212,10 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return cell
         
+    }
+    
+    func likeMosaic(sender:UIButton){
+        print("liking a mosaic",sender.tag);
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

@@ -26,7 +26,6 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     @IBOutlet weak var mosaicLikes: UILabel!
     
     @IBOutlet weak var mosaicLIkesButton: UIButton!
-    @IBOutlet weak var mosaicContributors: UILabel!
     
     @IBOutlet weak var mosaicName: UILabel!
     
@@ -44,6 +43,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBOutlet weak var socialMediaShareView: UIView!
     
+    @IBOutlet weak var contributorsView: UIView!
     
     // scrollview arrays
     var mosaicScrollImages:[UIImage] = [];
@@ -184,15 +184,6 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 })
             }
             
-            if let contributors = mosaic["contributors"]{
-                
-                self.mosaicContributors.text = String(contributors);
-                
-            } else {
-                
-                self.mosaicContributors.text = "0";
-                
-            }
             
             if let likes = mosaic["likes"]{
                 
@@ -202,7 +193,30 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 
                 self.mosaicLikes?.text = "0";
             }
-
+            
+            //add contributors to contributors view
+            Mosaic.getMosaicContributorsWithLimit(mosaic) { (contributors) -> Void in
+                
+                if let mosaicContributors = contributors {
+                    
+                    var startingXPos = 0;
+                    
+                    for contributor in mosaicContributors {
+                        
+                        if let user = contributor["user"] as? PFObject {
+                            
+                            if let profilePic = user["profilePic"] as? String {
+                                // create contributorimageview
+                                let civ = ContributorImageView(imageString: profilePic, x: startingXPos, y: 2, width: 20, height: 20)
+                                print("creating a new civ");
+                                self.contributorsView?.addSubview(civ);
+                                startingXPos = startingXPos + 10
+                                print("Self has \(self.view.subviews.count) views");
+                            }
+                        }
+                    }
+                }
+            }
             
             // Mosaic info has been loaded now get MosaicImages
             
