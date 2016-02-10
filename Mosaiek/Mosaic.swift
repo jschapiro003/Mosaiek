@@ -33,17 +33,15 @@ class Mosaic {
         mosaicsQuery.includeKey("user");
         mosaicsQuery.orderByDescending("createdAt");
         
-        print("beggining getUsers Mosaics");
+        print("Mosaic.swift - getUsersMosaics");
         
         mosaicsQuery.findObjectsInBackgroundWithBlock { (mosaics:[PFObject]?, error:NSError?) -> Void in
             
             if (error != nil){
-                print("error ", error)
+                print("An error occurred in Mosaic.swift - getUsersMosaics ", error)
             } else {
                 
                 if let usersMosaics = mosaics {
-                    
-                    print("successfully retrieved users mosaics");
                    
                     self.getUsersContributedMosaics(user, completion: { (mosaics) -> Void in
                         if let contributedMosaics = mosaics {
@@ -51,7 +49,7 @@ class Mosaic {
                                 
                                 if let contribMosaic = contributed["mosaic"] as? PFObject {
                                     Mosaic.getSingleMosaic(contribMosaic, completion: { (mosaic) -> Void in
-                                        print("adding contributed mosaic",mosaic);
+                                        
                                         completion(mosaics: [mosaic]);
                                     })
                                 }
@@ -74,12 +72,14 @@ class Mosaic {
         mosaicQuery.whereKey("objectId", equalTo: mosaic.objectId!);
         mosaicQuery.includeKey("user");
         
+        print("Mosaic.swift - getSingleMosaic");
+        
         mosaicQuery.getFirstObjectInBackgroundWithBlock { (mosaic:PFObject?, error:NSError?) -> Void in
             if (error != nil){
-                print("error ",error);
+                print("An error occurred in Mosaic.swift - getSingleMosaic ",error);
             }
             if let singleMosaic = mosaic {
-                print("successfuly retrieved single mosaic");
+                
                 completion(mosaic: singleMosaic);
             }
         }
@@ -96,13 +96,13 @@ class Mosaic {
         contributedMosaicsQuery.includeKey("mosaic");
         contributedMosaicsQuery.includeKey("user");
         
-        print("getting contributed mosaics");
+        print("Mosaic.swift- getUsersContributedMosaics");
         
         contributedMosaicsQuery.findObjectsInBackgroundWithBlock { (mosaics:[PFObject]?, error:NSError?) -> Void in
             if (error != nil){
-                print("error",error);
+                print("An error occurred in Mosaic.swift- getUsersContributedMosaics ",error);
             } else {
-                print ("successfully retrieved contributed mosaics");
+                
                 completion(mosaics: mosaics);
             }
         }
@@ -115,27 +115,27 @@ class Mosaic {
         mosaicContributorQuery.whereKey("user", equalTo: user);
         mosaicContributorQuery.whereKey("status", equalTo: 0); //status must be 0
         
-        print("begginning update mosaic contributor");
+        print("Mosaic.swift- updateMosaicContributor");
         
         mosaicContributorQuery.getFirstObjectInBackgroundWithBlock { (contribution:PFObject?, error:NSError?) -> Void in
             if (error != nil){
-                print("mosaic error: ",error);
+                print("An error occurred in Mosaic.swift- updateMosaicContributor ",error);
             } else {
                 if let contributionVal = contribution {
                     contributionVal["status"] = 1; //update contribution record
                     contributionVal.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                         if (error != nil){
-                            print("error",error);
+                            print("An error occurred in Mosaic.swift- updateMosaicContributor ",error);
                         } else {
-                            print("mosaic contributor updated: ",success);
+                            
                             //update mosaics contributors
                             if let contributorsCount = mosaic["contributorsCount"] as? Int {
                                 mosaic["contributorsCount"] = contributorsCount + 1;
                                 mosaic.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                                     if (error != nil){
-                                        print("error ",error);
+                                        print("An error occurred in Mosaic.swift- updateMosaicContributor ",error);
                                     } else {
-                                        print("mosaci contributors count updated: ",success);
+                                        
                                     }
                                 })
                             }
@@ -159,12 +159,11 @@ class Mosaic {
             return;
         }
         
-        print("begginning add contributors");
+        print("Mosaic.swift - addContributors");
+        
         mosaicQuery.getFirstObjectInBackgroundWithBlock { (mosaic:PFObject?, error:NSError?) -> Void in
             
             if (mosaic != nil){
-                
-                print("mosaic found");
                 
                 if (contributors.count > 0){
                     for contributor in contributors {
@@ -178,11 +177,10 @@ class Mosaic {
                         contributorsQuery.getFirstObjectInBackgroundWithBlock({ (contributorRelationship:PFObject?, error:NSError?) -> Void in
                             
                             if (error != nil){
-                                print("error: ",error);
+                                print("An error occurred in Mosaic.swift - addContributors: ",error);
                             }
                                 
                                 if contributorRelationship != nil {
-                                    print("relationship already exists");
                                     return;
                                 } else {
                                     
@@ -195,9 +193,9 @@ class Mosaic {
                                     
                                     contributorsTable.saveInBackgroundWithBlock({ (success: Bool, error:NSError?) -> Void in
                                         if (error != nil){
-                                            print("error:",error);
+                                            print("An error occurred in Mosaic.swift - addContributors:",error);
                                         } else {
-                                            print("success:",success);
+                                           
                                             if (success == true){
                                                 //send notification to contributor
                                                 let notification = Notification(user: contributor, type: 1, description: "You have been invited to contribute to \(mosaic!["name"])", status: 0,sender:nil,mosaic:mosaic);
@@ -218,7 +216,7 @@ class Mosaic {
             }
             
             if (error != nil){
-                print(error);
+                print("Mosaic.swift - addContributors ",error);
             }
         
         }
@@ -234,16 +232,16 @@ class Mosaic {
         likesQuery.whereKey("mosaic", equalTo: mosaic);
         likesQuery.whereKey("user", equalTo: PFUser.currentUser()!);
         
+        print ("Mosaic.swift - likeMosaic");
         likesQuery.getFirstObjectInBackgroundWithBlock { (like:PFObject?, error:NSError?) -> Void in
             
             if (error != nil){
                 
-                print("error: ",error);
+                print("An error occurred in Mosaic.swift - likeMosaic: ",error);
                 
             }
                 
             if (like != nil){
-                print("like exists");
                 return;
                 
             } else {
@@ -256,9 +254,9 @@ class Mosaic {
                 likeSave.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                     
                     if (error != nil){
-                        print("error: ",error);
+                        print("An error occurred in Mosaic.swift - likeMosaic: ",error);
                     } else {
-                        print("saved like save", success);
+                        
                     }
                 })
                 
@@ -268,9 +266,9 @@ class Mosaic {
                 
                 mosaic.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
                     if (error != nil){
-                        print("error: ",error);
+                        print("An error occurred in Mosaic.swift - likeMosaic: ",error);
                     } else {
-                        print("successfully liked mosaic",success);
+                       
                     }
                 }
                 
@@ -286,19 +284,18 @@ class Mosaic {
         isOwnerQuery.whereKey("objectId", equalTo: mosaic.objectId!);
         isOwnerQuery.whereKey("user", equalTo: PFUser.currentUser()!);
         
+        print ("Mosaic.swift - isOwner");
+        
         isOwnerQuery.getFirstObjectInBackgroundWithBlock { (owner:PFObject?, error:NSError?) -> Void in
             
             if (error != nil) {
                 
-                print("error ",error);
+                print("An error occurred in Mosaic.swift ",error);
             }
             
             if (owner != nil) {
-                
-                print("current user is the owner of this mosaic");
                 completion(owner: true);
             } else {
-                print("current users is NOT owner of this mosaic");
                 completion(owner:false);
             }
         }
@@ -309,10 +306,11 @@ class Mosaic {
         likesQuery.whereKey("mosaic", equalTo: mosaic);
         likesQuery.whereKey("user", equalTo: PFUser.currentUser()!);
         
+        print("Mosaic.swift - hasLikedMosaic");
         
         likesQuery.getFirstObjectInBackgroundWithBlock { (like:PFObject?, error:NSError?) -> Void in
             if (error != nil){
-                print("error ",error);
+                print("An error occurred in Mosaic.swift - hasLikedMosaic",error);
             }
             
             if (like != nil){
@@ -329,17 +327,19 @@ class Mosaic {
         contributorCountQuery.whereKey("mosaic", equalTo: mosaic);
         contributorCountQuery.whereKey("status", equalTo: 1);
         
+        print("Mosaic.swift - updateContributorCount");
+        
         contributorCountQuery.countObjectsInBackgroundWithBlock { (count:Int32, error:NSError?) -> Void in
             if (error != nil){
-                print("error ",error);
+                print("An error occurred in Mosaic.swift - updateContributorCount ",error);
             }
             
             mosaic["contributorsCount"] = Int(count);
             mosaic.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                 if (error != nil){
-                    print("error ",error);
+                    print("An error occurred in Mosaic.swift - updateContributorCount ",error);
                 }
-                print("mosaic contributor count updated");
+               
                 completion(count: Int(count));
                 
             })
@@ -351,16 +351,18 @@ class Mosaic {
         mosaic["name"] = mosaicName;
         mosaic["description"] = mosaicDescription;
         
+        print("Mosaic.swift - editMosaic");
+        
         mosaic.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
             if (error != nil){
-                print("error ",error);
+                print("An error occurred in Mosaic.swift - editMosaic ",error);
             }
             
             if (success != true){
-                print("mosaic could not be updated");
+               
                 completion(success: false);
             } else {
-                print("mosaic succesfully updated");
+                
                 completion(success:true);
             }
         }
@@ -372,11 +374,12 @@ class Mosaic {
         mosaicContributorsQuery.limit = 10;
         mosaicContributorsQuery.includeKey("user");
         
+        print("Mosaic.swift - getMosaicContributorsWithLimit");
         mosaicContributorsQuery.findObjectsInBackgroundWithBlock { (results:[PFObject]?, error:NSError?) -> Void in
             if (error != nil){
-                print("error ",error);
+                print("An error occurred at Mosaic.swift - getMosaicContributorsWithLimit ",error);
             }
-            print("Got \(results!.count) contributors for \(mosaic["name"])")
+            
             completion(contributors: results);
         }
         
