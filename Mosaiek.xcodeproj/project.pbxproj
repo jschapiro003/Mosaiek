@@ -35,6 +35,7 @@
 		311F2E701C5F230F0011B49B /* TimelineDetailCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311F2E6F1C5F230F0011B49B /* TimelineDetailCommentViewController.swift */; };
 		3124CD7F1C65243800143310 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3124CD7E1C65243800143310 /* Date.swift */; };
 		3152A5C11C61A1390053746A /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3152A5C01C61A1390053746A /* CommentCell.swift */; };
+		31DD5E661C6ACD6700AFE515 /* ContributorImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD5E651C6ACD6700AFE515 /* ContributorImageView.swift */; };
 		31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */; };
 		31E7A7281C4F41DB00736786 /* InvitationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */; };
 		31E7A72A1C4F428400736786 /* NewMosaicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7291C4F428400736786 /* NewMosaicViewController.swift */; };
@@ -106,6 +107,7 @@
 		311F2E6F1C5F230F0011B49B /* TimelineDetailCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineDetailCommentViewController.swift; sourceTree = "<group>"; };
 		3124CD7E1C65243800143310 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		3152A5C01C61A1390053746A /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		31DD5E651C6ACD6700AFE515 /* ContributorImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributorImageView.swift; sourceTree = "<group>"; };
 		31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationsViewController.swift; sourceTree = "<group>"; };
 		31E7A7291C4F428400736786 /* NewMosaicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMosaicViewController.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 		3124CD801C65279000143310 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				31DD5E651C6ACD6700AFE515 /* ContributorImageView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				31E7A7311C4F493C00736786 /* User.swift in Sources */,
 				31E7A7371C4F49BB00736786 /* EditMosaicViewController.swift in Sources */,
 				31E7A7391C4F49E000736786 /* Comment.swift in Sources */,
+				31DD5E661C6ACD6700AFE515 /* ContributorImageView.swift in Sources */,
 				31E7A72A1C4F428400736786 /* NewMosaicViewController.swift in Sources */,
 				311F2E701C5F230F0011B49B /* TimelineDetailCommentViewController.swift in Sources */,
 				31E7A73D1C4F4A5900736786 /* EditContributorsViewController.swift in Sources */,

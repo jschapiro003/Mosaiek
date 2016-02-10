@@ -17,6 +17,7 @@ protocol EditMosaicDelegate {
 class TimelineDetailViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, EditMosaicDelegate {
 
     var detailedMosaic:PFObject?
+    var mosaicContributorViews:[UIImage]? = [];
     
     @IBOutlet weak var mosaicImage: UIImageView!
     

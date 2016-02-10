@@ -304,6 +304,24 @@ class Mosaic {
         }
     }
     
+    class func hasLikedMosaic(mosaic:PFObject,completion:(liked:Bool)->Void){
+        let likesQuery = PFQuery(className: "Likes");
+        likesQuery.whereKey("mosaic", equalTo: mosaic);
+        likesQuery.whereKey("user", equalTo: PFUser.currentUser()!);
+        
+        likesQuery.getFirstObjectInBackgroundWithBlock { (like:PFObject?, error:NSError?) -> Void in
+            if (error != nil){
+                print("error ",error);
+            }
+            
+            if (like != nil){
+                completion(liked: true);
+            } else {
+                completion(liked:false);
+            }
+        }
+    }
+    
     class func updateContributorCount(mosaic:PFObject,completion:(count:Int)->Void){
         
         let contributorCountQuery = PFQuery(className: "Contributors");
@@ -345,5 +363,21 @@ class Mosaic {
                 completion(success:true);
             }
         }
+    }
+    
+    class func getMosaicContributorsWithLimit(mosaic:PFObject,completion:(contributors:[PFObject]?)-> Void){
+        let mosaicContributorsQuery = PFQuery(className: "Contributors");
+        mosaicContributorsQuery.whereKey("mosaic", equalTo: mosaic);
+        mosaicContributorsQuery.limit = 10;
+        mosaicContributorsQuery.includeKey("user");
+        
+        mosaicContributorsQuery.findObjectsInBackgroundWithBlock { (results:[PFObject]?, error:NSError?) -> Void in
+            if (error != nil){
+                print("error ",error);
+            }
+            print("Got \(results!.count) contributors for \(mosaic["name"])")
+            completion(contributors: results);
+        }
+        
     }
 }

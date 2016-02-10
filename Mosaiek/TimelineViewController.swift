@@ -16,7 +16,9 @@ protocol NewMosaicDelegate {
 class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate {
     
     var timelineMosaics:[PFObject]  = [];
+    var mosaicContributors:[PFObject]? = [];
     var currentMosaic:PFObject?
+    
     
     @IBOutlet weak var mosaicTable: UITableView!
     
@@ -54,6 +56,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.mosaicTable.reloadData();
             }
         }
+        
+        
     }
     
     //#MARK - IBAction
@@ -177,6 +181,33 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
+        
+        
+        Mosaic.getMosaicContributorsWithLimit(timelineMosaics[indexPath.row]) { (contributors) -> Void in
+            
+            if let mosaicContributors = contributors {
+                
+                var startingXPos = 0;
+                
+                for contributor in mosaicContributors {
+                    
+                    if let user = contributor["user"] as? PFObject {
+                        
+                        if let profilePic = user["profilePic"] as? String {
+                            // create contributorimageview
+                            let civ = ContributorImageView(imageString: profilePic, x: startingXPos, y: 2, width: 20, height: 20)
+                            print("creating a new civ");
+                            cell.contributorsView?.addSubview(civ);
+                            startingXPos = startingXPos + 10
+                            print("Self has \(self.view.subviews.count) views");
+                        }
+                    }
+                }
+            }
+        }
+        //get this mosaics contributors
+        //for each contributor create a new view
+        //add it contributors view with +x 5 position
         
         //contributed mosaic
         

@@ -231,9 +231,14 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jHf-zm-rDG">
+                                                    <rect key="frame" x="52" y="219" width="151" height="28"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="contributorsView" destination="jHf-zm-rDG" id="r0Q-Di-VkQ"/>
                                             <outlet property="mosaicCreationDate" destination="0ZR-PF-56l" id="CfW-5l-sTR"/>
                                             <outlet property="mosaicDescription" destination="kDl-RB-N7A" id="vHn-bm-7aA"/>
                                             <outlet property="mosaicLikes" destination="Zrg-Ih-ENb" id="ccl-CA-2Gx"/>
