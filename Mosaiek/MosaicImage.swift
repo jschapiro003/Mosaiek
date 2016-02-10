@@ -22,7 +22,7 @@ class MosaicImage {
         print("MosaicImage.swift - getCurrentMosaicImages");
         MosaicImageQuery.findObjectsInBackgroundWithBlock { (mosaicImages:[PFObject]?,error: NSError?) -> Void in
             if (error != nil){
-                print("An error occurred in MosaicImage.swift - getCurrentMosaicImages ", error);
+                print("An error occurred in MosaicImage.swift - getCurrentMosaicImages ", error!.code);
             } else {
                 completion(mosaicImages);
             }
@@ -51,7 +51,7 @@ class MosaicImage {
         
         MosaicImageTable.saveInBackgroundWithBlock { (success:Bool,error: NSError?) -> Void in
             if (error != nil){
-                print("An error occurred at MosaicImage.swift - saveImageToMosasic ", error)
+                print("An error occurred at MosaicImage.swift - saveImageToMosasic ", error!.code)
             } else {
                 completion(success: success);
             }

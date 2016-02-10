@@ -57,12 +57,12 @@ class Notification {
                     notificationTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                         
                         if (error != nil){
-                            print("error:",error);
+                            print("An error occurred at Notification.swift-createNotification:",error);
                         } else {
                             if (success == true){
                                 print("Notification successfully created");
                             } else {
-                                print("sucess",error);
+                                print("sucess",error!.code);
                             }
                         }
                     })
@@ -84,7 +84,7 @@ class Notification {
         
         notificationQuery.getFirstObjectInBackgroundWithBlock { (notification:PFObject?, error:NSError?) -> Void in
             if (error != nil){
-                print("An error occurred in Notification.swift ",error);
+                print("An error occurred in Notification.swift ",error!.code);
             }
             if (notification != nil){
                 completion(notificationExists: true);

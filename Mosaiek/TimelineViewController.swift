@@ -141,17 +141,20 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             })
         }
         
+        cell.likeButton.enabled = false;
+        
+        //Like Button Setup
         Mosaic.hasLikedMosaic(timelineMosaics[indexPath.row]) { (liked) -> Void in
             if (liked == true){
                 cell.likeButton?.setBackgroundImage(UIImage(named: "likes_filled"), forState:UIControlState.Normal);
-                cell.likeButton?.enabled = false;
                 
             }
+            cell.likeButton.enabled = true;
         }
-        
         
         cell.likeButton?.tag = indexPath.row;
         cell.likeButton?.addTarget(this, action: "likeMosaic:", forControlEvents: UIControlEvents.TouchUpInside);
+        
         
         if let likes = timelineMosaics[indexPath.row]["likes"] as? Int{
             
@@ -215,7 +218,20 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func likeMosaic(sender:UIButton){
-        print("liking a mosaic",sender.tag);
+        let mosaic = timelineMosaics[sender.tag];
+        
+        if sender.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes_filled"){
+            sender.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
+            Mosaic.removeLike(mosaic, completion: { (success) -> Void in
+                if (success){
+                    print("like removed");
+                }
+            })
+        } else {
+            Mosaic.likeMosaic(mosaic);
+            sender.setBackgroundImage(UIImage(named: "likes_filled"), forState: UIControlState.Normal);
+        }
+       
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

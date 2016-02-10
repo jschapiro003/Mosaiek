@@ -24,7 +24,7 @@ class Comment {
            
             if (error != nil){
                
-                print("An error occurred in Comment.swift - saveComment ", error);
+                print("An error occurred in Comment.swift - saveComment ", error!.code);
                 
             } else {
                 
@@ -45,7 +45,7 @@ class Comment {
         commentQuery.findObjectsInBackgroundWithBlock { (comments:[PFObject]?, error:NSError?) -> Void in
             
             if (error != nil) {
-                print("An error occurred in Comment.swift - getUserComments ", error);
+                print("An error occurred in Comment.swift - getUserComments ", error!.code);
                 
             } else {
                 

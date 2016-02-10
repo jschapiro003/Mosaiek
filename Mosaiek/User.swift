@@ -61,7 +61,7 @@ class User {
                         
                         friendship.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                             if (error != nil){
-                                print("An error occurrred at User.swift - confirmFriendRequest ",error);
+                                print("An error occurrred at User.swift - confirmFriendRequest ",error!.code);
                             } else {
                                 //print("friendship successfully formed",success);
                             }
@@ -110,7 +110,7 @@ class User {
                 }
             } else {
                 // Log details of the failure
-                print("An error occurred in User.swift - loadAllUsers ", error);
+                print("An error occurred in User.swift - loadAllUsers ", error!.code);
             }
         }
         
@@ -147,7 +147,7 @@ class User {
             }
             
             if (error != nil){
-                print ("An error occurred in User.swift - loadAllFriends ",error);
+                print ("An error occurred in User.swift - loadAllFriends ",error!.code);
             }
             
             contributorsQuery1.findObjectsInBackgroundWithBlock({ (friend1: [PFObject]?, error: NSError?) -> Void in
@@ -161,7 +161,7 @@ class User {
                 completion(friends);
                 
                 if (error != nil){
-                    print ("An error occurred in User.swift - loadAllFriends ", error)
+                    print ("An error occurred in User.swift - loadAllFriends ", error!.code)
                 }
                 
             })
@@ -225,14 +225,14 @@ class User {
                                             notification.createNotification(); // race condition :(
                                             
                                         } else {
-                                            print("An error occured in User.swift - saveFriends ", error);
+                                            print("An error occured in User.swift - saveFriends ", error!.code);
                                             completion(success: "Friend relationship could not be saved");
                                         }
                                     })
                                     
                                 } else {
                                     
-                                    print("An error occured in User.swift - saveFriends ", error);
+                                    print("An error occured in User.swift - saveFriends ", error!.code);
                                     completion(success: "Could not find friend to add");
                                 }
                                 
@@ -262,7 +262,7 @@ class User {
         notificationsQuery.findObjectsInBackgroundWithBlock { (notifications: [PFObject]?, error: NSError?) -> Void in
             
             if (error != nil){
-                print("An error occurred in User.swift - getNotifications ",error);
+                print("An error occurred in User.swift - getNotifications ",error!.code);
             }
             
             if (notifications != nil){
@@ -291,7 +291,7 @@ class User {
         finalFriendQuery.getFirstObjectInBackgroundWithBlock { (friendship:PFObject?, error:NSError?) -> Void in
             if (error != nil) {
                 
-                print("An error occurred in  User.swift - isFriends ", error);
+                print("An error occurred in  User.swift - isFriends ", error!.code);
                 
             } else {
                 
