@@ -18,11 +18,13 @@ class Comment {
         commentsTable["comment"] = comment;
         commentsTable["likes"] = 0;
         
+        print("Comment.swift - saveComment");
+        
         commentsTable.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
            
             if (error != nil){
                
-                print("error: ", error);
+                print("An error occurred in Comment.swift - saveComment ", error);
                 
             } else {
                 
@@ -39,10 +41,11 @@ class Comment {
         commentQuery.whereKey("mosaicImage", equalTo: mosaicImage);
         commentQuery.includeKey("user");
         
+        print("Comment.swift - getUserComments");
         commentQuery.findObjectsInBackgroundWithBlock { (comments:[PFObject]?, error:NSError?) -> Void in
             
             if (error != nil) {
-                print("error: ", error);
+                print("An error occurred in Comment.swift - getUserComments ", error);
                 
             } else {
                 

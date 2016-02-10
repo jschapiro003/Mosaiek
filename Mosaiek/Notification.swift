@@ -53,7 +53,7 @@ class Notification {
                         notificationTable["sender"] = self.sender;
                     }
                     
-                    print("attempting to save a notification");
+                    print("Notification.swift - createNotification");
                     notificationTable.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
                         
                         if (error != nil){
@@ -80,12 +80,13 @@ class Notification {
         notificationQuery.whereKey("type", equalTo: self.type!);
         notificationQuery.whereKey("description", equalTo: self.description!);
         
+        print ("Notification.swift - notificationExists");
+        
         notificationQuery.getFirstObjectInBackgroundWithBlock { (notification:PFObject?, error:NSError?) -> Void in
             if (error != nil){
-                print("error ",error);
+                print("An error occurred in Notification.swift ",error);
             }
             if (notification != nil){
-                print("notification exists already");
                 completion(notificationExists: true);
             } else {
                 completion(notificationExists: false);

@@ -19,10 +19,10 @@ class MosaicImage {
         MosaicImageQuery.whereKey("mosaic", equalTo: mosaic);
         MosaicImageQuery.includeKey("user");
         
-        
+        print("MosaicImage.swift - getCurrentMosaicImages");
         MosaicImageQuery.findObjectsInBackgroundWithBlock { (mosaicImages:[PFObject]?,error: NSError?) -> Void in
             if (error != nil){
-                print("error: ", error);
+                print("An error occurred in MosaicImage.swift - getCurrentMosaicImages ", error);
             } else {
                 completion(mosaicImages);
             }
@@ -47,9 +47,11 @@ class MosaicImage {
         MosaicImageTable["mosaic"] = mosaic;
         MosaicImageTable["user"] = PFUser.currentUser()!;
         
+        print("MosaicImage.swift - saveImageToMosasic");
+        
         MosaicImageTable.saveInBackgroundWithBlock { (success:Bool,error: NSError?) -> Void in
             if (error != nil){
-                print("error: ", error)
+                print("An error occurred at MosaicImage.swift - saveImageToMosasic ", error)
             } else {
                 completion(success: success);
             }
