@@ -324,14 +324,16 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                     likeB.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
                     self.mosaicLikes?.text = String(Int(self.mosaicLikes.text!)! - 1)
                     
+                    if let delegate = self.likeDelegate {
+                        print("calling delegate method");
+                        delegate.didLikeMosaic(likeB,tag:likeB.tag,addLike: false);
+                    }
+                    
                     Mosaic.removeLike(mosaic, completion: { (success) -> Void in
                         if (success == false){
                             print("unable to remove like");
                         } else {
-                            if let delegate = self.likeDelegate {
-                                print("calling delegate method");
-                                delegate.didLikeMosaic(likeB,tag:likeB.tag,addLike: false);
-                            }
+                            
                         }
                         
                     })

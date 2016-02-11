@@ -294,8 +294,6 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
       
         let cell = self.mosaicTable.cellForRowAtIndexPath(NSIndexPath(forRow: tag, inSection: 0)) as! TimelineMosaicCell;
         
-        print("image",cell.likeButton.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes"));
-        print("image like",cell.likeButton.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes_filled"));
         
         if (addLike == false && button.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes")){
             
@@ -303,7 +301,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.mosaicLikes.text = String(Int(cell.mosaicLikes.text!)! - 1)
             
         } else if (addLike == true && button.backgroundImageForState(UIControlState.Normal) == UIImage(named:"likes_filled")) {
-            
+            print("adding a like")
             cell.mosaicLikes.text = String(Int(cell.mosaicLikes.text!)! + 1)
         }
     }
