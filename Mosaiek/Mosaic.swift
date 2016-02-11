@@ -291,6 +291,17 @@ class Mosaic {
                 print("An error occurred in Mosaic.swift - removeLike ", error);
             }
             if let lR = likeRecord {
+                
+                if let currentLikes = mosaic["likes"] as? Int {
+                    mosaic["likes"] = currentLikes - 1;
+                    mosaic.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                        if (error != nil){
+                            print("An error occurred in Mosaic.swift - removLike ",error);
+                        }
+                        
+                    })
+                }
+                
                 lR.deleteInBackgroundWithBlock({ (deleted:Bool, error:NSError?) -> Void in
                     if (error != nil){
                         print("An error occurred in Mosaic.swift - removeLike ", error);

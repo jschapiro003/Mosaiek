@@ -12,16 +12,20 @@ protocol NewMosaicDelegate {
     func didCreateNewMosaic(mosaic:PFObject);
 }
 
+protocol LikeMosaicDelegate {
+    func didLikeMosaic(button:UIButton,tag:Int,addLike:Bool)
+}
 
-class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate {
+
+class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate,LikeMosaicDelegate {
     
     var timelineMosaics:[PFObject]  = [];
     var mosaicContributors:[PFObject]? = [];
     var currentMosaic:PFObject?
+    var currentLikeButton:UIButton?
     
     
     @IBOutlet weak var mosaicTable: UITableView!
-    
     
     
     override func viewDidLoad() {
@@ -94,7 +98,14 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         if (segue.identifier == "showDetailTimelineView"){
             
             let dvc = segue.destinationViewController as? TimelineDetailViewController;
+            
             dvc?.detailedMosaic = currentMosaic;
+            dvc?.likeDelegate = self;
+            
+            if let likeB = self.currentLikeButton {
+                dvc?.mainLikeButton = likeB;
+            }
+            
             
         }
         
@@ -125,7 +136,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
        
         let cell:TimelineMosaicCell = tableView.dequeueReusableCellWithIdentifier("timelineMosaicCell", forIndexPath: indexPath) as! TimelineMosaicCell
         
-       
+        print("updating cell");
         
         let mosaicThumbnail:PFFile? = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
         
@@ -148,6 +159,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             if (liked == true){
                 cell.likeButton?.setBackgroundImage(UIImage(named: "likes_filled"), forState:UIControlState.Normal);
                 
+            } else {
+                cell.likeButton?.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
             }
             cell.likeButton.enabled = true;
         }
@@ -218,9 +231,12 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func likeMosaic(sender:UIButton){
+        let cell = self.mosaicTable.cellForRowAtIndexPath(NSIndexPath(forRow: sender.tag, inSection: 0)) as! TimelineMosaicCell;
+        
         let mosaic = timelineMosaics[sender.tag];
         
         if sender.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes_filled"){
+            cell.mosaicLikes.text = String(Int(cell.mosaicLikes.text!)! - 1);
             sender.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
             Mosaic.removeLike(mosaic, completion: { (success) -> Void in
                 if (success){
@@ -228,6 +244,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             })
         } else {
+            cell.mosaicLikes.text = String(Int(cell.mosaicLikes.text!)! + 1);
             Mosaic.likeMosaic(mosaic);
             sender.setBackgroundImage(UIImage(named: "likes_filled"), forState: UIControlState.Normal);
         }
@@ -235,6 +252,11 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! TimelineMosaicCell;
+
+        
+        self.currentLikeButton = cell.likeButton;
         
         currentMosaic = timelineMosaics[indexPath.row];
         
@@ -265,6 +287,25 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func didEditMosaic(mosaicName: String, mosaicDescription: String) {
             //find cell of current mosaic and update values
+    }
+    
+    //#Mark - Like Mosaic Delegate Methods
+    func didLikeMosaic(button:UIButton,tag:Int,addLike:Bool){
+      
+        let cell = self.mosaicTable.cellForRowAtIndexPath(NSIndexPath(forRow: tag, inSection: 0)) as! TimelineMosaicCell;
+        
+        print("image",cell.likeButton.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes"));
+        print("image like",cell.likeButton.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes_filled"));
+        
+        if (addLike == false && button.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes")){
+            
+            print("deprecating likes");
+            cell.mosaicLikes.text = String(Int(cell.mosaicLikes.text!)! - 1)
+            
+        } else if (addLike == true && button.backgroundImageForState(UIControlState.Normal) == UIImage(named:"likes_filled")) {
+            
+            cell.mosaicLikes.text = String(Int(cell.mosaicLikes.text!)! + 1)
+        }
     }
 
 }

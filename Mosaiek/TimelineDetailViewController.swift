@@ -18,6 +18,9 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
 
     var detailedMosaic:PFObject?
     var mosaicContributorViews:[UIImage]? = [];
+    var mainLikeButton:UIButton? //used to update prior vc's like button if it changes
+    var likeDelegate:LikeMosaicDelegate?
+    
     
     @IBOutlet weak var mosaicImage: UIImageView!
     
@@ -57,7 +60,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(self.detailedMosaic);
+        print(self.mainLikeButton?.backgroundImageForState(UIControlState.Normal));
         self.setupView();
        
     }
@@ -194,6 +197,19 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 self.mosaicLikes?.text = "0";
             }
             
+            if let likeState = self.mainLikeButton {
+                
+                if likeState.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes") {
+                    
+                    self.mosaicLIkesButton.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
+                    
+                } else {
+                    
+                    self.mosaicLIkesButton.setBackgroundImage(UIImage(named:"likes_filled"), forState: UIControlState.Normal);
+                    
+                }
+            }
+            
             //add contributors to contributors view
             Mosaic.getMosaicContributorsWithLimit(mosaic) { (contributors) -> Void in
                 
@@ -287,16 +303,43 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     }
     
     @IBAction func likeMosaic(sender: AnyObject) {
-        print(self.mosaicLIkesButton.alpha);
-        if (self.mosaicLIkesButton.alpha == 1.0){
-            print("liking mosaic");
+        
+        if let likeB = self.mainLikeButton {
+            
             if let mosaic = self.detailedMosaic {
-                
-                Mosaic.likeMosaic(mosaic);
-                self.mosaicLIkesButton.alpha = 0.5;
-                self.mosaicLikes.text = String(Int(self.mosaicLikes!.text!)! + 1);
-            } else {
-                return;
+            
+                if likeB.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes"){
+                    self.mosaicLIkesButton.setBackgroundImage(UIImage(named: "likes_filled"), forState: UIControlState.Normal);
+                    likeB.setBackgroundImage(UIImage(named: "likes_filled"), forState: UIControlState.Normal);
+                    self.mosaicLikes?.text = String(Int(self.mosaicLikes.text!)! + 1)
+                    Mosaic.likeMosaic(mosaic);
+                    
+                    if let delegate = self.likeDelegate {
+                        print("calling delegate method");
+                        delegate.didLikeMosaic(likeB,tag: likeB.tag,addLike: true);
+                    }
+                    
+                } else if (likeB.backgroundImageForState(UIControlState.Normal) == UIImage(named:"likes_filled")) {
+                    self.mosaicLIkesButton.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
+                    likeB.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
+                    self.mosaicLikes?.text = String(Int(self.mosaicLikes.text!)! - 1)
+                    
+                    Mosaic.removeLike(mosaic, completion: { (success) -> Void in
+                        if (success == false){
+                            print("unable to remove like");
+                        } else {
+                            if let delegate = self.likeDelegate {
+                                print("calling delegate method");
+                                delegate.didLikeMosaic(likeB,tag:likeB.tag,addLike: false);
+                            }
+                        }
+                        
+                    })
+                    
+                } else {
+                    
+                    return;
+                }
             }
         }
        
@@ -304,8 +347,11 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBAction func shareOnSocialMedia(sender: AnyObject) {
         if (self.socialMediaShareView.hidden == true){
+            
             self.socialMediaShareView.hidden = false;
+            
         } else {
+            
             self.socialMediaShareView.hidden = true;
         }
         
