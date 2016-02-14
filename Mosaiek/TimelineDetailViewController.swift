@@ -546,6 +546,13 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             }
         }
         
+        if (segue.identifier == "showAddMoreContributors"){
+            let dvc = segue.destinationViewController as! AddMoreContributorsViewController;
+            if let currentMosaic = self.detailedMosaic {
+                dvc.mosaic = currentMosaic;
+            }
+        }
+        
         
     }
     

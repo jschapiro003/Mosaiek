@@ -205,6 +205,9 @@ class Mosaic {
                                         }
                                     })
                                     
+                                   //update contrib count
+                                   
+                                    
                                 }
                             
                         })
@@ -417,5 +420,31 @@ class Mosaic {
             completion(contributors: results);
         }
         
+    }
+    
+    class func isContributor(mosaic:PFObject,user:PFObject,completion:(contributor:Bool)->Void){
+        
+        let contributorQuery = PFQuery(className: "Contributors");
+        contributorQuery.whereKey("mosaic", equalTo: mosaic);
+        contributorQuery.whereKey("user", equalTo: user);
+        contributorQuery.whereKey("status", equalTo: 1);
+        
+        print("Mosaic.swift - isContributor");
+        
+        contributorQuery.getFirstObjectInBackgroundWithBlock { (relationship:PFObject?, error:NSError?) -> Void in
+            if (error != nil){
+                
+                print("An error occurred in Mosaic.swift - isContributor",error?.code);
+            }
+            
+            if (relationship != nil){
+                
+                completion(contributor: true);
+                
+            } else {
+                
+                completion(contributor: false);
+            }
+        }
     }
 }
