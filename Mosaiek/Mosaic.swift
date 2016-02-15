@@ -147,6 +147,7 @@ class Mosaic {
         
     }
     
+    
     class func addContributors(mosaicName:String?,contributors:Array<PFUser>){
         
         //get mosaic objects to act as pointer **** Refactor to use mosaic not mosaic name

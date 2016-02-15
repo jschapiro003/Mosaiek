@@ -22,6 +22,7 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
     
     @IBOutlet weak var commentField: UITextField!
     
+    @IBOutlet weak var mosaicImageLikeButton: UIButton!
     
     var comments:[PFObject]?
     
@@ -79,6 +80,18 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
 
                 }
             }
+            
+            self.mosaicImageLikeButton.enabled = false;
+            MosaicImage.mosaicImageIsLiked(mosaicImg, completion: { (liked, likeRelationship) -> Void in
+                if (liked == true) {
+                    self.mosaicImageLikeButton.setBackgroundImage(UIImage(named: "likes_filled"), forState: UIControlState.Normal);
+                    
+                } else {
+                    self.mosaicImageLikeButton.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
+                }
+                
+                self.mosaicImageLikeButton.enabled = true;
+            })
         }
         
         // view populated - now get comments
@@ -106,6 +119,40 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
         
     }
    
+    @IBAction func likeMosaicImage(sender: AnyObject) {
+        
+        
+        if (self.mosaicImageLikeButton.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes")) {
+           
+            
+            self.mosaicImageLikeButton.setBackgroundImage(UIImage(named: "likes_filled"), forState: UIControlState.Normal);
+            
+            self.mosaicImageLikes.text = String(Int(self.mosaicImageLikes.text!)! + 1);
+           
+            if let mImage = self.mosaicImage {
+                
+                MosaicImage.likeMosaicImage(mImage);
+            }
+            
+        } else if (self.mosaicImageLikeButton.backgroundImageForState(UIControlState.Normal) == UIImage(named: "likes_filled")){
+           
+            
+            self.mosaicImageLikeButton.setBackgroundImage(UIImage(named: "likes"), forState: UIControlState.Normal);
+            
+            self.mosaicImageLikes.text = String(Int(self.mosaicImageLikes.text!)! - 1);
+            
+            if let mImage = self.mosaicImage {
+                
+                MosaicImage.removeMosaicImageLike(mImage);
+                
+            }
+
+        } else {
+            
+            return;
+        }
+        
+    }
     // #MARK - TableView Delegate Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -117,6 +164,7 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if let dataSource = self.comments {
+            
             return dataSource.count;
         }
         
@@ -129,7 +177,7 @@ class TimelineDetailCommentViewController: UIViewController, UITableViewDelegate
         let cell:CommentCell = tableView.dequeueReusableCellWithIdentifier("commentCell", forIndexPath: indexPath) as! CommentCell
         
         if let user = self.comments![indexPath.row]["user"] {
-            print("user found");
+           
             
             if let userCommentImage = user["profilePic"] as? String {
                 

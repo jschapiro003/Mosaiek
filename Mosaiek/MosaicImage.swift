@@ -60,6 +60,82 @@ class MosaicImage {
         
     }
     
+    class func likeMosaicImage(mosaicImage:PFObject){
+        self.mosaicImageIsLiked(mosaicImage) { (liked,likeRelationship) -> Void in
+            if (liked != true) {
+                let mosaicImageLike = PFObject(className: "Likes");
+                mosaicImageLike["user"] = PFUser.currentUser()!;
+                mosaicImageLike["mosaicImage"] = mosaicImage;
+                
+                mosaicImageLike.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                    if (error != nil) {
+                        print("An error occurred at MosaicImage.swift - likeMosaicImage", error?.code);
+                    }
+                    
+                    if (success) {
+                        if let likeCount = mosaicImage["likes"] as? Int {
+                            mosaicImage["likes"] = likeCount + 1;
+                        }
+                        
+                    }
+                    
+                })
+                
+            } else {
+                
+                return;
+            }
+        }
+    }
+    
+    class func removeMosaicImageLike(mosaicImage:PFObject){
+        
+        self.mosaicImageIsLiked(mosaicImage) { (liked,likedRelationship) -> Void in
+            if (liked == true) {
+                if let likeRel = likedRelationship {
+                    likeRel.deleteInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+                        print("like relationship remvoed");
+                        if (error != nil){
+                            print("An error occurred in MosaicImage.swift - removeMosaicLike");
+                        }
+                        if let likeCount = mosaicImage["likes"] as? Int {
+                            mosaicImage["likes"] = likeCount - 1;
+                        }
+                    })
+                }
+                
+            } else {
+                
+                return;
+            }
+        }
+
+        
+    }
+    
+    class func mosaicImageIsLiked(mosaicImage:PFObject,completion:(liked:Bool,likeRelationship:PFObject?)->Void){
+        
+        let mosaicImageQuery = PFQuery(className: "Likes");
+        mosaicImageQuery.whereKey("mosaicImage", equalTo: mosaicImage);
+        mosaicImageQuery.whereKey("user", equalTo: PFUser.currentUser()!);
+        
+        print("MosaicImage.swift - mosaicImageIsLiked");
+        
+        mosaicImageQuery.getFirstObjectInBackgroundWithBlock { (like:PFObject?, error:NSError?) -> Void in
+            
+            if (error != nil){
+                print("An error occurred in MosaicImage.swift - mosaicImageIsLiked");
+            }
+            
+            if (like != nil) {
+                completion(liked: true,likeRelationship: like);
+            } else {
+                completion(liked: false,likeRelationship: nil);
+            }
+        }
+        
+    }
+    
     class func fileToImage(file:PFFile, completion: (mosaicImage: UIImage?) -> Void){
         
         file.getDataInBackgroundWithBlock { (data: NSData?, error:NSError?) -> Void in

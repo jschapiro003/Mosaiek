@@ -555,9 +555,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9fm-CF-62h">
                                 <rect key="frame" x="8" y="72" width="28" height="25"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="likes" translatesAutoresizingMaskIntoConstraints="NO" id="Yia-l8-nGL">
-                                <rect key="frame" x="11" y="326" width="22" height="18"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmg-iU-XtH">
                                 <rect key="frame" x="37" y="324" width="13" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -579,6 +576,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpM-6d-ZWR">
+                                <rect key="frame" x="8" y="327" width="21" height="19.5"/>
+                                <state key="normal" title="Button" image="likes" backgroundImage="likes"/>
+                                <connections>
+                                    <action selector="likeMosaicImage:" destination="phU-dN-dd3" eventType="touchUpInside" id="bzC-Nu-lEd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -586,6 +590,7 @@
                     <connections>
                         <outlet property="commentField" destination="dXK-HL-crd" id="KP8-p6-mIc"/>
                         <outlet property="mosaicImageComments" destination="eZb-zC-Zcb" id="5At-IN-Ctj"/>
+                        <outlet property="mosaicImageLikeButton" destination="zpM-6d-ZWR" id="AER-vA-d7g"/>
                         <outlet property="mosaicImageLikes" destination="wmg-iU-XtH" id="ziv-1q-a9H"/>
                         <outlet property="mosaicImageUserPic" destination="9fm-CF-62h" id="U6N-7M-Rr8"/>
                         <outlet property="mosaicImageView" destination="kkI-gv-o5b" id="TVr-2m-g5A"/>
