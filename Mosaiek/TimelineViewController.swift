@@ -24,6 +24,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     var currentMosaic:PFObject?
     var currentLikeButton:UIButton?
     
+    @IBOutlet weak var timelineTableView: UITableView!
     
     @IBOutlet weak var mosaicTable: UITableView!
     
@@ -33,6 +34,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.mosaicTable.delegate = self;
         self.mosaicTable.dataSource = self;
+        
+        self.mosaicTable.hidden = true;
         
         self.loadUsersMosaics();
     }
@@ -55,7 +58,12 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     func loadUsersMosaics() {
         Mosaic.getUsersMosaics(PFUser.currentUser()!) { (mosaics) -> Void in
             if let usersMosaics = mosaics {
+               
                 self.timelineMosaics += usersMosaics;
+                
+                if (self.timelineMosaics.count > 0) {
+                    self.mosaicTable.hidden = false;
+                }
                 
                 self.mosaicTable.reloadData();
             }
@@ -280,6 +288,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     func didCreateNewMosaic(mosaic:PFObject) {
         
         self.timelineMosaics.insert(mosaic, atIndex: 0);
+        self.mosaicTable.hidden = false;
         self.mosaicTable.reloadData();
     }
     

@@ -26,9 +26,10 @@ class User {
         //f1-user && f1=friend OR f1= user && f2 = friend, OR f2 = user && f1 = friend, OR f2 = user && f2 = friend
         //http://stackoverflow.com/questions/27893758/parse-compound-queries-with-or-and-and
         
-        let friendQuery1 = PFQuery(className: "Friends");
+        /*let friendQuery1 = PFQuery(className: "Friends");
         friendQuery1.whereKey("friend1", equalTo: user);
         friendQuery1.whereKey("friend1", equalTo: friend);
+        */
         
         let friendQuery2 = PFQuery(className: "Friends");
         friendQuery2.whereKey("friend1", equalTo: user);
@@ -38,11 +39,13 @@ class User {
         friendQuery3.whereKey("friend2", equalTo: user);
         friendQuery3.whereKey("friend1", equalTo: friend);
         
+        /*
         let friendQuery4 = PFQuery(className: "Friends");
         friendQuery4.whereKey("friend2", equalTo: user);
         friendQuery4.whereKey("friend2", equalTo: friend);
+        */
         
-        let finalFriendQuery = PFQuery.orQueryWithSubqueries([friendQuery1,friendQuery2,friendQuery3,friendQuery4]);
+        let finalFriendQuery = PFQuery.orQueryWithSubqueries([friendQuery2,friendQuery3]);
         
         print("User.swift - confirmFriendRequest");
         
@@ -56,7 +59,7 @@ class User {
                 if let friendships = friendRelations {
                     
                     for friendship in friendships {
-                        
+                        print("confirming friendship",friendship);
                         friendship["status"] = 1;
                         
                         friendship.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in

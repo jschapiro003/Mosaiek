@@ -25,7 +25,7 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
         
         self.contributorsTable.delegate = self;
         self.contributorsTable.dataSource = self;
-        
+        self.contributorsTable.hidden = true;
         self.loadContributors();
         
         
@@ -43,8 +43,13 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
             if let contributorList = friends {
                 
                 self.contributors = contributorList;
+                if contributorList.count > 0 {
+                    
+                    self.contributorsTable.hidden = false;
+                }
                 
             }
+            
             
             self.contributorsTable.reloadData()
         }

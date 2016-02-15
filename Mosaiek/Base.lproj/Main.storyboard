@@ -264,6 +264,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mosaicTable" destination="9AK-pG-2qO" id="YQA-vz-Jj4"/>
+                        <outlet property="timelineTableView" destination="9AK-pG-2qO" id="CCl-0w-oQA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2C-9T-rBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -132,7 +132,9 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 if let cell = superview.superview as? InvitationCell {
                     
+                    
                     indexPath = self.invitationsTable.indexPathForCell(cell)
+                    print("accepting invitation", indexPath)
                     
                 }
             }
