@@ -25,6 +25,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     
     var imagePicker: UIImagePickerController!
     
+    var mosaicObject:PFObject?
+    
     var mosaic:Mosaic?
     
     var delegate:NewMosaicDelegate?
@@ -159,7 +161,10 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
                 
                 print(error);
                 
-            } else {
+            }
+            if (success){
+                
+                self.mosaicObject = newMosaic;
                 
                 if let newMosaicDelegate = self.delegate {
                     newMosaicDelegate.didCreateNewMosaic(newMosaic);
@@ -167,6 +172,10 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
                 print("mosaic saved successfully",success);
                 
             }
+                
+            
+                
+            
         }
         
     }
@@ -200,8 +209,10 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
             
             // save to contributors with mosaic_id of current mosaic
             print("saving to \(self.mosaic?.mosaicName)")
+            if let mos = self.mosaicObject {
+                Mosaic.addContributors(mos.objectId,contributors: contributors);
+            }
             
-            Mosaic.addContributors(self.mosaic?.mosaicName,contributors: contributors);
         }
     }
     

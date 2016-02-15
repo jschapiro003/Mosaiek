@@ -159,5 +159,16 @@ class AddMoreContributorsViewController: UIViewController, UITableViewDelegate, 
         }
         return index;
     }
+    
+    //#MARK - IBAction
+    
+    @IBAction func addMoreContributors(sender: AnyObject) {
+        if (self.contributorsToAdd.count > 0) {
+            if let mos = self.mosaic {
+                Mosaic.addContributors(mos.objectId, contributors: self.contributorsToAdd as NSArray as! Array<PFUser>);
+            }
+            self.navigationController?.popViewControllerAnimated(true);
+        }
+    }
 
 }

@@ -498,7 +498,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Mosaïek" id="OdS-D8-dx6">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="QTP-Nq-HKR"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="QTP-Nq-HKR">
+                            <connections>
+                                <action selector="addMoreContributors:" destination="Dcw-ku-0ii" id="cfp-gM-W2W"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addMoreContributorsTable" destination="IHE-CR-xbr" id="grp-Kt-jdR"/>

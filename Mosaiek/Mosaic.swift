@@ -148,13 +148,14 @@ class Mosaic {
     }
     
     
-    class func addContributors(mosaicName:String?,contributors:Array<PFUser>){
+    class func addContributors(mosaicObjectId:String?,contributors:Array<PFUser>){
         
         //get mosaic objects to act as pointer **** Refactor to use mosaic not mosaic name
         let mosaicQuery = PFQuery(className: "Mosaic");
         
-        if let name = mosaicName {
-          mosaicQuery.whereKey("name", equalTo: name);
+        if let objectId = mosaicObjectId {
+          
+            mosaicQuery.whereKey("objectId", equalTo: objectId);
             
         } else {
             return;
@@ -409,6 +410,7 @@ class Mosaic {
     class func getMosaicContributorsWithLimit(mosaic:PFObject,completion:(contributors:[PFObject]?)-> Void){
         let mosaicContributorsQuery = PFQuery(className: "Contributors");
         mosaicContributorsQuery.whereKey("mosaic", equalTo: mosaic);
+        mosaicContributorsQuery.whereKey("status", equalTo: 1);
         mosaicContributorsQuery.limit = 10;
         mosaicContributorsQuery.includeKey("user");
         
