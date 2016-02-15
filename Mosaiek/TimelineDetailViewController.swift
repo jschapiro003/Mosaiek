@@ -408,15 +408,26 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     //MARK: - ImagePickerDelegate Methods
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
+        let this = self;
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
            
             if let mosaic = detailedMosaic {
                 
-                MosaicImage.saveImageToMosaic(mosaic, image: pickedImage, completion: { (success) -> Void in
+                MosaicImage.saveImageToMosaic(mosaic, image: pickedImage, completion: { (success,mosaicImageObject) -> Void in
                     
                     //set as current image in scrollview
                     //begin background process to mosaic'ify
+                    
+                    this.mosaicImageList.append(mosaicImageObject);
+                    this.mosaicScrollImages.append(pickedImage);
+                    this.mosaicImages.reloadInputViews();
+                    this.setupScrollView();
+                    this.loadVisiblePages();
+                    
+                    let alert = UIAlertController(title: "Nice!", message: "You successfully contributed to \(mosaic["name"]). \n Scroll through the images to find your contribution.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Cool Beanz...", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
                     print("Mosaic Image Sucessfully saved: ", success);
                 })
             }

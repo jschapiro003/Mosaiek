@@ -13,6 +13,7 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var invitationsTable: UITableView!
     
     var notifications:Array<PFObject>?;
+    var noInvitationsLabel:UILabel?
     
     
     override func viewDidLoad() {
@@ -20,7 +21,13 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.invitationsTable.delegate = self;
         self.invitationsTable.dataSource = self;
-    
+        self.invitationsTable.hidden = true;
+        
+        self.noInvitationsLabel = UILabel(frame: CGRectMake(10, 200, 500, 21));
+        //self.noInvitationsLabel!.textAlignment = .Center;
+        self.noInvitationsLabel!.text = "Sorry, you don't have any notifications :(";
+        self.view.addSubview(self.noInvitationsLabel!);
+        
         getNotifications();
     }
 
@@ -36,6 +43,12 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
             
             if let userNotifications = notifications {
                 
+                if userNotifications.count > 0 {
+                    self.noInvitationsLabel?.hidden = true;
+                     self.invitationsTable.hidden = false;
+                    
+                }
+               
                 self.notifications = userNotifications;
                 self.invitationsTable.reloadData();
                 

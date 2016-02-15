@@ -29,7 +29,7 @@ class MosaicImage {
         }
     }
     
-    class func saveImageToMosaic(mosaic:PFObject,image:UIImage,completion: (success: Bool) -> Void){
+    class func saveImageToMosaic(mosaic:PFObject,image:UIImage,completion: (success: Bool,mosaicImage:PFObject) -> Void){
         
         let thumbnail = self.generateJPEG(image);
         let hirez = self.generateJPEG(image);
@@ -52,8 +52,9 @@ class MosaicImage {
         MosaicImageTable.saveInBackgroundWithBlock { (success:Bool,error: NSError?) -> Void in
             if (error != nil){
                 print("An error occurred at MosaicImage.swift - saveImageToMosasic ", error!.code)
-            } else {
-                completion(success: success);
+            }
+            if (success == true){
+                completion(success: success,mosaicImage: MosaicImageTable);
             }
         }
         
