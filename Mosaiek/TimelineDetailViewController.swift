@@ -411,6 +411,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         let this = self;
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
            
+            print("hope this works",ImageProcessor.averageColor(pickedImage));
             if let mosaic = detailedMosaic {
                 
                 MosaicImage.saveImageToMosaic(mosaic, image: pickedImage, completion: { (success,mosaicImageObject) -> Void in

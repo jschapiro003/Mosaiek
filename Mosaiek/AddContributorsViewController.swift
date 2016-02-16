@@ -46,6 +46,12 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
                 if contributorList.count > 0 {
                     
                     self.contributorsTable.hidden = false;
+                } else {
+                    let alert = UIAlertController(title: "Uh Oh!", message: "You haven't added any friends yet! Make sure you add them so that they can contribute to your new mosaic.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Cool Beanz...", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+
                 }
                 
             }
