@@ -29,7 +29,7 @@ class MosaicImage {
         }
     }
     
-    class func saveImageToMosaic(mosaic:PFObject,image:UIImage,completion: (success: Bool,mosaicImage:PFObject) -> Void){
+    class func saveImageToMosaic(mosaic:PFObject,image:UIImage,rgba:UnsafeMutablePointer<CUnsignedChar>,completion: (success: Bool,mosaicImage:PFObject) -> Void){
         
         let thumbnail = self.generateJPEG(image);
         let hirez = self.generateJPEG(image);
@@ -44,8 +44,13 @@ class MosaicImage {
         MosaicImageTable["likes"] = 0;
         MosaicImageTable["image"] = mosaicImageFile;
         MosaicImageTable["thumbnail"] = mosaicImageThumbnailFile;
+        MosaicImageTable["red"] = CGFloat(rgba[0]);
+        MosaicImageTable["green"] = CGFloat(rgba[1]);
+        MosaicImageTable["blue"] = CGFloat(rgba[2]);
         MosaicImageTable["mosaic"] = mosaic;
         MosaicImageTable["user"] = PFUser.currentUser()!;
+        
+        rgba.dealloc(4);
         
         print("MosaicImage.swift - saveImageToMosasic");
         

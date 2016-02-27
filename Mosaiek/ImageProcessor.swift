@@ -9,7 +9,8 @@
 import Foundation
 
 class ImageProcessor {
-    class func averageColor(image:UIImage) -> UIColor {
+    //http://stackoverflow.com/questions/26330924/get-average-color-of-uiimage-in-swift
+    class func averageColor(image:UIImage) -> UnsafeMutablePointer<CUnsignedChar> {
         let rgba = UnsafeMutablePointer<CUnsignedChar>.alloc(4)
         let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
         let info = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
@@ -22,11 +23,12 @@ class ImageProcessor {
             let alpha: CGFloat = CGFloat(rgba[3]) / 255.0
             let multiplier: CGFloat = alpha / 255.0
             
-            return UIColor(red: CGFloat(rgba[0]) * multiplier, green: CGFloat(rgba[1]) * multiplier, blue: CGFloat(rgba[2]) * multiplier, alpha: alpha)
-            
+            //return UIColor(red: CGFloat(rgba[0]) * multiplier, green: CGFloat(rgba[1]) * multiplier, blue: CGFloat(rgba[2]) * multiplier, alpha: alpha)
+            return rgba;
         } else {
             
-            return UIColor(red: CGFloat(rgba[0]) / 255.0, green: CGFloat(rgba[1]) / 255.0, blue: CGFloat(rgba[2]) / 255.0, alpha: CGFloat(rgba[3]) / 255.0)
+            //return UIColor(red: CGFloat(rgba[0]) / 255.0, green: CGFloat(rgba[1]) / 255.0, blue: CGFloat(rgba[2]) / 255.0, alpha: CGFloat(rgba[3]) / 255.0)
+            return rgba;
         }
 
     }

@@ -411,10 +411,12 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         let this = self;
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
            
-            print("hope this works",ImageProcessor.averageColor(pickedImage));
+            let rgba:UnsafeMutablePointer<CUnsignedChar> = ImageProcessor.averageColor(pickedImage);
+            
+            
             if let mosaic = detailedMosaic {
                 
-                MosaicImage.saveImageToMosaic(mosaic, image: pickedImage, completion: { (success,mosaicImageObject) -> Void in
+                MosaicImage.saveImageToMosaic(mosaic, image: pickedImage,rgba: rgba, completion: { (success,mosaicImageObject) -> Void in
                     
                     //set as current image in scrollview
                     //begin background process to mosaic'ify

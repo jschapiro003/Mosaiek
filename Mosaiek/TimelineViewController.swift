@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SocketIOClientSwift
 
 protocol NewMosaicDelegate {
     func didCreateNewMosaic(mosaic:PFObject);
@@ -23,6 +24,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     var mosaicContributors:[PFObject]? = [];
     var currentMosaic:PFObject?
     var currentLikeButton:UIButton?
+    var socket:SocketIOClient?
     
     @IBOutlet weak var timelineTableView: UITableView!
     
@@ -38,6 +40,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         self.mosaicTable.hidden = true;
         
         self.loadUsersMosaics();
+        self.configureSockets();
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -54,6 +57,19 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    func configureSockets(){
+         socket = SocketIOClient(socketURL: NSURL(string: "http://localhost:3020")!, options: [ .ForcePolling(true)])
+        
+        socket!.on("connect") {data, ack in
+            print("socket connected")
+        }
+        
+        socket!.on("contribution") {data, ack in
+            print("contribution received",data);
+        }
+        
+        socket!.connect()
+    }
     
     func loadUsersMosaics() {
         Mosaic.getUsersMosaics(PFUser.currentUser()!) { (mosaics) -> Void in
