@@ -9,6 +9,7 @@
 import UIKit
 import SocketIOClientSwift
 
+
 protocol NewMosaicDelegate {
     func didCreateNewMosaic(mosaic:PFObject);
 }
@@ -18,13 +19,14 @@ protocol LikeMosaicDelegate {
 }
 
 
-class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate,LikeMosaicDelegate {
+class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate,LikeMosaicDelegate,ContributionMadeDelegate {
     
     var timelineMosaics:[PFObject]  = [];
     var mosaicContributors:[PFObject]? = [];
     var currentMosaic:PFObject?
     var currentLikeButton:UIButton?
     var socket:SocketIOClient?
+    let socketHandler = SocketHandler();
     
     @IBOutlet weak var timelineTableView: UITableView!
     
@@ -58,6 +60,10 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func configureSockets(){
+        
+        
+        socketHandler.delegate = self;
+        
          socket = SocketIOClient(socketURL: NSURL(string: "http://localhost:3020")!, options: [ .ForcePolling(true)])
         
         socket!.on("connect") {data, ack in
@@ -65,7 +71,18 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         socket!.on("contribution") {data, ack in
-            print("contribution received",data);
+            
+            if let contributionData = data[0] as? NSDictionary{
+                
+                let mosaic = contributionData["mosaic"];
+                let mosaicImage = contributionData["mosaicImage"];
+                let contrData = contributionData["data"];
+                self.socketHandler.layerContribution();
+                
+            }
+            
+           
+            
         }
         
         socket!.connect()
@@ -125,6 +142,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             
             dvc?.detailedMosaic = currentMosaic;
             dvc?.likeDelegate = self;
+            
+            socketHandler.delegate = dvc;
             
             if let likeB = self.currentLikeButton {
                 dvc?.mainLikeButton = likeB;
@@ -330,5 +349,13 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.mosaicLikes.text = String(Int(cell.mosaicLikes.text!)! + 1)
         }
     }
+    
+    //#Mark - ContributionMadeDelegate methods
+    
+    func didMakeContribution() {
+        print("delegate timelineview controller contribution");
+        
+    }
+    
 
 }

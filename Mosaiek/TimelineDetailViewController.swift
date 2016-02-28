@@ -14,7 +14,7 @@ protocol EditMosaicDelegate {
     func didEditMosaic(mosaicName:String,mosaicDescription:String);
 }
 
-class TimelineDetailViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, EditMosaicDelegate {
+class TimelineDetailViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, EditMosaicDelegate, ContributionMadeDelegate {
 
     var detailedMosaic:PFObject?
     var mosaicContributorViews:[UIImage]? = [];
@@ -575,6 +575,13 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     func didEditMosaic(mosaicName: String, mosaicDescription: String) {
         self.mosaicName?.text = mosaicName;
         self.mosaicDescription?.text = mosaicDescription;
+    }
+    
+    
+    
+    //Mark - contribution delegate methods
+    func didMakeContribution() {
+        
     }
 
 }

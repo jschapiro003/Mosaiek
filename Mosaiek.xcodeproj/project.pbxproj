@@ -38,6 +38,7 @@
 		313C3D3A1C7011A600DD5663 /* AddMoreContributorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C3D391C7011A600DD5663 /* AddMoreContributorsCell.swift */; };
 		313C3D3C1C72F18600DD5663 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C3D3B1C72F18600DD5663 /* ImageProcessor.swift */; };
 		3152A5C11C61A1390053746A /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3152A5C01C61A1390053746A /* CommentCell.swift */; };
+		31B7DE2C1C8217D000F6F193 /* SocketHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B7DE2B1C8217D000F6F193 /* SocketHandler.swift */; };
 		31DD5E661C6ACD6700AFE515 /* ContributorImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD5E651C6ACD6700AFE515 /* ContributorImageView.swift */; };
 		31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */; };
 		31E7A7281C4F41DB00736786 /* InvitationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */; };
@@ -114,6 +115,7 @@
 		313C3D391C7011A600DD5663 /* AddMoreContributorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMoreContributorsCell.swift; sourceTree = "<group>"; };
 		313C3D3B1C72F18600DD5663 /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		3152A5C01C61A1390053746A /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		31B7DE2B1C8217D000F6F193 /* SocketHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketHandler.swift; sourceTree = "<group>"; };
 		31DD5E651C6ACD6700AFE515 /* ContributorImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributorImageView.swift; sourceTree = "<group>"; };
 		31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationsViewController.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 			children = (
 				3124CD7E1C65243800143310 /* Date.swift */,
 				313C3D3B1C72F18600DD5663 /* ImageProcessor.swift */,
+				31B7DE2B1C8217D000F6F193 /* SocketHandler.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3124CD7F1C65243800143310 /* Date.swift in Sources */,
+				31B7DE2C1C8217D000F6F193 /* SocketHandler.swift in Sources */,
 				313C3D3C1C72F18600DD5663 /* ImageProcessor.swift in Sources */,
 				31E7A7461C55B8FE00736786 /* InvitationCell.swift in Sources */,
 				310916EF1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld in Sources */,
