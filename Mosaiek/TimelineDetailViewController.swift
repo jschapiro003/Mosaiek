@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import Social
+import SocketIOClientSwift
 
 protocol EditMosaicDelegate {
     func didEditMosaic(mosaicName:String,mosaicDescription:String);
@@ -20,6 +21,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var mosaicContributorViews:[UIImage]? = [];
     var mainLikeButton:UIButton? //used to update prior vc's like button if it changes
     var likeDelegate:LikeMosaicDelegate?
+    var socket:SocketIOClient?
+    let socketHandler = SocketHandler();
     
     
     @IBOutlet weak var mosaicImage: UIImageView!
@@ -56,18 +59,55 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var mosaicImageList: [PFObject] = [];
     var currentMosaicImage: PFObject?
     
+    //current image
+    var latestContribution:UIImage?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(self.mainLikeButton?.backgroundImageForState(UIControlState.Normal));
         self.setupView();
+        self.configureSockets()
        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func configureSockets(){
+        
+        let this = self;
+        
+        socketHandler.delegate = self;
+        
+        socket = SocketIOClient(socketURL: NSURL(string: "http://localhost:3020")!, options: [ .ForcePolling(true)])
+        
+        socket!.on("connect") {data, ack in
+            print("socket connected")
+        }
+        
+        socket!.on("contribution") {data, ack in
+            
+            if let contributionData = data[0] as? NSDictionary{
+                
+                let mosaic = contributionData["mosaic"] as! String;
+                let mosaicImage = contributionData["mosaicImage"] as! String;
+                let contrData = contributionData["position"] as! String;
+                
+                
+                self.socketHandler.layerContribution(mosaic,contributionId: mosaicImage,position: contrData,vc:this);
+                
+            }
+            
+            
+            
+        }
+        
+        socket!.connect()
     }
     
     func setupScrollView(){
@@ -427,6 +467,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                     this.setupScrollView();
                     this.loadVisiblePages();
                     
+                    this.latestContribution = pickedImage;
+                    
                     let alert = UIAlertController(title: "Nice!", message: "You successfully contributed to \(mosaic["name"]). \n Scroll through the images to find your contribution.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Cool Beanz...", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
@@ -580,7 +622,35 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     
     //Mark - contribution delegate methods
-    func didMakeContribution() {
+    func didMakeContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController) {
+        
+        let this = vc as! TimelineDetailViewController;
+        
+        let mosaicHeight = Int(self.mosaicImage.image!.size.height / 400);
+        let mosaicWidth = Int(self.mosaicImage.image!.size.width / 400);
+        
+        let xPos = ContributionProcessor.getXPosition(Int(position)!);
+        let yPos = ContributionProcessor.getYPosition(Int(position)!);
+        
+        print("mosaic height",mosaicHeight);
+        print("mosaic width",mosaicWidth);
+        print("position", ContributionProcessor.getPosition(position));
+        print("this",this);
+        
+        
+        let contributionImageView = UIImageView(frame: CGRect(x:xPos, y: yPos, width: mosaicWidth, height: mosaicHeight));
+        
+        if let contributionImage = this.latestContribution {
+            
+            print("contribution image exists");
+            contributionImageView.image = contributionImage;
+        }
+        
+        this.mosaicImage.addSubview(contributionImageView);
+        
+        print("contribution made detail");
+        print(mosaicId,contributionId,position);
+        //create new uiimage view with size of (main image/400)(aka 20X20)
         
     }
 

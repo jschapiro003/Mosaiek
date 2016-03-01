@@ -19,7 +19,7 @@ protocol LikeMosaicDelegate {
 }
 
 
-class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate,LikeMosaicDelegate,ContributionMadeDelegate {
+class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate,LikeMosaicDelegate {
     
     var timelineMosaics:[PFObject]  = [];
     var mosaicContributors:[PFObject]? = [];
@@ -42,7 +42,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         self.mosaicTable.hidden = true;
         
         self.loadUsersMosaics();
-        self.configureSockets();
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -59,34 +59,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    func configureSockets(){
-        
-        
-        socketHandler.delegate = self;
-        
-         socket = SocketIOClient(socketURL: NSURL(string: "http://localhost:3020")!, options: [ .ForcePolling(true)])
-        
-        socket!.on("connect") {data, ack in
-            print("socket connected")
-        }
-        
-        socket!.on("contribution") {data, ack in
-            
-            if let contributionData = data[0] as? NSDictionary{
-                
-                let mosaic = contributionData["mosaic"];
-                let mosaicImage = contributionData["mosaicImage"];
-                let contrData = contributionData["data"];
-                self.socketHandler.layerContribution();
-                
-            }
-            
-           
-            
-        }
-        
-        socket!.connect()
-    }
+  
     
     func loadUsersMosaics() {
         Mosaic.getUsersMosaics(PFUser.currentUser()!) { (mosaics) -> Void in
@@ -143,7 +116,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             dvc?.detailedMosaic = currentMosaic;
             dvc?.likeDelegate = self;
             
-            socketHandler.delegate = dvc;
+            
             
             if let likeB = self.currentLikeButton {
                 dvc?.mainLikeButton = likeB;
@@ -180,6 +153,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell:TimelineMosaicCell = tableView.dequeueReusableCellWithIdentifier("timelineMosaicCell", forIndexPath: indexPath) as! TimelineMosaicCell
         
         print("updating cell");
+        cell.objectId = timelineMosaics[indexPath.row].objectId;
         
         let mosaicThumbnail:PFFile? = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
         
@@ -350,12 +324,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    //#Mark - ContributionMadeDelegate methods
-    
-    func didMakeContribution() {
-        print("delegate timelineview controller contribution");
-        
-    }
+   
     
 
 }

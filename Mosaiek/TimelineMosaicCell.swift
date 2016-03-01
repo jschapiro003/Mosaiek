@@ -10,6 +10,8 @@ import UIKit
 
 class TimelineMosaicCell: UITableViewCell {
     
+    var objectId:String?
+    
     @IBOutlet weak var mosaicThumbnailImageView: UIImageView!
    
     @IBOutlet weak var mosaicName: UILabel!
