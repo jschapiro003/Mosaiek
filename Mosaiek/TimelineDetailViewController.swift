@@ -626,14 +626,16 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         let this = vc as! TimelineDetailViewController;
         
-        let mosaicHeight = Int(self.mosaicImage.image!.size.height / 400);
-        let mosaicWidth = Int(self.mosaicImage.image!.size.width / 400);
+        let mosaicHeight = Int(self.mosaicImage.image!.size.height / 100);
+        let mosaicWidth = Int(self.mosaicImage.image!.size.width / 100);
         
-        let xPos = ContributionProcessor.getXPosition(Int(position)!);
-        let yPos = ContributionProcessor.getYPosition(Int(position)!);
+        let xPos = ContributionProcessor.getXPosition(Int(position)!) * mosaicWidth;
+        let yPos = ContributionProcessor.getYPosition(Int(position)!) * mosaicHeight;
         
         print("mosaic height",mosaicHeight);
         print("mosaic width",mosaicWidth);
+        print("x position",xPos);
+        print("y position",yPos);
         print("position", ContributionProcessor.getPosition(position));
         print("this",this);
         
