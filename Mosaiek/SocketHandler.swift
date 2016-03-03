@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ContributionMadeDelegate {
-    func didMakeContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController);
+    func didMakeContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController,transformedImage:String);
 }
 
 class SocketHandler {
@@ -17,10 +17,10 @@ class SocketHandler {
     var delegate:ContributionMadeDelegate?
     
     
-    func layerContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController){
+    func layerContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController,transformedImage:String){
         
         if let del = self.delegate {
-            del.didMakeContribution(mosaicId,contributionId: contributionId,position: position,vc:vc);
+            del.didMakeContribution(mosaicId,contributionId: contributionId,position: position,vc:vc,transformedImage:transformedImage);
         }
        
     }

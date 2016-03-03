@@ -97,9 +97,11 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 let mosaic = contributionData["mosaic"] as! String;
                 let mosaicImage = contributionData["mosaicImage"] as! String;
                 let contrData = contributionData["position"] as! String;
+                let transformedImageData = contributionData["rgbImage"] as! String;
                 
                 
-                self.socketHandler.layerContribution(mosaic,contributionId: mosaicImage,position: contrData,vc:this);
+                
+                self.socketHandler.layerContribution(mosaic,contributionId: mosaicImage,position: contrData,vc:this,transformedImage: transformedImageData);
                 
             }
             
@@ -622,7 +624,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     
     //Mark - contribution delegate methods
-    func didMakeContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController) {
+    func didMakeContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController,transformedImage:String) {
         
         let this = vc as! TimelineDetailViewController;
         
@@ -642,17 +644,24 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         let contributionImageView = UIImageView(frame: CGRect(x:xPos, y: yPos, width: mosaicWidth, height: mosaicHeight));
         
-        if let contributionImage = this.latestContribution {
+        let imageData = NSData(base64EncodedString: transformedImage, options:NSDataBase64DecodingOptions(rawValue: 0));
+        let image = UIImage(data:imageData!);
+        
+        contributionImageView.image = image;
+        
+        /*if let contributionImage = this.latestContribution {
             
             print("contribution image exists");
             contributionImageView.image = contributionImage;
-        }
+        }*/
         
         this.mosaicImage.addSubview(contributionImageView);
         
         print("contribution made detail");
         print(mosaicId,contributionId,position);
-        //create new uiimage view with size of (main image/400)(aka 20X20)
+        //create new uiimage view with size of (main image/100)(aka 10X10)
+        
+        //store reference to latest image and position in core data
         
     }
 

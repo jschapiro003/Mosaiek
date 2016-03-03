@@ -53,7 +53,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="cell" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="47" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNe-fx-O64">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="cell" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="47" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNe-fx-O64">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -92,6 +92,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hNe-fx-O64" firstAttribute="top" secondItem="sPX-QK-0Im" secondAttribute="bottom" constant="-64" id="9kx-Li-p9D"/>
+                            <constraint firstItem="8vT-jJ-9Zo" firstAttribute="top" secondItem="hNe-fx-O64" secondAttribute="bottom" constant="-32" id="Ger-WR-Up1"/>
+                            <constraint firstItem="hNe-fx-O64" firstAttribute="leading" secondItem="iEr-yQ-7s9" secondAttribute="leadingMargin" constant="-20" id="nxg-ce-1ep"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hNe-fx-O64" secondAttribute="trailing" constant="-20" id="pEv-kg-Vew"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Mosaïek" id="SRb-KB-mRj">
                         <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="fsU-X2-kBD">
@@ -120,7 +126,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e27-pJ-QGx">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e27-pJ-QGx">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -151,6 +157,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="e27-pJ-QGx" firstAttribute="leading" secondItem="BX7-Da-Dh5" secondAttribute="leadingMargin" constant="-20" id="1fv-aQ-DHf"/>
+                            <constraint firstItem="LNn-fV-juC" firstAttribute="top" secondItem="e27-pJ-QGx" secondAttribute="bottom" constant="-32" id="3Xi-Bu-SoB"/>
+                            <constraint firstItem="e27-pJ-QGx" firstAttribute="top" secondItem="IjX-Zw-JRa" secondAttribute="bottom" constant="-64" id="Oey-GA-JfS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="e27-pJ-QGx" secondAttribute="trailing" constant="-20" id="tmC-NR-r7s"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Mosaïek" id="SMO-iv-1ny">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="NDV-YU-csI">
@@ -650,7 +662,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZwU-DS-yMf" id="pf8-1Z-c3p">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TfR-YD-5ej">
