@@ -84,7 +84,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         socketHandler.delegate = self;
         
-        socket = SocketIOClient(socketURL: NSURL(string: "http://localhost:3020")!, options: [ .ForcePolling(true)])
+        socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ .ForcePolling(true), .Log(true)])
         
         socket!.on("connect") {data, ack in
             print("socket connected")
