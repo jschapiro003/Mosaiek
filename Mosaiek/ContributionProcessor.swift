@@ -23,34 +23,15 @@ class ContributionProcessor {
     
     class func getXPosition(position:Int)-> Int{
         
-        //remainder 
         return position % 10;
         
     }
     
     class func getYPosition(position:Int)->Int{
         
-        //get quotient without remainder
         return position / 10;
         
     }
 }
 
 
-/*
-  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
- 20                                              39
- 40                                              59
-
- 31
- 41
- 51
- 61
- 71
- 81
- 91
-100
-.
-200
-300
-*/

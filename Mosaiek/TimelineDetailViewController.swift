@@ -84,7 +84,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         socketHandler.delegate = self;
         
-        socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ .ForcePolling(true), .Log(true)])
+        socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ .ForcePolling(true)])
         
         socket!.on("connect") {data, ack in
             print("socket connected")
@@ -628,14 +628,16 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         let this = vc as! TimelineDetailViewController;
         
-        let mosaicHeight = Int(self.mosaicImage.image!.size.height / 100);
-        let mosaicWidth = Int(self.mosaicImage.image!.size.width / 100);
+        let mosaicHeight = Int(this.mosaicImage.frame.maxY/10);
+        let mosaicWidth = Int(this.mosaicImage.frame.maxX/10);
         
         let xPos = ContributionProcessor.getXPosition(Int(position)!) * mosaicWidth;
         let yPos = ContributionProcessor.getYPosition(Int(position)!) * mosaicHeight;
         
-        print("mosaic height",mosaicHeight);
-        print("mosaic width",mosaicWidth);
+        print("final Y",Int(this.mosaicImage.frame.maxY))
+        print("final X",Int(this.mosaicImage.frame.maxX))
+        print("cell height",mosaicHeight);
+        print("cell width",mosaicWidth);
         print("x position",xPos);
         print("y position",yPos);
         print("position", ContributionProcessor.getPosition(position));
@@ -649,19 +651,12 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         contributionImageView.image = image;
         
-        /*if let contributionImage = this.latestContribution {
-            
-            print("contribution image exists");
-            contributionImageView.image = contributionImage;
-        }*/
         
         this.mosaicImage.addSubview(contributionImageView);
         
         print("contribution made detail");
         print(mosaicId,contributionId,position);
-        //create new uiimage view with size of (main image/100)(aka 10X10)
-        
-        //store reference to latest image and position in core data
+       
         
     }
 
