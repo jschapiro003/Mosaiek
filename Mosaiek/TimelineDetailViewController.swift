@@ -4,7 +4,7 @@
 //
 //  Created by Jonathan Schapiro on 1/19/16.
 //  Copyright © 2016 Jonathan Schapiro. All rights reserved.
-//
+////socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com/socket.io/contribution")!, options: [ .ForcePolling(true),.Log(true)])
 
 import UIKit
 import MobileCoreServices
@@ -21,7 +21,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var mosaicContributorViews:[UIImage]? = [];
     var mainLikeButton:UIButton? //used to update prior vc's like button if it changes
     var likeDelegate:LikeMosaicDelegate?
-    var socket:SocketIOClient?
+    
     let socketHandler = SocketHandler();
     
     
@@ -84,13 +84,22 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         socketHandler.delegate = self;
         
-        socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ .ForcePolling(true)])
         
-        socket!.on("connect") {data, ack in
+        let socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ .ForcePolling(true),.Log(true)])
+        
+      
+        
+        socket.on("connect") {data, ack in
             print("socket connected")
+            socket.on("handshake") {data, ack in
+                print("socket handshake")
+                socket.emit("handshake",(this.detailedMosaic?.objectId)!);
+            }
         }
         
-        socket!.on("contribution") {data, ack in
+        
+        
+        socket.on("contribution") {data, ack in
             
             if let contributionData = data[0] as? NSDictionary{
                 
@@ -109,7 +118,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             
         }
         
-        socket!.connect()
+        socket.connect()
     }
     
     func setupScrollView(){
@@ -628,12 +637,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         
         let this = vc as! TimelineDetailViewController;
         
-        let mosaicHeight = Int(this.mosaicImage.frame.maxY/10);
-        let mosaicWidth = Int(this.mosaicImage.frame.maxX/10);
+        let mosaicHeight = Int((this.mosaicImage.frame.maxY - this.mosaicImage.frame.minY)/10);//cell height
+        let mosaicWidth = Int((this.mosaicImage.frame.maxX - this.mosaicImage.frame.minX)/10);//cell width
         
         let xPos = ContributionProcessor.getXPosition(Int(position)!) * mosaicWidth;
         let yPos = ContributionProcessor.getYPosition(Int(position)!) * mosaicHeight;
         
+        print("starting x",this.mosaicImage.frame.minX);
+        print("starting y",this.mosaicImage.frame.minY);
         print("final Y",Int(this.mosaicImage.frame.maxY))
         print("final X",Int(this.mosaicImage.frame.maxX))
         print("cell height",mosaicHeight);
