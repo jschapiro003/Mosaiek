@@ -10,7 +10,7 @@ import Foundation
 
 class ContributionProcessor {
     
-    //20x20 cell
+    //10x10 mosaic
     
     class func getPosition(stringPosition:String) -> String {
         let stringArray = stringPosition.componentsSeparatedByCharactersInSet(

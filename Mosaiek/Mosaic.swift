@@ -450,4 +450,41 @@ class Mosaic {
             }
         }
     }
+    
+    class func saveMosaicState(mosaic:PFObject,image:UIImage,completion:(success:Bool)->Void){
+        let stateImageData = generateJPEG(image);
+        let stateImageFile = PFFile(name: "state_image.jpeg" , data: stateImageData);
+        
+        mosaic["currentState"] = stateImageFile;
+        
+        mosaic.saveInBackgroundWithBlock { (saved:Bool, error:NSError?) -> Void in
+            if (error != nil){
+                print("Mosaic.swift: error while saving mosaic state: ",error);
+            } else {
+                completion(success: saved);
+            }
+        }
+        
+    }
+    
+    class func captureCurrentState(view:UIView) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, UIScreen.mainScreen().scale);
+        //UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, [[UIScreen mainScreen] scale]);
+        view.layer.renderInContext(UIGraphicsGetCurrentContext()!);
+        //[view.layer renderInContext:UIGraphicsGetCurrentContext()];
+        let img = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return img;
+    }
+    
+    class func generateJPEG(image:UIImage) -> NSData {
+        
+        return UIImageJPEGRepresentation(image, 0.8)!;
+    }
+    
+    class func generateThumbnail(image:UIImage) -> NSData{
+        let imageData = UIImageJPEGRepresentation(image, 0.0) //lowest quality
+        return imageData!;
+    }
+    
 }

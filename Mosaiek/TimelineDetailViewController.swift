@@ -21,7 +21,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var mosaicContributorViews:[UIImage]? = [];
     var mainLikeButton:UIButton? //used to update prior vc's like button if it changes
     var likeDelegate:LikeMosaicDelegate?
-    
+    var currentSocket:SocketIOClient?
     let socketHandler = SocketHandler();
     
     
@@ -85,9 +85,9 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         socketHandler.delegate = self;
         
         
-        let socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ .ForcePolling(true),.Log(true)])
+        let socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ ])
         
-      
+        currentSocket = socket;
         
         socket.on("connect") {data, ack in
             print("socket connected")
@@ -119,6 +119,22 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         }
         
         socket.connect()
+    }
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        if let socket = currentSocket {
+            socket.emit("disconnect", (self.detailedMosaic?.objectId)!);
+            print("emitting disconnect");
+            
+            let currentState = Mosaic.captureCurrentState(self.mosaicImage);
+            
+            Mosaic.saveMosaicState(self.detailedMosaic!, image: currentState, completion: { (success) -> Void in
+                if (success){
+                    print("Successfully updated mosaic's current state");
+                }
+            })
+        }
+      
     }
     
     func setupScrollView(){
