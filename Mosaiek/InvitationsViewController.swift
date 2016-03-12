@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class InvitationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -39,7 +40,12 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func getNotifications(){
         
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true);
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Loading Invitations..."
+        
         User.getNotificiations { (notifications: Array<PFObject>?) -> Void in
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
             
             if let userNotifications = notifications {
                 

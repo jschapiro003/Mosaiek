@@ -10,6 +10,7 @@ import UIKit
 import MobileCoreServices
 import Social
 import SocketIOClientSwift
+import MBProgressHUD
 
 protocol EditMosaicDelegate {
     func didEditMosaic(mosaicName:String,mosaicDescription:String);
@@ -23,6 +24,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     var likeDelegate:LikeMosaicDelegate?
     var currentSocket:SocketIOClient?
     let socketHandler = SocketHandler();
+    
     
     
     @IBOutlet weak var mosaicImage: UIImageView!
@@ -85,18 +87,27 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         socketHandler.delegate = self;
         
         
-        let socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [ ])
+        let socket = SocketIOClient(socketURL: NSURL(string: "http://mosaiek.herokuapp.com")!, options: [.ForceNew(true)])
         
         currentSocket = socket;
         
         socket.on("connect") {data, ack in
             print("socket connected")
+            
+            Sockets.sharedInstance.addSocket(socket, socketID: (this.detailedMosaic?.objectId)!)
+            
             socket.on("handshake") {data, ack in
+                
                 print("socket handshake")
                 socket.emit("handshake",(this.detailedMosaic?.objectId)!);
             }
         }
         
+        socket.on("error") {data, ack in
+            print("Error received from server,", data);
+            
+            Sockets.sharedInstance.removeSocket(socket);
+        }
         
         
         socket.on("contribution") {data, ack in
@@ -112,6 +123,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 
                 self.socketHandler.layerContribution(mosaic,contributionId: mosaicImage,position: contrData,vc:this,transformedImage: transformedImageData);
                 
+                let currentState = Mosaic.captureCurrentState(self.mosaicImage);
+                
+                Mosaic.saveMosaicState(self.detailedMosaic!, image: currentState, completion: { (success) -> Void in
+                    if (success){
+                        print("Successfully updated mosaic's current state");
+                    }
+                })
+                
             }
             
             
@@ -123,9 +142,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     override func willMoveToParentViewController(parent: UIViewController?) {
         if let socket = currentSocket {
+            
             socket.emit("disconnect", (self.detailedMosaic?.objectId)!);
             print("emitting disconnect");
             
+            Sockets.sharedInstance.removeSocket(socket);
+            
+        }
+        if (self.mosaicImage != nil) {
             let currentState = Mosaic.captureCurrentState(self.mosaicImage);
             
             Mosaic.saveMosaicState(self.detailedMosaic!, image: currentState, completion: { (success) -> Void in
@@ -134,6 +158,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 }
             })
         }
+        
       
     }
     
@@ -191,9 +216,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                         self.mosaicDescription?.text = description;
                     }
                     
-                    if let imageFile = contributedMosaic["image"] as? PFFile{
+                    var imageFile:PFFile? = contributedMosaic["currentState"] as? PFFile;
+                    if (imageFile == nil){
+                        imageFile = contributedMosaic["image"] as? PFFile;
+                    }
+                    
+                    if let conributionImageFile = contributedMosaic["image"] as? PFFile{
                         
-                        MosaicImage.fileToImage(imageFile, completion: { (mosaicImage) -> Void in
+                        MosaicImage.fileToImage(conributionImageFile, completion: { (mosaicImage) -> Void in
                             
                             if let image = mosaicImage {
                                 
@@ -243,9 +273,15 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 }
             }
             
-            if let imageFile = mosaic["image"] as? PFFile {
+            var imageFile:PFFile? = mosaic["currentState"] as? PFFile;
+            
+            if (imageFile == nil){
+                imageFile = mosaic["image"] as? PFFile;
+            }
+            
+            if let mainImageFile = imageFile {
                 
-                MosaicImage.fileToImage(imageFile, completion: { (mosaicImage) -> Void in
+                MosaicImage.fileToImage(mainImageFile, completion: { (mosaicImage) -> Void in
                     
                     if let image = mosaicImage {
 
@@ -305,6 +341,10 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             
             MosaicImage.getCurrentMosaicImages(mosaic, completion: { (mosaicImages:Array<PFObject>?) -> Void in
                 
+                let loadingNotification = MBProgressHUD.showHUDAddedTo(self.mosaicImages, animated: true);
+                loadingNotification.mode = MBProgressHUDMode.Indeterminate
+                loadingNotification.labelText = "Loading Mosaic Images..."
+                
                 if let detailedMosaic = mosaicImages{
                     
                     this.setupGestureRecognizer();
@@ -322,7 +362,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                                     
                                     this.mosaicImageList.append(mosaicImg); // both of these lists get populated at same time
                                     this.mosaicScrollImages.append(scrollviewImage);
-                                    
+                                    MBProgressHUD.hideAllHUDsForView(self.mosaicImages, animated: true);
                                     this.setupScrollView()
                                     
                                 }
@@ -365,6 +405,9 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
 
     @IBAction func contributeToMosaic(sender: AnyObject) {
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true);
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Contributing to Mosaic"
         
         self.loadMosaicImage();
     }
@@ -495,6 +538,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                     this.loadVisiblePages();
                     
                     this.latestContribution = pickedImage;
+                    
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                     
                     let alert = UIAlertController(title: "Nice!", message: "You successfully contributed to \(mosaic["name"]). \n Scroll through the images to find your contribution.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Cool Beanz...", style: UIAlertActionStyle.Default, handler: nil))

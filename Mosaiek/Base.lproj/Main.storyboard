@@ -18,19 +18,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCT-mX-251">
-                                <rect key="frame" x="20" y="311" width="280" height="30"/>
-                                <state key="normal" title="Login With Facebook"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="sign_in_screen" translatesAutoresizingMaskIntoConstraints="NO" id="GwZ-el-kmN">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="628"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCT-mX-251">
+                                <rect key="frame" x="20" y="480" width="280" height="30"/>
+                                <state key="normal" title="Login With Facebook">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="userLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l6F-fC-Af6"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="facebook" translatesAutoresizingMaskIntoConstraints="NO" id="8h6-h4-Nmn">
+                                <rect key="frame" x="235" y="481" width="30" height="28"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qCT-mX-251" secondAttribute="bottom" constant="227" id="EOM-09-CxZ"/>
-                            <constraint firstItem="qCT-mX-251" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LRU-WH-3e5"/>
-                            <constraint firstItem="qCT-mX-251" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="4" id="Zwa-8Q-yGV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qCT-mX-251" secondAttribute="trailing" id="82U-nB-Pgr"/>
+                            <constraint firstItem="GwZ-el-kmN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="D9G-2v-SaX"/>
+                            <constraint firstItem="qCT-mX-251" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="404" id="G8y-GN-nOp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8h6-h4-Nmn" secondAttribute="trailing" constant="35" id="Hj6-mt-sBZ"/>
+                            <constraint firstItem="GwZ-el-kmN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="SRz-UE-Mit"/>
+                            <constraint firstItem="8h6-h4-Nmn" firstAttribute="baseline" secondItem="qCT-mX-251" secondAttribute="baseline" id="YYU-xl-eeU"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="qCT-mX-251" secondAttribute="leading" id="ZFF-hw-RLy"/>
+                            <constraint firstItem="GwZ-el-kmN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="cC4-m5-fO8"/>
+                            <constraint firstItem="8h6-h4-Nmn" firstAttribute="leading" secondItem="qCT-mX-251" secondAttribute="trailing" constant="-65" id="kMn-5d-DPY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GwZ-el-kmN" secondAttribute="trailing" constant="-20" id="pZP-nV-uuH"/>
+                            <constraint firstItem="GwZ-el-kmN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rUw-6e-rTy"/>
                         </constraints>
                     </view>
                     <connections>
@@ -928,6 +945,7 @@
         <image name="likes" width="50" height="50"/>
         <image name="pinterest" width="50" height="50"/>
         <image name="share" width="50" height="50"/>
+        <image name="sign_in_screen" width="2019" height="1346"/>
         <image name="stackOfPhotos" width="52" height="52"/>
     </resources>
 </document>

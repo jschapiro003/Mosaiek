@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class AddContributorsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
@@ -38,6 +39,10 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
     
     func loadContributors(){
         //get friends of current user from parse
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true);
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Loading Friends..."
+        
         User.loadAllFriends { (friends: Array<PFObject>?) -> Void in
            
             if let contributorList = friends {

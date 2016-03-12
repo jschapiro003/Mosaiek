@@ -8,6 +8,7 @@
 
 import UIKit
 import SocketIOClientSwift
+import MBProgressHUD
 
 
 protocol NewMosaicDelegate {
@@ -20,7 +21,7 @@ protocol LikeMosaicDelegate {
 
 
 class TimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewMosaicDelegate, EditMosaicDelegate,LikeMosaicDelegate {
-    
+    var mosaicSet: Set<PFObject> = Set()
     var timelineMosaics:[PFObject]  = [];
     var mosaicContributors:[PFObject]? = [];
     var currentMosaic:PFObject?
@@ -45,6 +46,9 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.loadUsersMosaics();
+    }
     override func viewWillAppear(animated: Bool) {
         currentMosaic = nil;
     }
@@ -62,14 +66,22 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
   
     
     func loadUsersMosaics() {
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true);
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Loading Mosaics"
+        
         Mosaic.getUsersMosaics(PFUser.currentUser()!) { (mosaics) -> Void in
             if let usersMosaics = mosaics {
-               
+
+                
+                self.timelineMosaics = [];
                 self.timelineMosaics += usersMosaics;
                 
                 if (self.timelineMosaics.count > 0) {
                     self.mosaicTable.hidden = false;
                 }
+                
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
                 
                 self.mosaicTable.reloadData();
             }
@@ -117,7 +129,6 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
             dvc?.likeDelegate = self;
             
             
-            
             if let likeB = self.currentLikeButton {
                 dvc?.mainLikeButton = likeB;
             }
@@ -152,10 +163,14 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
        
         let cell:TimelineMosaicCell = tableView.dequeueReusableCellWithIdentifier("timelineMosaicCell", forIndexPath: indexPath) as! TimelineMosaicCell
         
-        print("updating cell");
+        
         cell.objectId = timelineMosaics[indexPath.row].objectId;
         
-        let mosaicThumbnail:PFFile? = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
+        var mosaicThumbnail: PFFile? = timelineMosaics[indexPath.row]["currentState"] as? PFFile;
+        
+        if (mosaicThumbnail == nil) {
+            mosaicThumbnail = timelineMosaics[indexPath.row]["thumbnail"] as? PFFile;
+        }
         
         if let thumbnail = mosaicThumbnail {
             //Memoize!!!!

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -22,9 +23,16 @@ class AddFriendsViewController: UIViewController,UITableViewDelegate,UITableView
         self.friendsTable.delegate = self;
         self.friendsTable.dataSource = self;
         
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true);
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Loading All Users..."
+        
         User.loadAllUsers({ (users) -> Void in
             
             self.users = users;
+            
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
+            
             self.friendsTable.reloadData()
         })
     }

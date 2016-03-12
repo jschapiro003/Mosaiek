@@ -43,20 +43,27 @@ class Mosaic {
                 
                 if let usersMosaics = mosaics {
                    
+                    print("Received \(usersMosaics.count) mosaics");
+                    
                     self.getUsersContributedMosaics(user, completion: { (mosaics) -> Void in
                         if let contributedMosaics = mosaics {
                             for contributed in contributedMosaics {
                                 
                                 if let contribMosaic = contributed["mosaic"] as? PFObject {
                                     Mosaic.getSingleMosaic(contribMosaic, completion: { (mosaic) -> Void in
+                                        print("Mosaic search index",usersMosaics.indexOf(mosaic));
+                                        if usersMosaics.indexOf(mosaic) > -1 {
+                                            completion(mosaics: [mosaic]);
+                                        }
                                         
-                                        completion(mosaics: [mosaic]);
                                     })
                                 }
                                 
                             }
+                            print("sending back mosaics");
                             completion(mosaics: usersMosaics);
                         } else {
+                            print("sending back mosaics too");
                             completion(mosaics: usersMosaics);
                         }
                     })
