@@ -60,8 +60,15 @@ class Mosaic {
                                 }
                                 
                             }
+                            
+                            self.getFriendsMosaics({ (mosaics) -> Void in
+                                print("retrieved friends mosaics \(mosaics!.count)");
+                                print("friends mosaics",mosaics!);
+                                completion(mosaics: mosaics);
+                            })
+                            
                             print("sending back mosaics");
-                            completion(mosaics: usersMosaics);
+                            //completion(mosaics: usersMosaics);
                         } else {
                             print("sending back mosaics too");
                             completion(mosaics: usersMosaics);
@@ -93,7 +100,31 @@ class Mosaic {
     
     }
     
-    
+    class func getFriendsMosaics(completion: (mosaics: [PFObject]?) -> Void){
+        
+        User.loadAllFriends { (friendsResults:Array<PFObject>?) -> Void in
+            if let friends = friendsResults {
+                let friendsMosaicsQuery = PFQuery(className: "Mosaic");
+                for (var i = 0; i < friends.count; i++){
+                    print(friends[i]["profileName"]);
+                    friendsMosaicsQuery.whereKey("user", equalTo: friends[i]);
+                }
+                friendsMosaicsQuery.includeKey("user");
+                friendsMosaicsQuery.orderByDescending("createdAt");
+                friendsMosaicsQuery.findObjectsInBackgroundWithBlock({ (friendsMosaics:[PFObject]?, error:NSError?) -> Void in
+                    if (error != nil){ print("Mosaic.swift: error while getting friends mosaics",error); }
+                    else {
+                        print("Received \(friendsMosaics!.count) friends mosaics");
+                        completion(mosaics: friendsMosaics);
+                    }
+                    
+                })
+            }
+        }
+        //get a list of your friends
+        //if the user field of the mosaic is a friend retrieve it
+        
+    }
     
     class func getUsersContributedMosaics(user:PFUser,completion: (mosaics: [PFObject]?) -> Void){
         let contributedMosaicsQuery = PFQuery(className: "Contributors");
@@ -492,6 +523,16 @@ class Mosaic {
     class func generateThumbnail(image:UIImage) -> NSData{
         let imageData = UIImageJPEGRepresentation(image, 0.0) //lowest quality
         return imageData!;
+    }
+    
+    class func containsMosaic(mosaicArray:[PFObject],mosaic:PFObject)->Bool {
+        var contains = false;
+        for (var i = 0; i < mosaicArray.count; i++){
+            if (mosaic.objectId == mosaicArray[i].objectId){
+                contains = true;
+            }
+        }
+        return contains;
     }
     
 }

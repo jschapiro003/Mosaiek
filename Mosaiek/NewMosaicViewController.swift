@@ -58,7 +58,7 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     
     func loadMosaicImage(){
         //lazy instantiation of imagePicker
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+        /*if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             
             self.imagePicker = UIImagePickerController()
             self.imagePicker.delegate = self
@@ -68,7 +68,7 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
             
             self.presentViewController(self.imagePicker, animated: true, completion: nil)
             
-        } else if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+        } else*/ if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
             
             self.imagePicker = UIImagePickerController()
             self.imagePicker.delegate = self

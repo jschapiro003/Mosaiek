@@ -46,7 +46,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         // Refresh Controls
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to load new Mosaics")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing Mosaics...")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         self.mosaicTable.addSubview(self.refreshControl)
         
@@ -55,7 +55,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.loadUsersMosaics();
+        //self.loadUsersMosaics();
     }
     override func viewWillAppear(animated: Bool) {
         currentMosaic = nil;
@@ -81,9 +81,13 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         Mosaic.getUsersMosaics(PFUser.currentUser()!) { (mosaics) -> Void in
             if let usersMosaics = mosaics {
 
+                print("new mosaics received");
+                for (var mosaic = 0; mosaic < usersMosaics.count; mosaic++){
+                    if ( !Mosaic.containsMosaic(self.timelineMosaics, mosaic: usersMosaics[mosaic])){
+                        self.timelineMosaics.append(usersMosaics[mosaic]);
+                    }
+                }
                 
-                self.timelineMosaics = [];
-                self.timelineMosaics += usersMosaics;
                 
                 if (self.timelineMosaics.count > 0) {
                     self.mosaicTable.hidden = false;
