@@ -105,10 +105,7 @@ class Mosaic {
         User.loadAllFriends { (friendsResults:Array<PFObject>?) -> Void in
             if let friends = friendsResults {
                 let friendsMosaicsQuery = PFQuery(className: "Mosaic");
-                for (var i = 0; i < friends.count; i++){
-                    print(friends[i]["profileName"]);
-                    friendsMosaicsQuery.whereKey("user", equalTo: friends[i]);
-                }
+                friendsMosaicsQuery.whereKey("user", containedIn: friends);
                 friendsMosaicsQuery.includeKey("user");
                 friendsMosaicsQuery.orderByDescending("createdAt");
                 friendsMosaicsQuery.findObjectsInBackgroundWithBlock({ (friendsMosaics:[PFObject]?, error:NSError?) -> Void in
@@ -527,6 +524,7 @@ class Mosaic {
     
     class func containsMosaic(mosaicArray:[PFObject],mosaic:PFObject)->Bool {
         var contains = false;
+        
         for (var i = 0; i < mosaicArray.count; i++){
             if (mosaic.objectId == mosaicArray[i].objectId){
                 contains = true;
