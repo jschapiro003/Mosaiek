@@ -28,6 +28,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
     var currentLikeButton:UIButton?
     var socket:SocketIOClient?
     let socketHandler = SocketHandler();
+    var refreshControl: UIRefreshControl!
     
     @IBOutlet weak var timelineTableView: UITableView!
     
@@ -41,6 +42,13 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         self.mosaicTable.dataSource = self;
         
         self.mosaicTable.hidden = true;
+        
+        // Refresh Controls
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to load new Mosaics")
+        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.mosaicTable.addSubview(self.refreshControl)
         
         self.loadUsersMosaics();
         
@@ -82,6 +90,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
                 
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
+                self.refreshControl.endRefreshing()
                 
                 self.mosaicTable.reloadData();
             }
@@ -339,7 +348,10 @@ class TimelineViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-   
-    
+    //#MARK - Refresh methods
+    func refresh(sender:AnyObject)
+    {
+        self.loadUsersMosaics();
+    }
 
 }
