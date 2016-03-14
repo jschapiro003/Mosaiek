@@ -115,6 +115,14 @@ class InvitationsViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                 }
                 
+                if let notificationMosaic = invitations[indexPath.row]["mosaic"] as? PFObject{
+                    if let notificationMosaicImage = notificationMosaic["thumbnail"] as? PFFile {
+                        MosaicImage.fileToImage(notificationMosaicImage, completion: { (mosaicImage) -> Void in
+                            cell.notificationImage?.image = mosaicImage;
+                        })
+                    }
+                }
+                
             } else {
                 
                 cell.notificationDescriptionLabel?.text = "You do not have any invitations";

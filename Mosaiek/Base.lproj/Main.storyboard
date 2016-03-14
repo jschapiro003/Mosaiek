@@ -508,6 +508,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="contributeButton" destination="YQa-4G-wLD" id="PV2-wo-xgm"/>
                         <outlet property="contributorsView" destination="yxQ-iS-taU" id="QHF-hA-zXO"/>
                         <outlet property="editMosaic" destination="cf3-QU-Ldg" id="fSW-Hx-LDE"/>
                         <outlet property="mosaicImage" destination="jZ3-RW-Lel" id="CFR-8r-AAU"/>

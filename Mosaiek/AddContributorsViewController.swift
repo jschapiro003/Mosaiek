@@ -45,6 +45,7 @@ class AddContributorsViewController: UIViewController,UITableViewDataSource,UITa
         
         User.loadAllFriends { (friends: Array<PFObject>?) -> Void in
            
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
             if let contributorList = friends {
                 
                 self.contributors = contributorList;

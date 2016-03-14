@@ -53,6 +53,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBOutlet weak var contributorsView: UIView!
     
+    @IBOutlet weak var contributeButton: UIButton!
+    
     // scrollview arrays
     var mosaicScrollImages:[UIImage] = [];
     var mosaicScrollViews:[UIImageView?] = [];
@@ -196,6 +198,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                     self.editMosaic.enabled = true;
                 }
             });
+            
+            Mosaic.isContributor(mosaic, user: PFUser.currentUser()!, completion: { (contributor) -> Void in
+                if (!contributor){
+                    this.contributeButton.hidden = true;
+                } else {
+                    this.contributeButton.enabled = true;
+                }
+            })
             
             if let name = mosaic["name"]{
                 self.mosaicName?.text = name as? String;
@@ -344,6 +354,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                 let loadingNotification = MBProgressHUD.showHUDAddedTo(self.mosaicImages, animated: true);
                 loadingNotification.mode = MBProgressHUDMode.Indeterminate
                 loadingNotification.labelText = "Loading Mosaic Images..."
+                 MBProgressHUD.hideAllHUDsForView(self.mosaicImages, animated: true);
                 
                 if let detailedMosaic = mosaicImages{
                     
@@ -362,7 +373,7 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                                     
                                     this.mosaicImageList.append(mosaicImg); // both of these lists get populated at same time
                                     this.mosaicScrollImages.append(scrollviewImage);
-                                    MBProgressHUD.hideAllHUDsForView(self.mosaicImages, animated: true);
+                                   
                                     this.setupScrollView()
                                     
                                 }
