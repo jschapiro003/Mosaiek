@@ -41,6 +41,7 @@
 		3171B1341C9380A30024609D /* Sockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3171B1331C9380A30024609D /* Sockets.swift */; };
 		31B75EC91C85096C0032CA46 /* ContributionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B75EC81C85096C0032CA46 /* ContributionProcessor.swift */; };
 		31B7DE2C1C8217D000F6F193 /* SocketHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B7DE2B1C8217D000F6F193 /* SocketHandler.swift */; };
+		31DA86CB1C9A6EB400FBCC63 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA86CA1C9A6EB400FBCC63 /* StringHelper.swift */; };
 		31DD5E661C6ACD6700AFE515 /* ContributorImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD5E651C6ACD6700AFE515 /* ContributorImageView.swift */; };
 		31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */; };
 		31E7A7281C4F41DB00736786 /* InvitationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */; };
@@ -120,6 +121,7 @@
 		3171B1331C9380A30024609D /* Sockets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sockets.swift; sourceTree = "<group>"; };
 		31B75EC81C85096C0032CA46 /* ContributionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributionProcessor.swift; sourceTree = "<group>"; };
 		31B7DE2B1C8217D000F6F193 /* SocketHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketHandler.swift; sourceTree = "<group>"; };
+		31DA86CA1C9A6EB400FBCC63 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		31DD5E651C6ACD6700AFE515 /* ContributorImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributorImageView.swift; sourceTree = "<group>"; };
 		31E7A7251C4F3A4D00736786 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		31E7A7271C4F41DB00736786 /* InvitationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationsViewController.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				31B7DE2B1C8217D000F6F193 /* SocketHandler.swift */,
 				31B75EC81C85096C0032CA46 /* ContributionProcessor.swift */,
 				3171B1331C9380A30024609D /* Sockets.swift */,
+				31DA86CA1C9A6EB400FBCC63 /* StringHelper.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				310916EF1C4EF2DE007EA1C5 /* Mosaiek.xcdatamodeld in Sources */,
 				31E7A72C1C4F431700736786 /* TimelineDetailViewController.swift in Sources */,
 				313C3D381C6EBDB700DD5663 /* AddMoreContributorsViewController.swift in Sources */,
+				31DA86CB1C9A6EB400FBCC63 /* StringHelper.swift in Sources */,
 				3152A5C11C61A1390053746A /* CommentCell.swift in Sources */,
 				311F2E6E1C5EFE380011B49B /* AddContributorsCell.swift in Sources */,
 				31E7A7261C4F3A4D00736786 /* TimelineViewController.swift in Sources */,

@@ -15,13 +15,17 @@ protocol GenerateNewMosaicDelegate {
     func contributorsAddedToMosaic(contributors: Array<PFUser>)
 }
 
-class NewMosaicViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, GenerateNewMosaicDelegate {
+class NewMosaicViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate, GenerateNewMosaicDelegate {
     
     @IBOutlet weak var mosaicName: UITextField!
 
     @IBOutlet weak var mosaicDescription: UITextField!
     
     @IBOutlet weak var mosaicImage: UIImageView!
+    
+    @IBOutlet weak var dimensionsPicker: UIPickerView!
+    
+    @IBOutlet weak var allowDuplicatesSwitch: UISwitch!
     
     var imagePicker: UIImagePickerController!
     
@@ -30,6 +34,8 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
     var mosaic:Mosaic?
     
     var delegate:NewMosaicDelegate?
+    
+    var pickerDimensions: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +59,11 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
         
         self.mosaicName.delegate = self;
         self.mosaicDescription.delegate = self;
+        
+        self.dimensionsPicker.delegate = self;
+        self.dimensionsPicker.dataSource = self;
+        
+        pickerDimensions = ["10x10","20x20","30x30","40x40"];
         
     }
     
@@ -110,7 +121,9 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
             
         } else {
             //alert no good
-            print("form not valid")
+            let invalidAlert = UIAlertView(title: "Uh Oh!", message: "You must fill out all of the fields to create a Mosaic", delegate: self, cancelButtonTitle: "OK");
+            invalidAlert.show()
+            
         }
         
     }
@@ -250,6 +263,38 @@ class NewMosaicViewController: UIViewController, UINavigationControllerDelegate,
             print("no go")
             
         }
+    }
+    
+    // Mark: dimensions picker delegate methods
+    
+    
+    // The number of columns of data
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // The number of rows of data
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerDimensions.count
+    }
+    
+    // The data to return for the row and component (column) that's being passed in
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerDimensions[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        var pickerLabel = view as! UILabel!
+        if view == nil {  //if no label there yet
+            pickerLabel = UILabel()
+        }
+        let titleData = pickerDimensions[row]
+        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Arial", size: 10.0)!,NSForegroundColorAttributeName:UIColor.blackColor()])
+        pickerLabel!.attributedText = myTitle
+        pickerLabel!.textAlignment = .Center
+        
+        return pickerLabel
+        
     }
     
 

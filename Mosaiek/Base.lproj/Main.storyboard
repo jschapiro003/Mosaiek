@@ -814,6 +814,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap to Add Mosaic Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKe-dx-Mfb">
+                                <rect key="frame" x="13" y="104" width="287" height="231"/>
+                                <color key="backgroundColor" red="0.67171717171717171" green="0.67171717171717171" blue="0.67171717171717171" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tnn-gA-t4m">
                                 <rect key="frame" x="13" y="104" width="287" height="231"/>
                             </imageView>
@@ -828,7 +835,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mwt-4j-EUJ">
-                                <rect key="frame" x="48" y="505" width="192" height="30"/>
+                                <rect key="frame" x="60" y="518" width="192" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Invite Others To Contribute">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -838,13 +845,33 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stackOfPhotos" translatesAutoresizingMaskIntoConstraints="NO" id="9cv-37-8n3">
-                                <rect key="frame" x="238" y="506" width="32" height="28"/>
+                                <rect key="frame" x="251" y="519" width="32" height="28"/>
                             </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="h2B-Lb-zGr">
+                                <rect key="frame" x="251" y="471" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow duplicates: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIs-wN-VSH">
+                                <rect key="frame" x="166" y="478" width="84" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dimensions:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izB-cl-qGR">
+                                <rect key="frame" x="20" y="478" width="63" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zGd-zc-AUA">
+                                <rect key="frame" x="81" y="471" width="51" height="31"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Mosaïek" id="rIB-aa-OVw"/>
                     <connections>
+                        <outlet property="allowDuplicatesSwitch" destination="h2B-Lb-zGr" id="uT7-Qu-TPa"/>
+                        <outlet property="dimensionsPicker" destination="zGd-zc-AUA" id="Oe5-ab-33v"/>
                         <outlet property="mosaicDescription" destination="ycz-rZ-eZH" id="7hE-MN-BYj"/>
                         <outlet property="mosaicImage" destination="tnn-gA-t4m" id="1yZ-98-KV8"/>
                         <outlet property="mosaicName" destination="w8K-1A-P09" id="m3B-b9-d2n"/>
