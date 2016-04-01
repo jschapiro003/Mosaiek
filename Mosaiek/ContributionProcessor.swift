@@ -23,13 +23,13 @@ class ContributionProcessor {
     
     class func getXPosition(position:Int)-> Int{
         
-        return position % 10;
+        return position % 40;
         
     }
     
     class func getYPosition(position:Int)->Int{
         
-        return position / 10;
+        return position / 40;
         
     }
 }

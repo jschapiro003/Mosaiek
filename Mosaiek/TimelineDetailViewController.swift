@@ -116,14 +116,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             
             if let contributionData = data[0] as? NSDictionary{
                 
-                let mosaic = contributionData["mosaic"] as! String;
-                let mosaicImage = contributionData["mosaicImage"] as! String;
-                let contrData = contributionData["position"] as! String;
-                let transformedImageData = contributionData["rgbImage"] as! String;
+                let mosaicState = contributionData["mosaic"] as! String;
+                //let mosaicImage = contributionData["mosaicImage"] as! String;
+                //let contrData = contributionData["position"] as! String;
+                //let transformedImageData = contributionData["rgbImage"] as! String;
                 
                 
                 
-                self.socketHandler.layerContribution(mosaic,contributionId: mosaicImage,position: contrData,vc:this,transformedImage: transformedImageData);
+                self.socketHandler.layerContribution(mosaicState,vc: self);
                 
                 let currentState = Mosaic.captureCurrentState(self.mosaicImage);
                 
@@ -692,8 +692,14 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             }
         }
         
+        if (segue.identifier == "showMosaicImageCollection"){
+            let dvc = segue.destinationViewController as! MosaicImageViewController;
+            dvc.mosaicImages = self.mosaicScrollImages;
+        }
+        
         
     }
+    
     
     // EditMosaic Delegate Methods 
     
@@ -705,16 +711,17 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     
     //Mark - contribution delegate methods
-    func didMakeContribution(mosaicId:String,contributionId:String,position:String,vc:UIViewController,transformedImage:String) {
+    func didMakeContribution(mosaicState:String,vc:TimelineDetailViewController) {
         
-        let this = vc as! TimelineDetailViewController;
+        let this = vc ;
         
-        let mosaicHeight = Int((this.mosaicImage.frame.maxY - this.mosaicImage.frame.minY)/10);//cell height
-        let mosaicWidth = Int((this.mosaicImage.frame.maxX - this.mosaicImage.frame.minX)/10);//cell width
+        //let mosaicHeight = Int((this.mosaicImage.frame.maxY - this.mosaicImage.frame.minY)/40);//cell height
+        //let mosaicWidth = Int((this.mosaicImage.frame.maxX - this.mosaicImage.frame.minX)/40);//cell width
         
-        let xPos = ContributionProcessor.getXPosition(Int(position)!) * mosaicWidth;
-        let yPos = ContributionProcessor.getYPosition(Int(position)!) * mosaicHeight;
+        //let xPos = ContributionProcessor.getXPosition(Int(position)!) * mosaicWidth;
+        //let yPos = ContributionProcessor.getYPosition(Int(position)!) * mosaicHeight;
         
+        /*
         print("starting x",this.mosaicImage.frame.minX);
         print("starting y",this.mosaicImage.frame.minY);
         print("final Y",Int(this.mosaicImage.frame.maxY))
@@ -725,20 +732,20 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
         print("y position",yPos);
         print("position", ContributionProcessor.getPosition(position));
         print("this",this);
+        */
         
+       // let contributionImageView = UIImageView(frame: CGRect(x:xPos, y: yPos, width: mosaicWidth, height: mosaicHeight));
         
-        let contributionImageView = UIImageView(frame: CGRect(x:xPos, y: yPos, width: mosaicWidth, height: mosaicHeight));
-        
-        let imageData = NSData(base64EncodedString: transformedImage, options:NSDataBase64DecodingOptions(rawValue: 0));
+        let imageData = NSData(base64EncodedString: mosaicState, options:NSDataBase64DecodingOptions(rawValue: 0));
         let image = UIImage(data:imageData!);
         
-        contributionImageView.image = image;
+        //contributionImageView.image = image;
         
         
-        this.mosaicImage.addSubview(contributionImageView);
+        this.mosaicImage.image = image;
         
         print("contribution made detail");
-        print(mosaicId,contributionId,position);
+        //print(mosaicId,contributionId,position);
        
         
     }

@@ -190,6 +190,62 @@
             </objects>
             <point key="canvasLocation" x="1292" y="-647"/>
         </scene>
+        <!--Mosaic Image View Controller-->
+        <scene sceneID="JMl-j2-Jn6">
+            <objects>
+                <viewController id="2pn-PU-D1i" customClass="MosaicImageViewController" customModule="Mosaiek" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7K0-nv-enL"/>
+                        <viewControllerLayoutGuide type="bottom" id="G0Z-EF-MGy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TSp-1r-bFr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tRH-Hp-G2U">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bng-gr-Na0">
+                                    <size key="itemSize" width="84" height="92"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="MRh-r1-I2a" customClass="MosaicImageCell" customModule="Mosaiek" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="74" width="84" height="92"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="84" height="92"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fc-n5-ldf">
+                                                    <rect key="frame" x="-1" y="-1" width="85" height="93"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="mosaicImage" destination="2fc-n5-ldf" id="Yjf-RF-LZo"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="2pn-PU-D1i" id="1kb-7d-Jd9"/>
+                                    <outlet property="delegate" destination="2pn-PU-D1i" id="ZZi-OP-BR4"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Qqk-Ta-dql"/>
+                    <connections>
+                        <outlet property="mosaicImageCollectionView" destination="tRH-Hp-G2U" id="HUH-vw-bhp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="znc-00-7kS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="453" y="750"/>
+        </scene>
         <!--Timeline-->
         <scene sceneID="LE3-Vg-n9S">
             <objects>
@@ -448,6 +504,16 @@
                                 </state>
                                 <connections>
                                     <action selector="contributeToMosaic:" destination="LQK-Pc-T1s" eventType="touchUpInside" id="aqe-8l-jXq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jbX-tS-d4m">
+                                <rect key="frame" x="244" y="512" width="76" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <state key="normal" title="Show more...">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="2pn-PU-D1i" kind="push" identifier="showMosaicImageCollection" id="0CS-br-cPQ"/>
                                 </connections>
                             </button>
                         </subviews>

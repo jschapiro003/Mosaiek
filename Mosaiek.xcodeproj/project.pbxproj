@@ -31,12 +31,14 @@
 		310917361C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310917351C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework */; };
 		310917381C4EFC8F007EA1C5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310917371C4EFC8F007EA1C5 /* FBSDKLoginKit.framework */; };
 		3112FB8F1C587634004F8055 /* TimelineMosaicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3112FB8E1C587634004F8055 /* TimelineMosaicCell.swift */; };
+		3115D3821CAE273000E27BD6 /* MosaicImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115D3811CAE273000E27BD6 /* MosaicImageCell.swift */; };
 		311F2E6E1C5EFE380011B49B /* AddContributorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311F2E6D1C5EFE380011B49B /* AddContributorsCell.swift */; };
 		311F2E701C5F230F0011B49B /* TimelineDetailCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311F2E6F1C5F230F0011B49B /* TimelineDetailCommentViewController.swift */; };
 		3124CD7F1C65243800143310 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3124CD7E1C65243800143310 /* Date.swift */; };
 		313C3D381C6EBDB700DD5663 /* AddMoreContributorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C3D371C6EBDB700DD5663 /* AddMoreContributorsViewController.swift */; };
 		313C3D3A1C7011A600DD5663 /* AddMoreContributorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C3D391C7011A600DD5663 /* AddMoreContributorsCell.swift */; };
 		313C3D3C1C72F18600DD5663 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C3D3B1C72F18600DD5663 /* ImageProcessor.swift */; };
+		3144B6FF1CAA071B00466EB5 /* MosaicImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3144B6FE1CAA071B00466EB5 /* MosaicImageViewController.swift */; };
 		3152A5C11C61A1390053746A /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3152A5C01C61A1390053746A /* CommentCell.swift */; };
 		3171B1341C9380A30024609D /* Sockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3171B1331C9380A30024609D /* Sockets.swift */; };
 		31B75EC91C85096C0032CA46 /* ContributionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B75EC81C85096C0032CA46 /* ContributionProcessor.swift */; };
@@ -111,12 +113,14 @@
 		310917351C4EFC49007EA1C5 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = ../../Documents/ParseSDK/ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		310917371C4EFC8F007EA1C5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		3112FB8E1C587634004F8055 /* TimelineMosaicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineMosaicCell.swift; sourceTree = "<group>"; };
+		3115D3811CAE273000E27BD6 /* MosaicImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicImageCell.swift; sourceTree = "<group>"; };
 		311F2E6D1C5EFE380011B49B /* AddContributorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributorsCell.swift; sourceTree = "<group>"; };
 		311F2E6F1C5F230F0011B49B /* TimelineDetailCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineDetailCommentViewController.swift; sourceTree = "<group>"; };
 		3124CD7E1C65243800143310 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		313C3D371C6EBDB700DD5663 /* AddMoreContributorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMoreContributorsViewController.swift; sourceTree = "<group>"; };
 		313C3D391C7011A600DD5663 /* AddMoreContributorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMoreContributorsCell.swift; sourceTree = "<group>"; };
 		313C3D3B1C72F18600DD5663 /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
+		3144B6FE1CAA071B00466EB5 /* MosaicImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicImageViewController.swift; sourceTree = "<group>"; };
 		3152A5C01C61A1390053746A /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		3171B1331C9380A30024609D /* Sockets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sockets.swift; sourceTree = "<group>"; };
 		31B75EC81C85096C0032CA46 /* ContributionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributionProcessor.swift; sourceTree = "<group>"; };
@@ -304,6 +308,7 @@
 				31E7A73C1C4F4A5900736786 /* EditContributorsViewController.swift */,
 				31E7A73E1C51B64A00736786 /* AddFriendsViewController.swift */,
 				313C3D371C6EBDB700DD5663 /* AddMoreContributorsViewController.swift */,
+				3144B6FE1CAA071B00466EB5 /* MosaicImageViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				311F2E6D1C5EFE380011B49B /* AddContributorsCell.swift */,
 				3152A5C01C61A1390053746A /* CommentCell.swift */,
 				313C3D391C7011A600DD5663 /* AddMoreContributorsCell.swift */,
+				3115D3811CAE273000E27BD6 /* MosaicImageCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -529,6 +535,7 @@
 			files = (
 				3124CD7F1C65243800143310 /* Date.swift in Sources */,
 				31B7DE2C1C8217D000F6F193 /* SocketHandler.swift in Sources */,
+				3115D3821CAE273000E27BD6 /* MosaicImageCell.swift in Sources */,
 				313C3D3C1C72F18600DD5663 /* ImageProcessor.swift in Sources */,
 				31E7A7461C55B8FE00736786 /* InvitationCell.swift in Sources */,
 				3171B1341C9380A30024609D /* Sockets.swift in Sources */,
@@ -551,6 +558,7 @@
 				31E7A72A1C4F428400736786 /* NewMosaicViewController.swift in Sources */,
 				311F2E701C5F230F0011B49B /* TimelineDetailCommentViewController.swift in Sources */,
 				31E7A73D1C4F4A5900736786 /* EditContributorsViewController.swift in Sources */,
+				3144B6FF1CAA071B00466EB5 /* MosaicImageViewController.swift in Sources */,
 				310916E91C4EF2DE007EA1C5 /* LoginViewController.swift in Sources */,
 				310916E71C4EF2DE007EA1C5 /* AppDelegate.swift in Sources */,
 				31E7A7331C4F496100736786 /* MosaicImage.swift in Sources */,
