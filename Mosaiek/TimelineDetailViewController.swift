@@ -55,6 +55,8 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
     
     @IBOutlet weak var contributeButton: UIButton!
     
+    @IBOutlet weak var showAllMosaicImages: UIButton!
+    
     // scrollview arrays
     var mosaicScrollImages:[UIImage] = [];
     var mosaicScrollViews:[UIImageView?] = [];
@@ -348,6 +350,9 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
             }
             
             // Mosaic info has been loaded now get MosaicImages
+            if self.mosaicScrollImages.count == 0 {
+                self.showAllMosaicImages.hidden = true;
+            }
             
             MosaicImage.getCurrentMosaicImages(mosaic, completion: { (mosaicImages:Array<PFObject>?) -> Void in
                 
@@ -375,12 +380,15 @@ class TimelineDetailViewController: UIViewController,UINavigationControllerDeleg
                                     this.mosaicScrollImages.append(scrollviewImage);
                                    
                                     this.setupScrollView()
+                                    this.showAllMosaicImages.hidden = false;
                                     
                                 }
                             })
                         }
                     }
                 }
+                
+                
                 
             })
             

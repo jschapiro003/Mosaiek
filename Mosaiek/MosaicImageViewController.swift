@@ -18,6 +18,7 @@ class MosaicImageViewController: UIViewController,UICollectionViewDataSource,UIC
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.mosaicImageCollectionView.backgroundColor = UIColor.whiteColor()
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -27,7 +28,6 @@ class MosaicImageViewController: UIViewController,UICollectionViewDataSource,UIC
     }
 
     
-
     
     // MARK: - UICollectionViewDataSource protocol
     
